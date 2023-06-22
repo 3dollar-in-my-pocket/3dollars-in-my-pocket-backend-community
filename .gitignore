@@ -1,0 +1,11 @@
+# Project exclude paths
+/.gradle/
+/build/
+/build/classes/java/main/
+/build/classes/java/test/
+/threedollar-core/build/
+/threedollar-core/threedollar-domain/build/
+/threedollar-core/threedollar-domain/build/classes/java/main/
+/threedollar-service/build/
+/threedollar-service/build/classes/java/main/
+/threedollar-service/build/classes/java/test/

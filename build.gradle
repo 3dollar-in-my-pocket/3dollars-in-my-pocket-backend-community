@@ -1,0 +1,80 @@
+buildscript {
+    ext {
+        // Spring
+        springBootVersion = "2.7.12"
+        springDependencyManagementVersion = "1.1.0"
+
+        // QueryDsl
+        queryDslVersion = "5.0.0"
+
+        // Redis
+        redissonVersion = "3.22.0"
+        embeddedRedisVersion = "0.7.2"
+
+        // Swagger
+        springDocVersion = "1.7.0"
+    }
+}
+
+plugins {
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id "application"
+}
+
+allprojects {
+    group = "com.threedollar"
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply {
+        plugin "idea"
+        plugin "java-library"
+        plugin "org.springframework.boot"
+        plugin "io.spring.dependency-management"
+        plugin "java-test-fixtures"
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    // SpringBoot Validation
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
+
+    // SpringBoot Configuration Processor
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    // SpringBoot
+    implementation ("org.springframework.boot:spring-boot-starter-web")
+
+    // Lombok
+    compileOnly ("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+
+
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
