@@ -10,3 +10,5 @@
 /threedollar-service/build/classes/java/main/
 /threedollar-service/build/classes/java/test/
 /.idea/
+/gradle/
+/threedollar-core/threedollar-common/build/
