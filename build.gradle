@@ -40,35 +40,37 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-}
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
-}
 
-dependencies {
-    // SpringBoot Validation
-    implementation("org.springframework.boot:spring-boot-configuration-processor")
+    dependencies {
+        // SpringBoot Validation
+        implementation("org.springframework.boot:spring-boot-configuration-processor")
 
-    // SpringBoot Configuration Processor
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+        // SpringBoot Configuration Processor
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    // SpringBoot
-    implementation ("org.springframework.boot:spring-boot-starter-web")
+        // SpringBoot
+        implementation ("org.springframework.boot:spring-boot-starter-web")
 
-    // Lombok
-    compileOnly ("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-    testCompileOnly("org.projectlombok:lombok")
-    testAnnotationProcessor("org.projectlombok:lombok")
+        // Lombok
+        compileOnly ("org.projectlombok:lombok")
+        annotationProcessor("org.projectlombok:lombok")
+        testCompileOnly("org.projectlombok:lombok")
+        testAnnotationProcessor("org.projectlombok:lombok")
 
-}
+    }
 
-tasks.named('test') {
-    useJUnitPlatform()
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+
 }
