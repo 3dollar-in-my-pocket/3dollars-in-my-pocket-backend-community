@@ -1,8 +1,7 @@
 package com.threedollar.common.exception;
 
-import org.springframework.http.HttpStatus;
-
 public enum ErrorCode {
+    E400_INVALID(HttpStatusCode.BAD_REQUEST, "BR000", "잘못된 요청입니다"),
 
     ;
 

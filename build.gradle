@@ -63,6 +63,10 @@ subprojects {
         // SpringBoot
         implementation ("org.springframework.boot:spring-boot-starter-web")
 
+        // SpringBoot Test
+        implementation("org.springframework.boot:spring-boot-starter-test")
+
+
         // Lombok
         compileOnly ("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
