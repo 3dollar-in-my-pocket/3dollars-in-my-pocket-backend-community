@@ -6,8 +6,8 @@
 /threedollar-core/build/
 /threedollar-core/threedollar-domain/build/
 /threedollar-core/threedollar-domain/build/classes/java/main/
-/threedollar-service/build/
-/threedollar-service/build/classes/java/main/
-/threedollar-service/build/classes/java/test/
+/threedollar-application/build/
+/threedollar-application/build/classes/java/main/
+/threedollar-application/build/classes/java/test/
 /.idea/
 /threedollar-core/threedollar-common/build/

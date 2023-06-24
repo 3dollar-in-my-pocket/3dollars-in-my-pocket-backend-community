@@ -1,0 +1,15 @@
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
+application {
+    mainClass.set("com.threedollar.threedollarservice.ThreedollarServiceApplication")
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-test")
+}
