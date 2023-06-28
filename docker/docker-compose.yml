@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  threedollars-community-mysql:
+    container_name: 3dollars-community-mysql
+    image: mysql:8.0
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 3dollars
+      MYSQL_DATABASE: local_db
+      MYSQL_USER: 3dollars
+      MYSQL_PASSWORD: 3dollars@
+      TZ: Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - threedollars-community-mysql-volume:/var/lib/mysql
+    networks:
+      - threedollars-network
+
+
+  threedollars-community-redis:
+    image: redis:6.0
+    command: redis-server --port 6379
+    container_name: 3dollars-community-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - threedollars-community-redis-volume:/data
+    networks:
+      - threedollars-network
+
+
+
+volumes:
+  threedollars-community-mysql-volume:
+    driver: local
+  threedollars-community-redis-volume:
+    driver: local
+
+
+networks:
+  threedollars-network:
+    driver: bridge
