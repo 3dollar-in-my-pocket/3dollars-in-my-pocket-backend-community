@@ -2,7 +2,6 @@ package com.threedollar.threedollardomain.domain.options;
 
 import com.threedollar.threedollardomain.domain.BaseEntity;
 import com.threedollar.threedollardomain.domain.poll.Poll;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +31,7 @@ public class Options extends BaseEntity {
     @Column(length = 200)
     private String imageUrl;
 
-    @Builder(access = AccessLevel.PACKAGE)
+    @Builder
     public Options(Poll poll, String title, String content, String imageUrl) {
         this.poll = poll;
         this.title = title;
