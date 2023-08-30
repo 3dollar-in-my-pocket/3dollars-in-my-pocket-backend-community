@@ -2,7 +2,6 @@ package com.threedollar.threedollardomain.domain.poll;
 
 import com.threedollar.threedollardomain.domain.BaseEntity;
 import com.threedollar.threedollardomain.domain.options.Options;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Poll extends BaseEntity {
 
     @Column(nullable = false)
@@ -40,31 +39,37 @@ public class Poll extends BaseEntity {
     private String accountId;
 
     @Column(nullable = false)
-    private LocalDateTime deadLine;
+    private LocalDateTime startTime;
+
+    @Column(nullable = false)
+    private LocalDateTime endTime;
+
 
     @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Options> options = new ArrayList<>();
 
     @Builder
-    public Poll(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime deadLine) {
+    public Poll(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
         this.pollType = pollType;
         this.title = title;
         this.contents = contents;
         this.accountType = accountType;
         this.accountId = accountId;
-        this.deadLine = deadLine;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @NotNull
-    public static Poll newInstance(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime deadLine) {
+    public static Poll newInstance(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
         return Poll.builder()
                 .pollType(pollType)
                 .title(title)
                 .contents(contents)
                 .accountType(accountType)
                 .accountId(accountId)
-                .deadLine(deadLine)
+                .startTime(startTime)
+                .endTime(endTime)
                 .build();
     }
 
