@@ -1,12 +1,17 @@
 dependencies {
+
     // Common Module
     api project(":threedollar-core:threedollar-common")
 
     // JPA
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // H2
-    implementation("com.h2database:h2")
+    runtimeOnly 'com.h2database:h2'
+
+    // Spring Web MVC
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
 
     // QueryDsl
     implementation("com.querydsl:querydsl-jpa")
@@ -32,6 +37,10 @@ sourceSets {
 }
 
 
-clean.doLast {
-    file(queryDslDir).deleteDir()
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(queryDslDir)
+}
+
+clean {
+    delete file(queryDslDir)
 }

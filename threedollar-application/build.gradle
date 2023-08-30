@@ -12,15 +12,20 @@ application {
 dependencies {
     // Common
     implementation project(":threedollar-core:threedollar-common")
+    implementation project(":threedollar-core:threedollar-domain")
 
+    // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-test")
 
     // H2
-    implementation 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2'
 
     // Session
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 
 }

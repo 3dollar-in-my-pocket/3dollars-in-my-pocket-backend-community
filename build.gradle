@@ -58,8 +58,6 @@ subprojects {
 
         implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
-
-
         // SpringBoot Configuration Processor
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
