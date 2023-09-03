@@ -3,6 +3,8 @@ package com.threedollar.domain.poll;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Getter
 public enum PollType {
@@ -11,6 +13,10 @@ public enum PollType {
     ;
 
     private final String description;
+
+    public static List<PollType> pollTypeList() {
+        return List.of(PollType.values());
+    }
 
 
 }

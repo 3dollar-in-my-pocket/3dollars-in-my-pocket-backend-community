@@ -47,6 +47,7 @@ public class Poll extends BaseEntity {
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Options> options = new ArrayList<>();
 
+
     @Builder
     public Poll(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
         this.pollType = pollType;
@@ -56,6 +57,16 @@ public class Poll extends BaseEntity {
         this.accountId = accountId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void addOptions(List<Options> options) {
+        for (Options option : options) {
+            addOption(option);
+        }
+    }
+
+    private void addOption(Options options) {
+        this.options.add(options);
     }
 
     public static Poll newInstance(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {

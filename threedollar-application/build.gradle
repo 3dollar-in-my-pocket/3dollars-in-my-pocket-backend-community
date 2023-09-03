@@ -24,6 +24,11 @@ dependencies {
     // Session
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+    // Swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+
     tasks.named('test') {
         useJUnitPlatform()
     }
