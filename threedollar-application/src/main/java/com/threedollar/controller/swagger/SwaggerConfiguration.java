@@ -1,4 +1,4 @@
-package com.threedollar.common.exception.config.swagger;
+package com.threedollar.controller.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class SwaggerConfiguration extends WebMvcConfigurationSupport {
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder()
-                .title("threedollars-community")
+                .title("three-dollars-community")
                 .version("1.0.0")
                 .build();
     }

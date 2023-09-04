@@ -1,5 +1,6 @@
 package com.threedollar.service;
 
+import com.threedollar.service.options.dto.request.OptionsRequest;
 import com.threedollar.service.poll.dto.PollService;
 import com.threedollar.service.poll.dto.request.AddPollRequest;
 import com.threedollar.domain.poll.Poll;
@@ -34,6 +35,10 @@ class PollServiceTest {
         LocalDateTime startTime = LocalDateTime.of(2023, 8, 31, 9, 0);
         LocalDateTime endTime = LocalDateTime.of(2023, 9, 15, 0, 0);
 
+
+        OptionsRequest optionsRequest = new OptionsRequest("제목", "내용", "imageUrl");
+
+
         AddPollRequest request = AddPollRequest
                 .builder()
                 .title(title)
@@ -43,6 +48,7 @@ class PollServiceTest {
                 .accountType(accountType)
                 .startTime(startTime)
                 .endTime(endTime)
+                .optionsRequestList(List.of(optionsRequest))
                 .build();
 
         // when

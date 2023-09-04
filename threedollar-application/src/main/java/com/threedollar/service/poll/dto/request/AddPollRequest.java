@@ -43,7 +43,7 @@ public class AddPollRequest {
     private List<OptionsRequest> optionsRequestList;
 
     @Builder
-    public AddPollRequest(PollType pollType, String title, @Nullable String content, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
+    public AddPollRequest(PollType pollType, String title, @Nullable String content, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime, List<OptionsRequest> optionsRequestList) {
         this.pollType = pollType;
         this.title = title;
         this.content = content;
@@ -51,11 +51,14 @@ public class AddPollRequest {
         this.accountId = accountId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.optionsRequestList = optionsRequestList;
     }
 
     public Poll toEntity() {
         Poll poll = Poll.newInstance(pollType, title, content, accountType, accountId, startTime, endTime);
-        List<Options> options = optionsRequestList.stream().map(option -> option.toEntity(poll)).collect(Collectors.toList());
+        List<Options> options = this.optionsRequestList.stream()
+                .map(option -> option.toEntity(poll))
+                .collect(Collectors.toList());
         poll.addOptions(options);
         return poll;
     }

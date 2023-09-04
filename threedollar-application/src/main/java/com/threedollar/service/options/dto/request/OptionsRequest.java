@@ -26,4 +26,6 @@ public class OptionsRequest {
     public Options toEntity(Poll poll) {
         return Options.of(poll, title, content, urlImage);
     }
+
+
 }
