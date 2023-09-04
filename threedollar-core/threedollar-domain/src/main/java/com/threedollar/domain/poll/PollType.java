@@ -8,11 +8,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public enum PollType {
-    TASTE_VS_TASTE("맛대맛"),
-    BEST_FOOD("가장 맛있는 음식")
+    TASTE_VS_TASTE("맛짱투표", "그만싸워 얘덜아... 먹을걸로 왜그래..."),
+    BEST_FOOD("가장 맛있는 음식", "참맛을 찾아서 ....")
     ;
 
-    private final String description;
+    private final String title;
+
+    private final String content;
 
     public static List<PollType> pollTypeList() {
         return List.of(PollType.values());
