@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +25,16 @@ public class AllPollResponse {
 
     private List<OptionsResponse> optionsResponses;
 
+    private LocalDateTime endTime;
+
     @Builder
-    public AllPollResponse(String title, String content, String accountType, String accountId, List<OptionsResponse> optionsResponses) {
+    public AllPollResponse(String title, String content, String accountType, String accountId, List<OptionsResponse> optionsResponses, LocalDateTime endTime) {
         this.title = title;
         this.content = content;
         this.accountType = accountType;
         this.accountId = accountId;
         this.optionsResponses = optionsResponses;
+        this.endTime = endTime;
     }
 
     public static AllPollResponse of(Poll poll) {
@@ -40,6 +44,7 @@ public class AllPollResponse {
                 .accountType(poll.getAccountType())
                 .accountId(poll.getAccountId())
                 .optionsResponses(getOptionResponse(poll.getOptions()))
+                .endTime(poll.getEndTime())
                 .build();
     }
 
@@ -48,4 +53,5 @@ public class AllPollResponse {
                 .map(OptionsResponse::of)
                 .collect(Collectors.toList());
     }
+
 }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -23,6 +24,7 @@ public class Options extends BaseEntity {
     private Poll poll;
 
     @Column(length = 100, nullable = false)
+    @NotBlank
     private String title;
 
     @Column(length = 100)
@@ -39,7 +41,7 @@ public class Options extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    public static Options of(@NotNull Poll poll, String title, String content, String imageUrl) {
+    public static Options of(@NotNull Poll poll, @NotBlank String title, String content, String imageUrl) {
         return Options.builder()
                 .poll(poll)
                 .title(title)

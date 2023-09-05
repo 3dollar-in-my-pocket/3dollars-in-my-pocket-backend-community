@@ -2,6 +2,7 @@ package com.threedollar.controller.poll;
 
 import com.threedollar.common.exception.dto.response.ApiResponse;
 import com.threedollar.domain.poll.PollType;
+import com.threedollar.service.common.request.AccountInfoRequest;
 import com.threedollar.service.poll.dto.PollService;
 import com.threedollar.service.poll.dto.request.AddPollRequest;
 import com.threedollar.service.poll.dto.response.AllPollResponse;
@@ -21,7 +22,8 @@ import java.util.List;
 @RestController
 public class PollController {
 
-    private final static String defaultPollType = "DEFAULT_POLL_TYPE";
+    private final static String DEFAULT_POLL_TYPE = "DEFAULT_POLL_TYPE";
+
     private final PollService pollService;
 
     @ApiOperation("[투표] 투표를 합니다")
@@ -41,8 +43,9 @@ public class PollController {
     @GetMapping("/community/v1/poll")
     public ApiResponse<List<AllPollResponse>> getAllPoll(@RequestParam(required = false) Long cursor,
                                                          @RequestParam int size,
-                                                         @RequestParam(required = false, defaultValue = defaultPollType) PollType pollType) {
-        return ApiResponse.success(pollService.getAllPollResponse(cursor, size, pollType));
+                                                         @RequestParam(required = false, defaultValue = DEFAULT_POLL_TYPE) PollType pollType,
+                                                         @Valid @RequestBody AccountInfoRequest accountInfoRequest) {
+        return ApiResponse.success(pollService.getAllPollResponse(cursor, size, pollType, accountInfoRequest));
     }
 
 
