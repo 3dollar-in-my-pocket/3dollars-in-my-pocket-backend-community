@@ -2,7 +2,6 @@ package com.threedollar.controller.poll;
 
 import com.threedollar.common.exception.dto.response.ApiResponse;
 import com.threedollar.domain.poll.PollType;
-import com.threedollar.service.common.request.AccountInfoRequest;
 import com.threedollar.service.poll.dto.PollService;
 import com.threedollar.service.poll.dto.request.AddPollRequest;
 import com.threedollar.service.poll.dto.response.AllPollResponse;
@@ -43,9 +42,8 @@ public class PollController {
     @GetMapping("/community/v1/poll")
     public ApiResponse<List<AllPollResponse>> getAllPoll(@RequestParam(required = false) Long cursor,
                                                          @RequestParam int size,
-                                                         @RequestParam(required = false, defaultValue = DEFAULT_POLL_TYPE) PollType pollType,
-                                                         @Valid @RequestBody AccountInfoRequest accountInfoRequest) {
-        return ApiResponse.success(pollService.getAllPollResponse(cursor, size, pollType, accountInfoRequest));
+                                                         @RequestParam(required = false, defaultValue = DEFAULT_POLL_TYPE) PollType pollType) {
+        return ApiResponse.success(pollService.getAllPollResponse(cursor, size, pollType));
     }
 
 
