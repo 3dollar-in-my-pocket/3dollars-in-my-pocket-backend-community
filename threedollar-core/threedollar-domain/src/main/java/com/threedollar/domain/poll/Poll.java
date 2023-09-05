@@ -29,7 +29,7 @@ public class Poll extends BaseEntity {
     private String title;
 
     @Column(nullable = false)
-    private String contents;
+    private String content;
 
     @Column(nullable = false)
     private String accountType;
@@ -43,16 +43,15 @@ public class Poll extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
-
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Options> options = new ArrayList<>();
 
 
     @Builder
-    public Poll(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
+    public Poll(PollType pollType, String title, String content, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
         this.pollType = pollType;
         this.title = title;
-        this.contents = contents;
+        this.content = content;
         this.accountType = accountType;
         this.accountId = accountId;
         this.startTime = startTime;
@@ -69,11 +68,11 @@ public class Poll extends BaseEntity {
         this.options.add(options);
     }
 
-    public static Poll newInstance(PollType pollType, String title, String contents, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
+    public static Poll newInstance(PollType pollType, String title, String content, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime) {
         return Poll.builder()
                 .pollType(pollType)
                 .title(title)
-                .contents(contents)
+                .content(content)
                 .accountType(accountType)
                 .accountId(accountId)
                 .startTime(startTime)

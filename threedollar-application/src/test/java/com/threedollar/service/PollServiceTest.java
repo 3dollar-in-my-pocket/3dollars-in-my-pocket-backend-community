@@ -60,7 +60,7 @@ class PollServiceTest {
         assertThat(pollList).hasSize(1);
         assertThat(title).isEqualTo(pollList.get(0).getTitle());
         assertThat(pollType).isEqualTo(pollList.get(0).getPollType());
-        assertThat(contents).isEqualTo(pollList.get(0).getContents());
+        assertThat(contents).isEqualTo(pollList.get(0).getContent());
         assertThat(accountId).isEqualTo(pollList.get(0).getAccountId());
         assertThat(accountType).isEqualTo(pollList.get(0).getAccountType());
         assertThat(startTime).isEqualTo(pollList.get(0).getStartTime());

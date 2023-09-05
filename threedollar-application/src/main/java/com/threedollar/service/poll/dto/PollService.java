@@ -4,6 +4,7 @@ import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.PollType;
 import com.threedollar.domain.poll.repository.PollRepository;
 import com.threedollar.service.poll.dto.request.AddPollRequest;
+import com.threedollar.service.poll.dto.response.AllPollResponse;
 import com.threedollar.service.poll.dto.response.PollTypeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,15 @@ public class PollService {
                 .map(PollTypeResponse::of)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<AllPollResponse> getAllPollResponse (Long cursor, int size, PollType pollType) {
+        List<Poll> pollList = pollRepository.findAllPollList(cursor, size, pollType);
+        return pollList.stream()
+                .map(AllPollResponse::of)
+                .collect(Collectors.toList());
+    }
+
 
 
 }
