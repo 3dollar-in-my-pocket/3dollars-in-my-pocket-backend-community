@@ -12,6 +12,12 @@ dependencies {
     // Spring Web MVC
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Redis
+    implementation('org.springframework.boot:spring-boot-starter-data-redis')
+
+    // Embedded-Redis
+    implementation ('it.ozimov:embedded-redis:0.7.2')
+
 
     // QueryDsl
     implementation("com.querydsl:querydsl-jpa")

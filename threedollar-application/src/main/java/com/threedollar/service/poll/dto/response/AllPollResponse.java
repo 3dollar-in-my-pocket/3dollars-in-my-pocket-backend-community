@@ -1,5 +1,6 @@
 package com.threedollar.service.poll.dto.response;
 
+import com.threedollar.domain.AccountType;
 import com.threedollar.domain.options.Options;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.service.options.dto.response.OptionsResponse;
@@ -19,7 +20,7 @@ public class AllPollResponse {
 
     private String content;
 
-    private String accountType;
+    private AccountType accountType;
 
     private String accountId;
 
@@ -27,14 +28,18 @@ public class AllPollResponse {
 
     private LocalDateTime endTime;
 
+    private CursorResponse cursorResponse;
+
     @Builder
-    public AllPollResponse(String title, String content, String accountType, String accountId, List<OptionsResponse> optionsResponses, LocalDateTime endTime) {
+    public AllPollResponse(String title, String content, AccountType accountType, String accountId, List<OptionsResponse> optionsResponses, LocalDateTime endTime,
+                           CursorResponse cursorResponse) {
         this.title = title;
         this.content = content;
         this.accountType = accountType;
         this.accountId = accountId;
         this.optionsResponses = optionsResponses;
         this.endTime = endTime;
+        this.cursorResponse = cursorResponse;
     }
 
     public static AllPollResponse of(Poll poll) {
@@ -44,7 +49,7 @@ public class AllPollResponse {
                 .accountType(poll.getAccountType())
                 .accountId(poll.getAccountId())
                 .optionsResponses(getOptionResponse(poll.getOptions()))
-                .endTime(poll.getEndTime())
+                .endTime(poll.getEndDateTime())
                 .build();
     }
 

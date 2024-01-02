@@ -20,9 +20,9 @@ public class PollService {
     private final PollRepository pollRepository;
 
     @Transactional
-    public void addPoll(AddPollRequest request) {
+    public Long addPoll(AddPollRequest request) {
         Poll poll = request.toEntity();
-        pollRepository.save(poll);
+        return pollRepository.save(poll).getId();
     }
 
     public List<PollTypeResponse> getPollTypes() {
@@ -32,13 +32,26 @@ public class PollService {
     }
 
     @Transactional(readOnly = true)
-    public List<AllPollResponse> getAllPollResponse (Long cursor, int size, PollType pollType) {
-        List<Poll> pollList = pollRepository.findAllPollList(cursor, size, pollType);
+    public List<AllPollResponse> getAllPollResponse(Long cursor, int size, PollType pollType) {
+        int checkSize = size + 1;
+
+        List<Poll> pollList = pollRepository.findAllPollList(cursor, checkSize, pollType);
+        if (pollList.size() == checkSize) {
+
+        }
+
+        pollList.get(size);
+
+
+        boolean validateEmpty = validateEmpty(pollList);
         return pollList.stream()
                 .map(AllPollResponse::of)
                 .collect(Collectors.toList());
     }
 
+    private boolean validateEmpty(List<Poll> pollList) {
+        return !pollList.isEmpty();
+    }
 
 
 }

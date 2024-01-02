@@ -10,6 +10,5 @@ public interface PollRepositoryCustom {
 
     List<Poll> findAllPollList(Long cursor, int size, PollType pollType);
 
-
-
+    
 }

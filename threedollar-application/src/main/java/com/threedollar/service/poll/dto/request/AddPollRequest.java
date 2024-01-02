@@ -1,5 +1,6 @@
 package com.threedollar.service.poll.dto.request;
 
+import com.threedollar.domain.AccountType;
 import com.threedollar.domain.options.Options;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.PollType;
@@ -29,7 +30,7 @@ public class AddPollRequest {
     private String content;
 
     @NotNull
-    private String accountType;
+    private AccountType accountType;
 
     @NotBlank
     private String accountId;
@@ -43,7 +44,7 @@ public class AddPollRequest {
     private List<OptionsRequest> optionsRequestList;
 
     @Builder
-    public AddPollRequest(PollType pollType, String title, @Nullable String content, String accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime, List<OptionsRequest> optionsRequestList) {
+    public AddPollRequest(PollType pollType, String title, @Nullable String content, AccountType accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime, List<OptionsRequest> optionsRequestList) {
         this.pollType = pollType;
         this.title = title;
         this.content = content;
