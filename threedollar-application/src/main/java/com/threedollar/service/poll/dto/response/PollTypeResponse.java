@@ -1,6 +1,6 @@
 package com.threedollar.service.poll.dto.response;
 
-import com.threedollar.domain.poll.PollType;
+import com.threedollar.domain.poll.PollCategory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +22,11 @@ public class PollTypeResponse {
         this.content = content;
     }
 
-    public static PollTypeResponse of(PollType pollType) {
+    public static PollTypeResponse of(PollCategory pollCategory) {
         return PollTypeResponse.builder()
-                .pollType(pollType.name())
-                .title(pollType.getTitle())
-                .content(pollType.getContent())
+                .pollType(pollCategory.name())
+                .title(pollCategory.getTitle())
+                .content(pollCategory.getContent())
                 .build();
     }
 

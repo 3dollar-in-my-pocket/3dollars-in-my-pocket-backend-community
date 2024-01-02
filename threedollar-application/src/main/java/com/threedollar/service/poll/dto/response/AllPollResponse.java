@@ -1,7 +1,7 @@
 package com.threedollar.service.poll.dto.response;
 
 import com.threedollar.domain.AccountType;
-import com.threedollar.domain.options.Options;
+import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.service.options.dto.response.OptionsResponse;
 import lombok.Builder;
@@ -53,7 +53,7 @@ public class AllPollResponse {
                 .build();
     }
 
-    public static List<OptionsResponse> getOptionResponse(List<Options> options) {
+    public static List<OptionsResponse> getOptionResponse(List<PollOption> options) {
         return options.stream()
                 .map(OptionsResponse::of)
                 .collect(Collectors.toList());

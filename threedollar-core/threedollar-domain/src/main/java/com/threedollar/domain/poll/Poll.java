@@ -1,7 +1,7 @@
 package com.threedollar.domain.poll;
 
 import com.threedollar.domain.AccountType;
-import com.threedollar.domain.options.Options;
+import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +22,11 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(indexes = {
-        @Index(name = "idx_poll_1", columnList = "category, pollStatus"),
-        @Index(name = "idx_poll_2", columnList = "accountId,accountType,pollStatus")
-}
-)
 public class Poll extends BaseEntity {
 
     @Column(nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
-    private PollType pollType;
+    private PollCategory pollCategory;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -58,11 +52,11 @@ public class Poll extends BaseEntity {
     private PollStatus pollStatus;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<Options> options = new ArrayList<>();
+    private final List<PollOption> options = new ArrayList<>();
 
     @Builder
-    public Poll(PollType pollType, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
-        this.pollType = pollType;
+    public Poll(PollCategory pollCategory, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
+        this.pollCategory = pollCategory;
         this.title = title;
         this.content = content;
         this.accountType = accountType;
@@ -72,25 +66,26 @@ public class Poll extends BaseEntity {
         this.pollStatus = pollStatus;
     }
 
-    public void addOptions(List<Options> options) {
-        for (Options option : options) {
+    public void addOptions(List<PollOption> options) {
+        for (PollOption option : options) {
             addOption(option);
         }
     }
 
-    private void addOption(Options options) {
-        this.options.add(options);
+    private void addOption(PollOption pollOption) {
+        this.options.add(pollOption);
     }
 
-    public static Poll newInstance(PollType pollType, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static Poll newInstance(PollCategory pollCategory, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return Poll.builder()
-                .pollType(pollType)
+                .pollCategory(pollCategory)
                 .title(title)
                 .content(content)
                 .accountType(accountType)
                 .accountId(accountId)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
+                .pollStatus(PollStatus.ACTIVE)
                 .build();
     }
 

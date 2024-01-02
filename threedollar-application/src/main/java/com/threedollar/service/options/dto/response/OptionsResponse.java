@@ -1,6 +1,6 @@
 package com.threedollar.service.options.dto.response;
 
-import com.threedollar.domain.options.Options;
+import com.threedollar.domain.options.PollOption;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +22,11 @@ public class OptionsResponse {
         this.content = content;
     }
 
-    public static OptionsResponse of(Options options) {
+    public static OptionsResponse of(PollOption pollOption) {
         return OptionsResponse.builder()
-                .title(options.getTitle())
-                .imageUrl(options.getImageUrl())
-                .content(options.getContent())
+                .title(pollOption.getTitle())
+                .imageUrl(pollOption.getImageUrl())
+                .content(pollOption.getContent())
                 .build();
     }
 }

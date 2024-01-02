@@ -1,6 +1,5 @@
 package com.threedollar.service.poll.dto.response;
 
-import com.threedollar.domain.poll.Poll;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

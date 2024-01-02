@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Options extends BaseEntity {
+public class PollOption extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "poll_id", nullable = false)
@@ -34,15 +34,15 @@ public class Options extends BaseEntity {
     private String imageUrl;
 
     @Builder
-    public Options(Poll poll, String title, String content, String imageUrl) {
+    public PollOption(Poll poll, String title, String content, String imageUrl) {
         this.poll = poll;
         this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
     }
 
-    public static Options of(@NotNull Poll poll, @NotBlank String title, String content, String imageUrl) {
-        return Options.builder()
+    public static PollOption of(@NotNull Poll poll, @NotBlank String title, String content, String imageUrl) {
+        return PollOption.builder()
                 .poll(poll)
                 .title(title)
                 .content(content)

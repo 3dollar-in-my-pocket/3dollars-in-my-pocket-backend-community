@@ -1,10 +1,10 @@
 package com.threedollar.service.poll.dto.request;
 
 import com.threedollar.domain.AccountType;
-import com.threedollar.domain.options.Options;
+import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;
-import com.threedollar.domain.poll.PollType;
-import com.threedollar.service.options.dto.request.OptionsRequest;
+import com.threedollar.domain.poll.PollCategory;
+import com.threedollar.service.options.dto.request.PollOptionCreateRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
-public class AddPollRequest {
+public class PollCreateRequest {
 
     @NotNull
-    private PollType pollType;
+    private PollCategory pollCategory;
 
     @NotBlank
     private String title;
@@ -30,39 +30,30 @@ public class AddPollRequest {
     private String content;
 
     @NotNull
-    private AccountType accountType;
-
-    @NotBlank
-    private String accountId;
-
-    @NotNull
     private LocalDateTime startTime;
 
     @NotNull
     private LocalDateTime endTime;
 
-    private List<OptionsRequest> optionsRequestList;
+    private List<PollOptionCreateRequest> options;
 
     @Builder
-    public AddPollRequest(PollType pollType, String title, @Nullable String content, AccountType accountType, String accountId, LocalDateTime startTime, LocalDateTime endTime, List<OptionsRequest> optionsRequestList) {
-        this.pollType = pollType;
+    public PollCreateRequest(PollCategory pollCategory, String title, @Nullable String content, LocalDateTime startTime, LocalDateTime endTime, List<PollOptionCreateRequest> options) {
+        this.pollCategory = pollCategory;
         this.title = title;
         this.content = content;
-        this.accountType = accountType;
-        this.accountId = accountId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.optionsRequestList = optionsRequestList;
+        this.options = options;
     }
 
-    public Poll toEntity() {
-        Poll poll = Poll.newInstance(pollType, title, content, accountType, accountId, startTime, endTime);
-        List<Options> options = this.optionsRequestList.stream()
+    public Poll toEntity(AccountType accountType, String accountId) {
+        Poll poll = Poll.newInstance(pollCategory, title, content, accountType, accountId, startTime, endTime);
+        List<PollOption> options = this.options.stream()
                 .map(option -> option.toEntity(poll))
                 .collect(Collectors.toList());
         poll.addOptions(options);
         return poll;
     }
-
 
 }

@@ -3,7 +3,7 @@ package com.threedollar.domain.poll.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.threedollar.domain.poll.Poll;
-import com.threedollar.domain.poll.PollType;
+import com.threedollar.domain.poll.PollCategory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,10 +16,10 @@ public class PollRepositoryCustomImpl implements PollRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Poll> findAllPollList(Long cursor, int size, PollType pollType) {
+    public List<Poll> findAllPollList(Long cursor, int size, PollCategory pollCategory) {
         return jpaQueryFactory.selectFrom(poll)
                 .where(existedCursor(cursor),
-                        poll.pollType.eq(pollType))
+                        poll.pollCategory.eq(pollCategory))
                 .orderBy(poll.id.desc())
                 .limit(size)
                 .fetch();

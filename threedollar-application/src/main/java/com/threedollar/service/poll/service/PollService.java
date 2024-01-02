@@ -1,9 +1,10 @@
-package com.threedollar.service.poll.dto;
+package com.threedollar.service.poll.service;
 
+import com.threedollar.domain.AccountType;
 import com.threedollar.domain.poll.Poll;
-import com.threedollar.domain.poll.PollType;
+import com.threedollar.domain.poll.PollCategory;
 import com.threedollar.domain.poll.repository.PollRepository;
-import com.threedollar.service.poll.dto.request.AddPollRequest;
+import com.threedollar.service.poll.dto.request.PollCreateRequest;
 import com.threedollar.service.poll.dto.response.AllPollResponse;
 import com.threedollar.service.poll.dto.response.PollTypeResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +21,22 @@ public class PollService {
     private final PollRepository pollRepository;
 
     @Transactional
-    public Long addPoll(AddPollRequest request) {
-        Poll poll = request.toEntity();
+    public Long addPoll(PollCreateRequest request, AccountType accountType, String accountId) {
+        Poll poll = request.toEntity(accountType, accountId);
         return pollRepository.save(poll).getId();
     }
 
     public List<PollTypeResponse> getPollTypes() {
-        return PollType.pollTypeList().stream()
+        return PollCategory.pollTypeList().stream()
                 .map(PollTypeResponse::of)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<AllPollResponse> getAllPollResponse(Long cursor, int size, PollType pollType) {
+    public List<AllPollResponse> getAllPollResponse(Long cursor, int size, PollCategory pollCategory) {
         int checkSize = size + 1;
 
-        List<Poll> pollList = pollRepository.findAllPollList(cursor, checkSize, pollType);
+        List<Poll> pollList = pollRepository.findAllPollList(cursor, checkSize, pollCategory);
         if (pollList.size() == checkSize) {
 
         }
