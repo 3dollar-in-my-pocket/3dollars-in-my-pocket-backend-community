@@ -2,7 +2,7 @@ package com.threedollar.common.exception;
 
 public enum ErrorCode {
     E400_INVALID(HttpStatusCode.BAD_REQUEST, "BR000", "잘못된 요청입니다"),
-
+    E404_NOT_FOUND(HttpStatusCode.NOT_FOUND, "NF000", "찾을 수 없습니다"),
     ;
 
     private final HttpStatusCode httpStatusCode;

@@ -26,6 +26,13 @@ public class PollService {
         return pollRepository.save(poll).getId();
     }
 
+    @Transactional
+    public void deletePoll(Long pollId, AccountType accountType, String accountId) {
+        Poll poll = PollServiceHelper.getPollByIdAndAccountType(pollRepository, pollId, accountType, accountId);
+        poll.delete();
+    }
+
+
     public List<PollTypeResponse> getPollTypes() {
         return PollCategory.pollTypeList().stream()
                 .map(PollTypeResponse::of)

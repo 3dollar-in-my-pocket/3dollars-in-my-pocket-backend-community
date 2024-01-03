@@ -8,6 +8,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public enum PollCategory {
+
     TASTE_VS_TASTE("맛짱투표", "그만싸워 얘덜아... 먹을걸로 왜그래..."),
     BEST_FOOD("가장 맛있는 음식", "참맛을 찾아서 ....")
     ;

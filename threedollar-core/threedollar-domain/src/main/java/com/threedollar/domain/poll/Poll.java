@@ -12,9 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Index;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +68,10 @@ public class Poll extends BaseEntity {
         for (PollOption option : options) {
             addOption(option);
         }
+    }
+
+    public void delete() {
+        this.pollStatus = PollStatus.DELETED;
     }
 
     private void addOption(PollOption pollOption) {
