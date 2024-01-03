@@ -1,4 +1,4 @@
-package com.threedollar.controller;
+package com.threedollar.controller.poll;
 
 
 import com.threedollar.common.exception.dto.response.ApiResponse;
