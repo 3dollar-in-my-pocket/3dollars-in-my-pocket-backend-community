@@ -1,8 +1,8 @@
 package com.threedollar.domain.sticker;
 
 
-import com.threedollar.domain.AccountType;
 import com.threedollar.domain.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,17 +18,30 @@ public class Sticker extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private StickerType stickerType;
+    private StickerGroup stickerGroup;
 
     @Column(nullable = false)
     private String imageUrl;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
+    private StickerStatus status;
 
-    @Column(nullable = false)
-    private String accountId;
+    private int priority;
 
+    @Builder
+    public Sticker(StickerGroup stickerGroup, String imageUrl, StickerStatus status, int priority) {
+        this.stickerGroup = stickerGroup;
+        this.imageUrl = imageUrl;
+        this.status = status;
+        this.priority = priority;
+    }
+
+    public static Sticker newInstance(String imageUrl, StickerGroup stickerGroup) {
+        return Sticker.builder()
+                .imageUrl(imageUrl)
+                .stickerGroup(stickerGroup)
+                .status(StickerStatus.ACTIVE)
+                .build();
+    }
 
 }
