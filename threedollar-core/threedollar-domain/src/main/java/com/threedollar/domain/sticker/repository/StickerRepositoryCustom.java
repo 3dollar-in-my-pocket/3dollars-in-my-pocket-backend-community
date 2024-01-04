@@ -12,4 +12,6 @@ public interface StickerRepositoryCustom {
 
     Sticker getStickerByIdAndStickerGroup(@NotNull Long stickerId, @NotNull StickerGroup stickerGroup);
 
+    List<Sticker> getStickerByIdsAndStickerGroup(@NotNull List<Long> stickerIds, @NotNull StickerGroup stickerGroup);
+
 }

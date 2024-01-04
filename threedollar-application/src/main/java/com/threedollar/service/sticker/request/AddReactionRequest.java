@@ -1,4 +1,4 @@
-package com.threedollar.service.reaction.dto.request;
+package com.threedollar.service.sticker.request;
 
 import com.threedollar.domain.reaction.Reaction;
 import com.threedollar.domain.sticker.StickerGroup;
@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,19 +18,20 @@ public class AddReactionRequest {
     private String targetId;
 
     @NotBlank
-    private Long stickerId;
-
-    @NotBlank
     private String accountId;
 
+
+    @NotNull
+    private List<Long> stickerIds;
+
     @Builder
-    public AddReactionRequest(String targetId, Long stickerId, String accountId) {
+    public AddReactionRequest(String targetId, String accountId, List<Long> stickerIds) {
         this.targetId = targetId;
-        this.stickerId = stickerId;
         this.accountId = accountId;
+        this.stickerIds = stickerIds;
     }
 
     public Reaction toEntity(StickerGroup stickerGroup) {
-        return Reaction.newInstance(stickerGroup, stickerId, accountId, targetId);
+        return Reaction.newInstance(stickerGroup, stickerIds, accountId, targetId);
     }
 }

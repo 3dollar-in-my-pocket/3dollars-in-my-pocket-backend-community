@@ -32,4 +32,14 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
                         sticker.status.eq(StickerStatus.ACTIVE))
                 .fetchOne();
     }
+
+    @Override
+    public List<Sticker> getStickerByIdsAndStickerGroup(List<Long> stickerIds, StickerGroup stickerGroup) {
+        return jpaQueryFactory.selectFrom(sticker)
+                .where(
+                        sticker.id.in(stickerIds),
+                        sticker.stickerGroup.eq(stickerGroup),
+                        sticker.status.eq(StickerStatus.ACTIVE)
+                ).fetch();
+    }
 }
