@@ -1,6 +1,7 @@
 package com.threedollar.domain.reaction;
 
 import com.threedollar.domain.BaseEntity;
+import com.threedollar.domain.sticker.StickerGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Reaction extends BaseEntity {
 
     @Column(nullable = false)
-    private ReactionTarget reactionTarget;
+    private StickerGroup stickerGroup;
 
     @Column(nullable = false)
     private Long stickerId;
@@ -31,21 +32,21 @@ public class Reaction extends BaseEntity {
     private ReactionStatus status;
 
     @Builder
-    public Reaction(@NotNull ReactionTarget reactionTarget,
+    public Reaction(@NotNull StickerGroup stickerGroup,
                     @NotBlank Long stickerId,
                     @NotBlank String accountId,
                     @NotBlank String targetId,
                     @NotNull ReactionStatus status) {
-        this.reactionTarget = reactionTarget;
+        this.stickerGroup = stickerGroup;
         this.stickerId = stickerId;
         this.accountId = accountId;
         this.targetId = targetId;
         this.status = status;
     }
 
-    public static Reaction newInstance(ReactionTarget reactionTarget, Long stickerId, String accountId, String targetId) {
+    public static Reaction newInstance(StickerGroup stickerGroup, Long stickerId, String accountId, String targetId) {
         return Reaction.builder()
-                .reactionTarget(reactionTarget)
+                .stickerGroup(stickerGroup)
                 .stickerId(stickerId)
                 .accountId(accountId)
                 .targetId(targetId)

@@ -31,11 +31,12 @@ public class StickerService {
 
 
     @Transactional
-    public Long addSticker(AddReactionRequest request) {
+    public Long addSticker(AddReactionRequest request, StickerGroup stickerGroup) {
 
-        Sticker sticker = StickerServiceHelper.getStickerById(stickerRepository, request.getStickerId());
+        Sticker sticker = StickerServiceHelper.getStickerByIdAndStickerGroup(stickerRepository, stickerGroup, request.getStickerId());
 
-        Reaction reaction = reactionRepository.getReactionByTargetAndAccountIdAndStickerId(request.getReactionTarget(),
+        Reaction reaction = reactionRepository.getReactionByTargetAndAccountIdAndStickerId(
+                stickerGroup,
                 request.getTargetId(),
                 request.getAccountId(),
                 sticker.getId());
@@ -45,7 +46,7 @@ public class StickerService {
             return reaction.getId();
         }
 
-        Reaction savedReaction = reactionRepository.save(request.toEntity());
+        Reaction savedReaction = reactionRepository.save(request.toEntity(sticker.getStickerGroup()));
         return savedReaction.getId();
 
     }

@@ -1,7 +1,6 @@
 package com.threedollar.service.sticker;
 
 import com.threedollar.domain.reaction.Reaction;
-import com.threedollar.domain.reaction.ReactionTarget;
 import com.threedollar.domain.reaction.repository.ReactionRepository;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
@@ -41,12 +40,12 @@ public class StickerServiceTest {
         AddReactionRequest request = getRequest(sticker.getId());
 
         // when
-        stickerService.addSticker(request);
+        stickerService.addSticker(request, sticker.getStickerGroup());
 
         // then
         List<Reaction> reactionList = reactionRepository.findAll();
         assertThat(reactionList).hasSize(1);
-        assertReaction(reactionList.get(0), request.getReactionTarget(), request.getTargetId(), request.getAccountId(), request.getStickerId());
+        assertReaction(reactionList.get(0), sticker.getStickerGroup(), request.getTargetId(), request.getAccountId(), request.getStickerId());
     }
 
     @Test
@@ -54,11 +53,11 @@ public class StickerServiceTest {
         // given
         Sticker sticker = createSticker();
         AddReactionRequest request = getRequest(sticker.getId());
-        Reaction reaction = getReaction(request);
+        Reaction reaction = getReaction(request, sticker.getStickerGroup());
         reactionRepository.save(reaction);
 
         // when
-        stickerService.addSticker(request);
+        stickerService.addSticker(request, sticker.getStickerGroup());
 
         // then
         List<Reaction> reactionList = reactionRepository.findAll();
@@ -66,24 +65,22 @@ public class StickerServiceTest {
 
     }
 
-    private void assertReaction(Reaction reaction, ReactionTarget reactionTarget, String targetId, String accountId, Long stickerId) {
-        assertThat(reaction.getReactionTarget()).isEqualTo(reactionTarget);
+    private void assertReaction(Reaction reaction, StickerGroup stickerGroup, String targetId, String accountId, Long stickerId) {
+        assertThat(reaction.getStickerGroup()).isEqualTo(stickerGroup);
         assertThat(reaction.getTargetId()).isEqualTo(targetId);
         assertThat(reaction.getAccountId()).isEqualTo(accountId);
         assertThat(reaction.getStickerId()).isEqualTo(stickerId);
     }
 
 
-    private Reaction getReaction(AddReactionRequest request) {
-        return request.toEntity();
+    private Reaction getReaction(AddReactionRequest request, StickerGroup stickerGroup) {
+        return request.toEntity(stickerGroup);
     }
 
     private AddReactionRequest getRequest(Long stickerId) {
-        ReactionTarget reactionTarget = ReactionTarget.POLL;
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
         return AddReactionRequest.builder()
-                .reactionTarget(reactionTarget)
                 .targetId(targetId)
                 .accountId(accountId)
                 .stickerId(stickerId)
@@ -95,6 +92,5 @@ public class StickerServiceTest {
         StickerGroup stickerGroup = StickerGroup.COMMUNITY_COMMENT;
         return stickerRepository.save(Sticker.newInstance(imageUrl, stickerGroup));
     }
-
 
 }

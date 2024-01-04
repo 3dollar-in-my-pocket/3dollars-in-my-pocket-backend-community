@@ -24,9 +24,11 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
     }
 
     @Override
-    public Sticker getStickerById(Long stickerId) {
+    public Sticker getStickerByIdAndStickerGroup(Long stickerId,
+                                                 StickerGroup stickerGroup) {
         return jpaQueryFactory.selectFrom(sticker)
-                .where(sticker.id.eq(stickerId),
+                .where(
+                        sticker.stickerGroup.eq(stickerGroup),
                         sticker.status.eq(StickerStatus.ACTIVE))
                 .fetchOne();
     }
