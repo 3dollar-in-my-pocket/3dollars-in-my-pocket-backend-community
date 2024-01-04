@@ -22,4 +22,12 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
                         sticker.status.eq(StickerStatus.ACTIVE))
                 .fetch();
     }
+
+    @Override
+    public Sticker getStickerById(Long stickerId) {
+        return jpaQueryFactory.selectFrom(sticker)
+                .where(sticker.id.eq(stickerId),
+                        sticker.status.eq(StickerStatus.ACTIVE))
+                .fetchOne();
+    }
 }

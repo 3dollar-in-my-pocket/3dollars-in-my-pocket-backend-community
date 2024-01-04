@@ -19,7 +19,7 @@ public class Reaction extends BaseEntity {
     private ReactionTarget reactionTarget;
 
     @Column(nullable = false)
-    private String stickerId;
+    private Long stickerId;
 
     @Column(nullable = false)
     private String accountId;
@@ -32,7 +32,7 @@ public class Reaction extends BaseEntity {
 
     @Builder
     public Reaction(@NotNull ReactionTarget reactionTarget,
-                    @NotBlank String stickerId,
+                    @NotBlank Long stickerId,
                     @NotBlank String accountId,
                     @NotBlank String targetId,
                     @NotNull ReactionStatus status) {
@@ -43,7 +43,7 @@ public class Reaction extends BaseEntity {
         this.status = status;
     }
 
-    public static Reaction newInstance(ReactionTarget reactionTarget, String stickerId, String accountId, String targetId) {
+    public static Reaction newInstance(ReactionTarget reactionTarget, Long stickerId, String accountId, String targetId) {
         return Reaction.builder()
                 .reactionTarget(reactionTarget)
                 .stickerId(stickerId)

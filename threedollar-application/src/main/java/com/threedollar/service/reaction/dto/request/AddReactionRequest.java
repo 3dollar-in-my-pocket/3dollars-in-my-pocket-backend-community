@@ -20,13 +20,13 @@ public class AddReactionRequest {
     private String targetId;
 
     @NotBlank
-    private String stickerId;
+    private Long stickerId;
 
     @NotBlank
     private String accountId;
 
     @Builder
-    public AddReactionRequest(ReactionTarget reactionTarget, String targetId, String stickerId, String accountId) {
+    public AddReactionRequest(ReactionTarget reactionTarget, String targetId, Long stickerId, String accountId) {
         this.reactionTarget = reactionTarget;
         this.targetId = targetId;
         this.stickerId = stickerId;

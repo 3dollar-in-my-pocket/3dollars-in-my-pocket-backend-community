@@ -13,7 +13,7 @@ public class ReactionRepositoryCustomImpl implements ReactionRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Reaction getReactionByTargetAndAccountIdAndStickerId(ReactionTarget reactionTarget, String targetId, String accountId, String stickerId) {
+    public Reaction getReactionByTargetAndAccountIdAndStickerId(ReactionTarget reactionTarget, String targetId, String accountId, Long stickerId) {
         return jpaQueryFactory.selectFrom(reaction)
                 .where(reaction.reactionTarget.eq(reactionTarget),
                         reaction.targetId.eq(targetId),

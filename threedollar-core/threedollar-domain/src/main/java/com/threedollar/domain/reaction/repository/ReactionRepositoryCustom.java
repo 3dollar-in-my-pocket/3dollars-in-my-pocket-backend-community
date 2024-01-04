@@ -8,5 +8,5 @@ public interface ReactionRepositoryCustom {
     Reaction getReactionByTargetAndAccountIdAndStickerId(ReactionTarget reactionTarget,
                                                          String targetId,
                                                          String accountId,
-                                                         String stickerId);
+                                                         Long stickerId);
 }

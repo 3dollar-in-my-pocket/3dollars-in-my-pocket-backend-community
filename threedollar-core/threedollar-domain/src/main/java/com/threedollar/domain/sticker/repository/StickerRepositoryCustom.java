@@ -9,4 +9,7 @@ import java.util.List;
 public interface StickerRepositoryCustom {
 
     List<Sticker> getStickerByStickerGroup(@NotNull StickerGroup stickerGroup);
+
+    Sticker getStickerById(@NotNull Long stickerId);
+
 }
