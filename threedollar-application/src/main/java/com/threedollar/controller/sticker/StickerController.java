@@ -18,7 +18,7 @@ public class StickerController {
 
     private final StickerService stickerService;
 
-    @Operation(summary = "[스티커] 스티커를 조회합니다")
+    @Operation(summary = "[스티커] 스티커를 조회합니다", description = "그룹에 해당하는 스티커를 조회합니다")
     @GetMapping("/v1/stickers")
     public ApiResponse<List<StickerInfoResponse>> getSticker(@RequestParam StickerGroup group) {
         return ApiResponse.success(stickerService.getStickerList(group));

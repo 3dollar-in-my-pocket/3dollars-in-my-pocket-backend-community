@@ -4,15 +4,15 @@ import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Getter
+@Service
 public class StickerService {
 
     private final StickerRepository stickerRepository;
@@ -24,9 +24,6 @@ public class StickerService {
                 .map(StickerInfoResponse::of)
                 .collect(Collectors.toList());
     }
-
-
-
 
 
 }
