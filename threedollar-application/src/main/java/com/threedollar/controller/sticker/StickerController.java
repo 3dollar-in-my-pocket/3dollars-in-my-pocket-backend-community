@@ -7,6 +7,7 @@ import com.threedollar.service.sticker.request.AddReactionRequest;
 import com.threedollar.service.sticker.StickerRetrieveService;
 import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,7 +24,6 @@ public class StickerController {
     private final StickerRetrieveService stickerRetrieveService;
 
     private final StickerReactionService stickerReactionService;
-
 
 
     @Operation(summary = "[스티커] 스티커를 조회합니다", description = "그룹에 해당하는 스티커를 조회합니다")

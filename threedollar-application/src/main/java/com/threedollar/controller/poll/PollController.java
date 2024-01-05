@@ -4,8 +4,11 @@ package com.threedollar.controller.poll;
 import com.threedollar.common.exception.dto.response.ApiResponse;
 import com.threedollar.domain.AccountType;
 import com.threedollar.service.poll.dto.request.PollCreateRequest;
-import com.threedollar.service.poll.service.PollService;
+import com.threedollar.service.poll.PollService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor

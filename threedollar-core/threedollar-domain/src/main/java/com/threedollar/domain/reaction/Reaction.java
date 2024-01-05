@@ -3,15 +3,15 @@ package com.threedollar.domain.reaction;
 import com.threedollar.StringArrayConverter;
 import com.threedollar.domain.BaseEntity;
 import com.threedollar.domain.sticker.StickerGroup;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -51,4 +51,5 @@ public class Reaction extends BaseEntity {
                 .targetId(targetId)
                 .build();
     }
+
 }

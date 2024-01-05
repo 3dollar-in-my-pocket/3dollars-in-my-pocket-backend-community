@@ -2,12 +2,12 @@ package com.threedollar.service.sticker.request;
 
 import com.threedollar.domain.reaction.Reaction;
 import com.threedollar.domain.sticker.StickerGroup;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @NoArgsConstructor
