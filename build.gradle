@@ -1,14 +1,13 @@
 buildscript {
     ext {
         // Spring
-        springBootVersion = "3.1.4"
+        springBootVersion = "3.2.1"
         springDependencyManagementVersion = "1.1.3"
 
         // QueryDsl
         queryDslVersion = "5.0.0"
 
         // Redis
-        redissonVersion = "3.22.0"
         embeddedRedisVersion = "0.7.2"
 
         // Swagger
