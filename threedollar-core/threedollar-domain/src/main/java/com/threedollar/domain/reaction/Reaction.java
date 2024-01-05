@@ -6,6 +6,8 @@ import com.threedollar.domain.sticker.StickerGroup;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -17,6 +19,12 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name="Reaction", uniqueConstraints = {
+        @UniqueConstraint(
+                name="uni_reaction_1",
+                columnNames = {"targetId","accountId","stickerGroup"}
+        )
+})
 public class Reaction extends BaseEntity {
 
     @Column(nullable = false)

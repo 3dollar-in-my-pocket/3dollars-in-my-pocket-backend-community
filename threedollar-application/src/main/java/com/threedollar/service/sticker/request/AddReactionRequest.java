@@ -20,7 +20,6 @@ public class AddReactionRequest {
     @NotBlank
     private String accountId;
 
-
     @NotNull
     private List<Long> stickerIds;
 

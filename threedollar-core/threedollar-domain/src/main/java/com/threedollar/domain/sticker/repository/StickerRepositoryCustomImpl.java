@@ -34,8 +34,9 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
     }
 
     @Override
-    public List<Sticker> getStickerByIdsAndStickerGroup(List<Long> stickerIds, StickerGroup stickerGroup) {
-        return jpaQueryFactory.selectFrom(sticker)
+    public List<Long> getStickerByIdsAndStickerGroup(List<Long> stickerIds, StickerGroup stickerGroup) {
+        return jpaQueryFactory.select(sticker.id)
+                .from(sticker)
                 .where(
                         sticker.id.in(stickerIds),
                         sticker.stickerGroup.eq(stickerGroup),
