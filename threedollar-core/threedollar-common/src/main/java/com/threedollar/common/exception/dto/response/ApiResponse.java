@@ -1,13 +1,13 @@
 package com.threedollar.common.exception.dto.response;
 
 import com.threedollar.common.exception.ErrorCode;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode
 @ToString

@@ -6,7 +6,6 @@ import com.threedollar.domain.poll.PollCategory;
 import com.threedollar.domain.poll.PollStatus;
 import com.threedollar.domain.poll.repository.PollRepository;
 import com.threedollar.service.poll.dto.request.PollCreateRequest;
-import com.threedollar.service.poll.service.PollService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +80,6 @@ public class PollServiceTest {
         List<Poll> polls = pollRepository.findAll();
         assertThat(polls).hasSize(1);
         assertThat(polls.get(0).getPollStatus()).isEqualTo(PollStatus.DELETED);
-
 
     }
 

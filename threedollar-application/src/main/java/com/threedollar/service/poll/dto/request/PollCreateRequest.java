@@ -5,13 +5,13 @@ import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.PollCategory;
 import com.threedollar.service.options.dto.request.PollOptionCreateRequest;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.threedollar.service.poll.service;
+package com.threedollar.service.poll;
 
 import com.threedollar.domain.AccountType;
 import com.threedollar.domain.poll.Poll;

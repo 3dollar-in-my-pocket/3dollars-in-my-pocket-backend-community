@@ -1,7 +1,8 @@
 package com.threedollar;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
