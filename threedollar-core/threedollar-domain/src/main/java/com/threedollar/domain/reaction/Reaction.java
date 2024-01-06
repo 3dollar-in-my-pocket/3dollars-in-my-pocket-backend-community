@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="Reaction", uniqueConstraints = {
+@Table(name="reaction", uniqueConstraints = {
         @UniqueConstraint(
                 name="uni_reaction_1",
                 columnNames = {"targetId","accountId","stickerGroup"}
@@ -58,6 +58,10 @@ public class Reaction extends BaseEntity {
                 .accountId(accountId)
                 .targetId(targetId)
                 .build();
+    }
+
+    public void update(List<Long> stickerIds) {
+        this.stickerIds = stickerIds;
     }
 
 }

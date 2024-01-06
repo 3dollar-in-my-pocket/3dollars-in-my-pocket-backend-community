@@ -23,9 +23,6 @@ public class StickerReactionService {
     @Transactional
     public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup) {
 
-        /**
-         * TODO: unique key 로 targetId, accountId, stickerGroup 으로 잡는다
-         */
         List<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(request.getStickerIds(), stickerGroup);
         if (request.getStickerIds().size() != stickerList.size()) {
             throw new IllegalArgumentException("요청하신 스티커를 사용할 수 없습니다.");
@@ -33,11 +30,10 @@ public class StickerReactionService {
 
         Reaction reaction = reactionRepository.getByReactionStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
         if (reaction != null) {
-            reactionRepository.delete(reaction);
+            reaction.update(request.getStickerIds());
         }
 
         reactionRepository.save(Reaction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
-
 
     }
 
