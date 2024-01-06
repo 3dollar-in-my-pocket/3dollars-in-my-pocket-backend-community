@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name="reaction", uniqueConstraints = {
         @UniqueConstraint(
                 name="uni_reaction_1",
-                columnNames = {"targetId","accountId","stickerGroup"}
+                columnNames = {"accountId","targetId","stickerGroup"}
         )
 })
 public class Reaction extends BaseEntity {
