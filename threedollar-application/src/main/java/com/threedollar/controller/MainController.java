@@ -1,5 +1,6 @@
 package com.threedollar.controller;
 
+import com.threedollar.common.exception.dto.response.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
     @GetMapping("/ping")
-    public String check() {
-        return "pong";
+    public ApiResponse<String> check() {
+        return ApiResponse.OK;
     }
 
 }
