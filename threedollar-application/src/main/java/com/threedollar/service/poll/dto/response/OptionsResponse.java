@@ -1,4 +1,4 @@
-package com.threedollar.service.options.dto.response;
+package com.threedollar.service.poll.dto.response;
 
 import com.threedollar.domain.options.PollOption;
 import lombok.Builder;

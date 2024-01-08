@@ -1,4 +1,4 @@
-package com.threedollar.service.options.dto.request;
+package com.threedollar.service.poll.dto.request;
 
 import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;

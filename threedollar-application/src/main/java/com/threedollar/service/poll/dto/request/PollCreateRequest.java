@@ -4,7 +4,6 @@ import com.threedollar.domain.AccountType;
 import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.PollCategory;
-import com.threedollar.service.options.dto.request.PollOptionCreateRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
