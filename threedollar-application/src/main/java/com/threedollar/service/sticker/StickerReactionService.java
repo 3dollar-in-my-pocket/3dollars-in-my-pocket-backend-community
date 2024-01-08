@@ -3,6 +3,7 @@ package com.threedollar.service.sticker;
 
 import com.threedollar.domain.reaction.Reaction;
 import com.threedollar.domain.reaction.repository.ReactionRepository;
+import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.service.sticker.request.AddReactionRequest;
@@ -19,6 +20,8 @@ public class StickerReactionService {
 
     private final ReactionRepository reactionRepository;
     private final StickerRepository stickerRepository;
+
+    private final StickerCountRepository stickerCountRepository;
 
     @Transactional
     public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup) {
