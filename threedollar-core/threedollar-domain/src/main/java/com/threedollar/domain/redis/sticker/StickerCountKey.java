@@ -25,7 +25,7 @@ public class StickerCountKey implements StringRedisKey<StickerCountKey, Long> {
 
     @Override
     public String getKey() {
-        return "stickerGroup : " + stickerGroup + "targetId : " + targetId;
+        return "stickerGroup:" + stickerGroup + "," + "targetId:" + targetId;
     }
 
     @Override
