@@ -19,6 +19,7 @@ import java.util.List;
 public class StickerReactionService {
 
     private final ReactionRepository reactionRepository;
+
     private final StickerRepository stickerRepository;
 
     private final StickerCountRepository stickerCountRepository;
@@ -33,10 +34,15 @@ public class StickerReactionService {
 
         Reaction reaction = reactionRepository.getByReactionStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
         if (reaction != null) {
+            reaction.getStickerIds()
+                    .forEach(id -> stickerCountRepository.decrByCount(stickerGroup, reaction.getTargetId(), id));
+            request.getStickerIds()
+                            .forEach(id -> stickerCountRepository.incrByCount(stickerGroup, request.getTargetId(), id));
             reaction.update(request.getStickerIds());
             return;
         }
-
+        request.getStickerIds()
+                .forEach(id -> stickerCountRepository.incrByCount(stickerGroup, request.getTargetId(), id));
         reactionRepository.save(Reaction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
     }
