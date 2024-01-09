@@ -5,7 +5,7 @@ import com.threedollar.domain.reaction.repository.ReactionRepository;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
-import com.threedollar.service.sticker.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

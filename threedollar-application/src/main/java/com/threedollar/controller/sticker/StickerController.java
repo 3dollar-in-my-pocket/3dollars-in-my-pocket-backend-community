@@ -2,8 +2,10 @@ package com.threedollar.controller.sticker;
 
 import com.threedollar.common.exception.dto.response.ApiResponse;
 import com.threedollar.domain.sticker.StickerGroup;
+import com.threedollar.service.sticker.StickerReactionRetrieveService;
 import com.threedollar.service.sticker.StickerReactionService;
-import com.threedollar.service.sticker.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.TargetStickerReactionResponse;
+import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import com.threedollar.service.sticker.StickerRetrieveService;
 import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,6 +27,8 @@ public class StickerController {
     private final StickerRetrieveService stickerRetrieveService;
 
     private final StickerReactionService stickerReactionService;
+
+    private final StickerReactionRetrieveService stickerReactionRetrieveService;
 
 
     @Operation(summary = "[스티커] 스티커를 조회합니다", description = "그룹에 해당하는 스티커를 조회합니다")
@@ -39,6 +44,14 @@ public class StickerController {
         stickerReactionService.upsertSticker(request, stickerGroup);
 
         return ApiResponse.OK;
+    }
+
+    @Operation(summary = "[스티커] 타겟들에 대한 스티커들을 조회합니다")
+    @GetMapping("v1/sticker-group/{stickerGroup}/stickers")
+    public ApiResponse<List<TargetStickerReactionResponse>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
+                                                                                      @RequestParam List<String> targetIds,
+                                                                                      @RequestParam String accountId) {
+        return ApiResponse.success(stickerReactionRetrieveService.getStickerReactionResponse(stickerGroup, accountId, targetIds));
     }
 
 }

@@ -43,4 +43,6 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
                         sticker.status.eq(StickerStatus.ACTIVE)
                 ).fetch();
     }
+
+
 }

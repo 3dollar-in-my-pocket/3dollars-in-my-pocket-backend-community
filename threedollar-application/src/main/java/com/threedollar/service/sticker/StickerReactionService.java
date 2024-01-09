@@ -6,7 +6,7 @@ import com.threedollar.domain.reaction.repository.ReactionRepository;
 import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
-import com.threedollar.service.sticker.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +32,7 @@ public class StickerReactionService {
             throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", request.getStickerIds()));
         }
 
-        Reaction reaction = reactionRepository.getByReactionStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
+        Reaction reaction = reactionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
         if (reaction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, reaction.getTargetId(), reaction.getStickerIds());
             stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
