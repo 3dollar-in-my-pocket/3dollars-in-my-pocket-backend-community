@@ -17,15 +17,20 @@ public class StickerCountKey implements StringRedisKey<StickerCountKey, Long> {
 
     private final String targetId;
 
+    private final Long stickerId;
+
     @Builder
-    public StickerCountKey(StickerGroup stickerGroup, String targetId) {
+    public StickerCountKey(StickerGroup stickerGroup, String targetId, Long stickerId) {
         this.stickerGroup = stickerGroup;
         this.targetId = targetId;
+        this.stickerId = stickerId;
     }
+
+
 
     @Override
     public String getKey() {
-        return "stickerGroup:" + stickerGroup + "," + "targetId:" + targetId;
+        return "stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + stickerId;
     }
 
     @Override

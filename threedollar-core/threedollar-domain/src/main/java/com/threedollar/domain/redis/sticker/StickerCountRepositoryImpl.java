@@ -13,7 +13,7 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
     private final StringRedisRepository<StickerCountKey, Long> stickerRedisRepository;
 
     @Override
-    public void incrByCount(StickerGroup stickerGroup, String targetId) {
+    public void incrByCount(StickerGroup stickerGroup, String targetId, Long stickerId) {
         StickerCountKey key = StickerCountKey.builder()
                 .stickerGroup(stickerGroup)
                 .targetId(targetId)
@@ -22,7 +22,7 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
     }
 
     @Override
-    public long getValueByKey(StickerGroup stickerGroup, String targetId) {
+    public long getValueByKey(StickerGroup stickerGroup, String targetId, Long stickerId) {
         StickerCountKey key = StickerCountKey.builder()
                 .stickerGroup(stickerGroup)
                 .targetId(targetId)
@@ -31,7 +31,7 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
     }
 
     @Override
-    public void decrByCount(StickerGroup stickerGroup, String targetId) {
+    public void decrByCount(StickerGroup stickerGroup, String targetId, Long stickerId) {
         StickerCountKey key = StickerCountKey.builder()
                 .stickerGroup(stickerGroup)
                 .targetId(targetId)

@@ -4,10 +4,10 @@ import com.threedollar.domain.sticker.StickerGroup;
 
 public interface StickerCountRepository {
 
-    void incrByCount(StickerGroup stickerGroup, String targetId);
+    void incrByCount(StickerGroup stickerGroup, String targetId, Long stickerId);
 
-    long getValueByKey(StickerGroup stickerGroup, String targetId);
+    long getValueByKey(StickerGroup stickerGroup, String targetId, Long stickerId);
 
-    void decrByCount(StickerGroup stickerGroup, String targetId);
+    void decrByCount(StickerGroup stickerGroup, String targetId, Long stickerId);
 
 }
