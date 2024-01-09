@@ -34,15 +34,12 @@ public class StickerReactionService {
 
         Reaction reaction = reactionRepository.getByReactionStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
         if (reaction != null) {
-            reaction.getStickerIds()
-                    .forEach(id -> stickerCountRepository.decrByCount(stickerGroup, reaction.getTargetId(), id));
-            request.getStickerIds()
-                            .forEach(id -> stickerCountRepository.incrByCount(stickerGroup, request.getTargetId(), id));
+            stickerCountRepository.decrBulkByCount(stickerGroup, reaction.getTargetId(), reaction.getStickerIds());
+            stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
             reaction.update(request.getStickerIds());
             return;
         }
-        request.getStickerIds()
-                .forEach(id -> stickerCountRepository.incrByCount(stickerGroup, request.getTargetId(), id));
+        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
         reactionRepository.save(Reaction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
     }
