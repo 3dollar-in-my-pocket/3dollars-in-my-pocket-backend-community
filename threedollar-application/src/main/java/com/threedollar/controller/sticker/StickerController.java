@@ -47,7 +47,7 @@ public class StickerController {
     }
 
     @Operation(summary = "[스티커] 타겟들에 대한 스티커들을 조회합니다")
-    @GetMapping("v1/sticker-group/{stickerGroup}/stickers")
+    @GetMapping("v1/sticker-group/{stickerGroup}/stickers/targetIds")
     public ApiResponse<List<TargetStickerReactionResponse>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
                                                                                       @RequestParam List<String> targetIds,
                                                                                       @RequestParam String accountId) {

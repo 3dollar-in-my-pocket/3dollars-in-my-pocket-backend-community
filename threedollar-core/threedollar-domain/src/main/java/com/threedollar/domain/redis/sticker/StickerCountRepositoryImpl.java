@@ -65,4 +65,16 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
                 .toList();
         stickerRedisRepository.decrBulk(stickerCountKeys);
     }
+
+    @Override
+    public List<Long> getValuesByKeys(StickerGroup stickerGroup, String targetId, List<Long> stickerIds) {
+        List<StickerCountKey> stickerCountKeys = stickerIds.stream()
+                .map(id -> StickerCountKey.builder()
+                        .stickerId(id)
+                        .targetId(targetId)
+                        .stickerGroup(stickerGroup)
+                        .build())
+                .toList();
+        return stickerRedisRepository.getBulk(stickerCountKeys);
+    }
 }

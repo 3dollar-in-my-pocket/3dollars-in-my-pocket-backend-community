@@ -16,4 +16,8 @@ public interface StickerCountRepository {
 
     void decrBulkByCount(StickerGroup stickerGroup, String targetId, List<Long> stickerIds);
 
+    List<Long> getValuesByKeys(StickerGroup stickerGroup, String targetId, List<Long> stickerIds);
+
+
+
 }
