@@ -25,7 +25,7 @@ import java.util.List;
                 columnNames = {"accountId","targetId","stickerGroup"}
         )
 })
-public class Reaction extends BaseEntity {
+public class StickerAction extends BaseEntity {
 
     @Column(nullable = false)
     private StickerGroup stickerGroup;
@@ -41,18 +41,18 @@ public class Reaction extends BaseEntity {
 
 
     @Builder
-    public Reaction(@NotNull StickerGroup stickerGroup,
-                    @NotBlank List<Long> stickerIds,
-                    @NotBlank String accountId,
-                    @NotBlank String targetId) {
+    public StickerAction(@NotNull StickerGroup stickerGroup,
+                         @NotBlank List<Long> stickerIds,
+                         @NotBlank String accountId,
+                         @NotBlank String targetId) {
         this.stickerGroup = stickerGroup;
         this.stickerIds = stickerIds;
         this.accountId = accountId;
         this.targetId = targetId;
     }
 
-    public static Reaction newInstance(StickerGroup stickerGroup, List<Long> stickerIds, String accountId, String targetId) {
-        return Reaction.builder()
+    public static StickerAction newInstance(StickerGroup stickerGroup, List<Long> stickerIds, String accountId, String targetId) {
+        return StickerAction.builder()
                 .stickerGroup(stickerGroup)
                 .stickerIds(stickerIds)
                 .accountId(accountId)

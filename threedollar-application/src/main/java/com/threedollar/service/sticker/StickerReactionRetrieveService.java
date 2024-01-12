@@ -1,7 +1,7 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.domain.reaction.Reaction;
-import com.threedollar.domain.reaction.repository.ReactionRepository;
+import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.reaction.repository.StickerActionRepository;
 import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StickerReactionRetrieveService {
 
-    private final ReactionRepository reactionRepository;
+    private final StickerActionRepository stickerActionRepository;
 
     private final StickerRepository stickerRepository;
 
@@ -33,7 +33,7 @@ public class StickerReactionRetrieveService {
 
         List<Sticker> stickers = stickerRepository.getStickerByStickerGroup(stickerGroup);
 
-        Map<String, List<Reaction>> reactionMap = reactionRepository.getReactionByStickerGroupAndTargetIds(stickerGroup, targetIds);
+        Map<String, List<StickerAction>> reactionMap = stickerActionRepository.getReactionByStickerGroupAndTargetIds(stickerGroup, targetIds);
 
         List<TargetStickerReactionResponse> targetStickerReactionResponses = new ArrayList<>();
 
@@ -47,14 +47,14 @@ public class StickerReactionRetrieveService {
 
     }
 
-    public static boolean isSelected(Reaction reaction, String accountId) {
-        return reaction.getAccountId().equals(accountId);
+    public static boolean isSelected(StickerAction stickerAction, String accountId) {
+        return stickerAction.getAccountId().equals(accountId);
     }
 
-    public static List<Sticker> getStickers(List<Sticker> stickers, Reaction reaction, String targetId) {
+    public static List<Sticker> getStickers(List<Sticker> stickers, StickerAction stickerAction, String targetId) {
         return stickers.stream()
-                .filter(sticker -> sticker.getStickerGroup().equals(reaction.getStickerGroup()) &&
-                        targetId.equals(reaction.getTargetId()))
+                .filter(sticker -> sticker.getStickerGroup().equals(stickerAction.getStickerGroup()) &&
+                        targetId.equals(stickerAction.getTargetId()))
                 .collect(Collectors.toList());
     }
 

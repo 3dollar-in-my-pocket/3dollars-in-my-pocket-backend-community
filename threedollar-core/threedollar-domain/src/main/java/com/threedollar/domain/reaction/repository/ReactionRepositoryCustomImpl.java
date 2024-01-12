@@ -1,7 +1,7 @@
 package com.threedollar.domain.reaction.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.threedollar.domain.reaction.Reaction;
+import com.threedollar.domain.reaction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +18,9 @@ public class ReactionRepositoryCustomImpl implements ReactionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Reaction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
-                                                                     String targetId,
-                                                                     String accountId) {
+    public StickerAction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
+                                                                          String targetId,
+                                                                          String accountId) {
         return jpaQueryFactory.selectFrom(reaction)
                 .where(reaction.stickerGroup.eq(stickerGroup),
                         reaction.targetId.eq(targetId),
@@ -30,15 +30,15 @@ public class ReactionRepositoryCustomImpl implements ReactionRepositoryCustom {
 
 
     @Override
-    public Map<String, List<Reaction>> getReactionByStickerGroupAndTargetIds(StickerGroup stickerGroup, List<String> targetIds) {
-        Map<String, List<Reaction>> reactionMap = new HashMap<>();
+    public Map<String, List<StickerAction>> getReactionByStickerGroupAndTargetIds(StickerGroup stickerGroup, List<String> targetIds) {
+        Map<String, List<StickerAction>> reactionMap = new HashMap<>();
         for (String targetId : targetIds) {
             reactionMap.put(targetId, getReactionsByTargetId(targetId, stickerGroup));
         }
         return reactionMap;
     }
 
-    private List<Reaction> getReactionsByTargetId(String targetId, StickerGroup stickerGroup) {
+    private List<StickerAction> getReactionsByTargetId(String targetId, StickerGroup stickerGroup) {
         return jpaQueryFactory.selectFrom(reaction)
                 .where(reaction.targetId.eq(targetId),
                         reaction.stickerGroup.eq(stickerGroup))

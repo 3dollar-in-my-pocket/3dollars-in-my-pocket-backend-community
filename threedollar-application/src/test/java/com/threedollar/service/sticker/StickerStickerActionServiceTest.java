@@ -1,7 +1,7 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.domain.reaction.Reaction;
-import com.threedollar.domain.reaction.repository.ReactionRepository;
+import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.reaction.repository.StickerActionRepository;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
@@ -15,10 +15,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class StickerReactionServiceTest {
+public class StickerStickerActionServiceTest {
 
     @Autowired
-    private ReactionRepository reactionRepository;
+    private StickerActionRepository stickerActionRepository;
 
     @Autowired
     private StickerReactionService stickerReactionService;
@@ -28,19 +28,19 @@ public class StickerReactionServiceTest {
 
     @AfterEach
     void clean_up() {
-        reactionRepository.deleteAll();
+        stickerActionRepository.deleteAll();
         stickerRepository.deleteAll();
     }
 
-    private void assertReaction(Reaction reaction, StickerGroup stickerGroup, String targetId, String accountId, List<Long> stickerIds) {
-        assertThat(reaction.getStickerGroup()).isEqualTo(stickerGroup);
-        assertThat(reaction.getTargetId()).isEqualTo(targetId);
-        assertThat(reaction.getAccountId()).isEqualTo(accountId);
-        assertThat(reaction.getStickerIds()).isEqualTo(stickerIds);
+    private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, List<Long> stickerIds) {
+        assertThat(stickerAction.getStickerGroup()).isEqualTo(stickerGroup);
+        assertThat(stickerAction.getTargetId()).isEqualTo(targetId);
+        assertThat(stickerAction.getAccountId()).isEqualTo(accountId);
+        assertThat(stickerAction.getStickerIds()).isEqualTo(stickerIds);
     }
 
 
-    private Reaction getReaction(AddReactionRequest request, StickerGroup stickerGroup) {
+    private StickerAction getReaction(AddReactionRequest request, StickerGroup stickerGroup) {
         return request.toEntity(stickerGroup);
     }
 

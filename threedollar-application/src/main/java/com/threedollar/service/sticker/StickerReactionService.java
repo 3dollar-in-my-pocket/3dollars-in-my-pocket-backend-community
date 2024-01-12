@@ -1,8 +1,8 @@
 package com.threedollar.service.sticker;
 
 
-import com.threedollar.domain.reaction.Reaction;
-import com.threedollar.domain.reaction.repository.ReactionRepository;
+import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.reaction.repository.StickerActionRepository;
 import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StickerReactionService {
 
-    private final ReactionRepository reactionRepository;
+    private final StickerActionRepository stickerActionRepository;
 
     private final StickerRepository stickerRepository;
 
@@ -32,15 +32,15 @@ public class StickerReactionService {
             throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", request.getStickerIds()));
         }
 
-        Reaction reaction = reactionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
-        if (reaction != null) {
-            stickerCountRepository.decrBulkByCount(stickerGroup, reaction.getTargetId(), reaction.getStickerIds());
+        StickerAction stickerAction = stickerActionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
+        if (stickerAction != null) {
+            stickerCountRepository.decrBulkByCount(stickerGroup, stickerAction.getTargetId(), stickerAction.getStickerIds());
             stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
-            reaction.update(request.getStickerIds());
+            stickerAction.update(request.getStickerIds());
             return;
         }
         stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
-        reactionRepository.save(Reaction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
+        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
     }
 

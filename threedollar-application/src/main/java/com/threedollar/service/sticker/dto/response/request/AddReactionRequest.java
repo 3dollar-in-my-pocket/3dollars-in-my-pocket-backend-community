@@ -1,6 +1,6 @@
 package com.threedollar.service.sticker.dto.response.request;
 
-import com.threedollar.domain.reaction.Reaction;
+import com.threedollar.domain.reaction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +30,7 @@ public class AddReactionRequest {
         this.stickerIds = stickerIds;
     }
 
-    public Reaction toEntity(StickerGroup stickerGroup) {
-        return Reaction.newInstance(stickerGroup, stickerIds, accountId, targetId);
+    public StickerAction toEntity(StickerGroup stickerGroup) {
+        return StickerAction.newInstance(stickerGroup, stickerIds, accountId, targetId);
     }
 }
