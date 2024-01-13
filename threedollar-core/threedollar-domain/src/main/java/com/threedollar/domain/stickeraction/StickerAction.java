@@ -1,4 +1,4 @@
-package com.threedollar.domain.reaction;
+package com.threedollar.domain.stickeraction;
 
 import com.threedollar.StringArrayConverter;
 import com.threedollar.domain.BaseEntity;

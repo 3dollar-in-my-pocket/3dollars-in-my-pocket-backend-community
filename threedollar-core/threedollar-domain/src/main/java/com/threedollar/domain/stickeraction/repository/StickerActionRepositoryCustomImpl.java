@@ -1,7 +1,7 @@
-package com.threedollar.domain.reaction.repository;
+package com.threedollar.domain.stickeraction.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 import lombok.RequiredArgsConstructor;
 
@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.threedollar.domain.reaction.QReaction.reaction;
+import static com.threedollar.domain.stickeraction.QReaction.reaction;
 
 
 @RequiredArgsConstructor
-public class ReactionRepositoryCustomImpl implements ReactionRepositoryCustom {
+public class StickerActionRepositoryCustomImpl implements StickerActionRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 

@@ -1,13 +1,13 @@
-package com.threedollar.domain.reaction.repository;
+package com.threedollar.domain.stickeraction.repository;
 
-import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 
 import java.util.List;
 import java.util.Map;
 
 
-public interface ReactionRepositoryCustom {
+public interface StickerActionRepositoryCustom {
 
     StickerAction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
                                                                    String targetId,

@@ -1,6 +1,6 @@
 package com.threedollar.service.sticker.dto.response.request;
 
-import com.threedollar.domain.reaction.StickerAction;
+import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

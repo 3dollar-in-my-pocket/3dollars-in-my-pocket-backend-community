@@ -1,8 +1,8 @@
 package com.threedollar.service.sticker;
 
 
-import com.threedollar.domain.reaction.StickerAction;
-import com.threedollar.domain.reaction.repository.StickerActionRepository;
+import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;

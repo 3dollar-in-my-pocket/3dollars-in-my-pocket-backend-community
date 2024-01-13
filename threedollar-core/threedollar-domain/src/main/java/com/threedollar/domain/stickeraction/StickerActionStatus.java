@@ -1,9 +1,9 @@
-package com.threedollar.domain.reaction;
+package com.threedollar.domain.stickeraction;
 
 import lombok.Getter;
 
 @Getter
-public enum ReactionStatus {
+public enum StickerActionStatus {
 
     ACTIVE("활성화"),
     DELETED("삭제됨"),
@@ -11,7 +11,7 @@ public enum ReactionStatus {
 
     private final String description;
 
-    ReactionStatus(String description) {
+    StickerActionStatus(String description) {
         this.description = description;
     }
 
