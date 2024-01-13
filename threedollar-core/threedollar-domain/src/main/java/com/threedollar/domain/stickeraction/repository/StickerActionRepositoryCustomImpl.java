@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.threedollar.domain.stickeraction.QReaction.reaction;
-
+import static com.threedollar.domain.stickeraction.QStickerAction.stickerAction;
 
 @RequiredArgsConstructor
 public class StickerActionRepositoryCustomImpl implements StickerActionRepositoryCustom {
@@ -21,10 +20,10 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
     public StickerAction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
                                                                           String targetId,
                                                                           String accountId) {
-        return jpaQueryFactory.selectFrom(reaction)
-                .where(reaction.stickerGroup.eq(stickerGroup),
-                        reaction.targetId.eq(targetId),
-                        reaction.accountId.eq(accountId))
+        return jpaQueryFactory.selectFrom(stickerAction)
+                .where(stickerAction.stickerGroup.eq(stickerGroup),
+                        stickerAction.targetId.eq(targetId),
+                        stickerAction.accountId.eq(accountId))
                 .fetchOne();
     }
 
@@ -39,9 +38,9 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
     }
 
     private List<StickerAction> getReactionsByTargetId(String targetId, StickerGroup stickerGroup) {
-        return jpaQueryFactory.selectFrom(reaction)
-                .where(reaction.targetId.eq(targetId),
-                        reaction.stickerGroup.eq(stickerGroup))
+        return jpaQueryFactory.selectFrom(stickerAction)
+                .where(stickerAction.targetId.eq(targetId),
+                        stickerAction.stickerGroup.eq(stickerGroup))
                 .fetch();
     }
 
