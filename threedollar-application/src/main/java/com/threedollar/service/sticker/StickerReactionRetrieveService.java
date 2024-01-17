@@ -65,7 +65,7 @@ public class StickerReactionRetrieveService {
         List<StickerCountKey> stickerCountKeys = targetIds.stream()
                 .flatMap(targetId -> stickers.stream()
                         .map(sticker -> StickerCountKey.of(stickerGroup, targetId, sticker.getId()))
-                ).toList();
+                ).collect(Collectors.toList());
         return stickerCountRepository.stickerCount(stickerCountKeys);
 
     }

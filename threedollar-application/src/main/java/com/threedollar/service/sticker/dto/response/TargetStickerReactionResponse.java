@@ -26,20 +26,5 @@ public class TargetStickerReactionResponse {
         this.stickerInfoDetailList = stickerInfoDetailList;
     }
 
-    public static TargetStickerReactionResponse of(boolean isSelected, String targetId, StickerGroup stickerGroup, StickerCountRepository stickerCountRepository, List<Sticker> stickers) {
-
-        List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
-                .map(sticker -> StickerInfoDetail.of(isSelected, sticker, targetId, stickerCountRepository))
-                .toList();
-
-        return TargetStickerReactionResponse.builder()
-                .targetId(targetId)
-                .stickerGroup(stickerGroup)
-                .stickerInfoDetailList(stickerInfoDetails)
-                .build();
-
-    }
-
-
 
 }
