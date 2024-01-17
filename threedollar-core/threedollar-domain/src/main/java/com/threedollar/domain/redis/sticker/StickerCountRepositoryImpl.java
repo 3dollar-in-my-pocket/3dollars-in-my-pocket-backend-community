@@ -6,7 +6,9 @@ import com.threedollar.domain.sticker.StickerGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
@@ -45,10 +47,10 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
     public void incrBulkByCount(StickerGroup stickerGroup, String targetId, List<Long> stickerIds) {
         List<StickerCountKey> stickerCountKeys = stickerIds.stream()
                 .map(id -> StickerCountKey.builder()
-                .stickerId(id)
-                .targetId(targetId)
-                .stickerGroup(stickerGroup)
-                .build())
+                        .stickerId(id)
+                        .targetId(targetId)
+                        .stickerGroup(stickerGroup)
+                        .build())
                 .toList();
         stickerRedisRepository.incrBulk(stickerCountKeys);
 
@@ -76,5 +78,15 @@ public class StickerCountRepositoryImpl implements StickerCountRepository {
                         .build())
                 .toList();
         return stickerRedisRepository.getBulk(stickerCountKeys);
+    }
+
+    @Override
+    public Map<StickerCountKey, Long> stickerCount(List<StickerCountKey> stickerCountKeys) {
+        Map<StickerCountKey, Long> result = new HashMap<>();
+        for (StickerCountKey stickerCountKey : stickerCountKeys) {
+            Long count = stickerRedisRepository.get(stickerCountKey);
+            result.put(stickerCountKey, count);
+        }
+        return result;
     }
 }

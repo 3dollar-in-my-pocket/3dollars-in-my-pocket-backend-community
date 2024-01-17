@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -49,7 +50,7 @@ public class StickerController {
     @Operation(summary = "[스티커] 타겟들에 대한 스티커들을 조회합니다")
     @GetMapping("v1/sticker-group/{stickerGroup}/stickers/targetIds")
     public ApiResponse<List<TargetStickerReactionResponse>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
-                                                                                      @RequestParam List<String> targetIds,
+                                                                                      @RequestParam Set<String> targetIds,
                                                                                       @RequestParam String accountId) {
         return ApiResponse.success(stickerReactionRetrieveService.getStickerReactionResponse(stickerGroup, accountId, targetIds));
     }

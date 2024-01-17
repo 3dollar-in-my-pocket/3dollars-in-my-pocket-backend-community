@@ -5,9 +5,8 @@ import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import static com.threedollar.domain.stickeraction.QStickerAction.stickerAction;
 
@@ -27,22 +26,15 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
                 .fetchOne();
     }
 
-
     @Override
-    public Map<String, List<StickerAction>> getReactionByStickerGroupAndTargetIds(StickerGroup stickerGroup, List<String> targetIds) {
-        Map<String, List<StickerAction>> reactionMap = new HashMap<>();
-        for (String targetId : targetIds) {
-            reactionMap.put(targetId, getReactionsByTargetId(targetId, stickerGroup));
-        }
-        return reactionMap;
-    }
-
-    private List<StickerAction> getReactionsByTargetId(String targetId, StickerGroup stickerGroup) {
+    public List<StickerAction> getStickerActionByMe(String accountId, Set<String> targetIds, StickerGroup stickerGroup) {
         return jpaQueryFactory.selectFrom(stickerAction)
-                .where(stickerAction.targetId.eq(targetId),
-                        stickerAction.stickerGroup.eq(stickerGroup))
+                .where(stickerAction.stickerGroup.eq(stickerGroup),
+                        stickerAction.targetId.in(targetIds),
+                        stickerAction.accountId.eq(accountId))
                 .fetch();
     }
+
 
 }
 

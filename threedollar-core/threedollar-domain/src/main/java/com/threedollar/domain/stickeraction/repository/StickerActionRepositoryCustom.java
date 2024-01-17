@@ -4,7 +4,7 @@ import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 
 public interface StickerActionRepositoryCustom {
@@ -14,7 +14,9 @@ public interface StickerActionRepositoryCustom {
                                                                    String accountId);
 
 
-    Map<String, List<StickerAction>> getReactionByStickerGroupAndTargetIds(StickerGroup stickerGroup,
-                                                                           List<String> targetIds);
+
+    List<StickerAction> getStickerActionByMe(String accountId,
+                                             Set<String> targetIds,
+                                             StickerGroup stickerGroup);
 
 }

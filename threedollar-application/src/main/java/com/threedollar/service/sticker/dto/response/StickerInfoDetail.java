@@ -1,6 +1,5 @@
 package com.threedollar.service.sticker.dto.response;
 
-import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.Sticker;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,13 +28,12 @@ public class StickerInfoDetail {
         this.selectedByMe = selectedByMe;
     }
 
-    public static StickerInfoDetail of(boolean isSelected, Sticker sticker, String targetId, StickerCountRepository stickerCountRepository) {
-        Long count = stickerCountRepository.getValueByKey(sticker.getStickerGroup(), targetId, sticker.getId());
+    public static StickerInfoDetail of(Sticker sticker, Long stickerCount, boolean isSelected) {
         return StickerInfoDetail.builder()
                 .stickerId(sticker.getId())
                 .priority(sticker.getPriority())
                 .imageUrl(sticker.getImageUrl())
-                .stickerCount(count)
+                .stickerCount(stickerCount)
                 .selectedByMe(isSelected)
                 .build();
     }
