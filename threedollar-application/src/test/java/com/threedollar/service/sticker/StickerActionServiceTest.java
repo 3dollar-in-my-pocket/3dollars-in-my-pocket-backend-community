@@ -1,5 +1,7 @@
 package com.threedollar.service.sticker;
 
+import com.threedollar.domain.redis.sticker.StickerCountKey;
+import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.domain.sticker.Sticker;
@@ -27,6 +29,9 @@ public class StickerActionServiceTest {
     @Autowired
     private StickerRepository stickerRepository;
 
+    @Autowired
+    private StickerCountRepository stickerCountRepository;
+
     @AfterEach
     void clean_up() {
         stickerActionRepository.deleteAll();
@@ -37,7 +42,7 @@ public class StickerActionServiceTest {
     void 스티커를_추가한다() {
         // given
         Sticker sticker = createSticker();
-        AddReactionRequest request = getRequest();
+        AddReactionRequest request = getRequest(sticker);
 
         // when
         stickerReactionService.upsertSticker(request, sticker.getStickerGroup());
@@ -45,7 +50,6 @@ public class StickerActionServiceTest {
         // then
         StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
         assertReaction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
-
     }
 
     private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, List<Long> stickerIds) {
@@ -60,11 +64,13 @@ public class StickerActionServiceTest {
         return request.toEntity(stickerGroup);
     }
 
-    private AddReactionRequest getRequest() {
+    private AddReactionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
+        List<Long> stickerIds = List.of(sticker.getId());
         return AddReactionRequest.builder()
                 .targetId(targetId)
+                .stickerIds(stickerIds)
                 .accountId(accountId)
                 .build();
     }
