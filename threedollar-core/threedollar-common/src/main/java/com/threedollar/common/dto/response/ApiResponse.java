@@ -1,4 +1,4 @@
-package com.threedollar.common.exception.dto.response;
+package com.threedollar.common.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.threedollar.common.exception.ErrorCode;

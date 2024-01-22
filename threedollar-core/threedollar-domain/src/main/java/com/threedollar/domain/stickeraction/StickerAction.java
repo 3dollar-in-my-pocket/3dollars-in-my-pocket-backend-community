@@ -1,11 +1,13 @@
 package com.threedollar.domain.stickeraction;
 
-import com.threedollar.StringArrayConverter;
+import com.threedollar.config.converter.SetLongArrayConverter;
 import com.threedollar.domain.BaseEntity;
 import com.threedollar.domain.sticker.StickerGroup;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
@@ -14,24 +16,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="reaction", uniqueConstraints = {
-        @UniqueConstraint(
-                name="uni_reaction_1",
-                columnNames = {"accountId","targetId","stickerGroup"}
-        )
+@Table(uniqueConstraints = {
+    @UniqueConstraint(
+        name = "uni_sticker_action_1",
+        columnNames = {"accountId", "targetId", "stickerGroup"}
+    )
 })
 public class StickerAction extends BaseEntity {
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StickerGroup stickerGroup;
 
-    @Convert(converter = StringArrayConverter.class)
-    private List<Long> stickerIds;
+    @Convert(converter = SetLongArrayConverter.class)
+    private Set<Long> stickerIds;
 
     @Column(nullable = false)
     private String accountId;
@@ -42,7 +45,7 @@ public class StickerAction extends BaseEntity {
 
     @Builder
     public StickerAction(@NotNull StickerGroup stickerGroup,
-                         @NotBlank List<Long> stickerIds,
+                         @NotBlank Set<Long> stickerIds,
                          @NotBlank String accountId,
                          @NotBlank String targetId) {
         this.stickerGroup = stickerGroup;
@@ -51,16 +54,16 @@ public class StickerAction extends BaseEntity {
         this.targetId = targetId;
     }
 
-    public static StickerAction newInstance(StickerGroup stickerGroup, List<Long> stickerIds, String accountId, String targetId) {
+    public static StickerAction newInstance(StickerGroup stickerGroup, Set<Long> stickerIds, String accountId, String targetId) {
         return StickerAction.builder()
-                .stickerGroup(stickerGroup)
-                .stickerIds(stickerIds)
-                .accountId(accountId)
-                .targetId(targetId)
-                .build();
+            .stickerGroup(stickerGroup)
+            .stickerIds(stickerIds)
+            .accountId(accountId)
+            .targetId(targetId)
+            .build();
     }
 
-    public void update(List<Long> stickerIds) {
+    public void update(Set<Long> stickerIds) {
         this.stickerIds = stickerIds;
     }
 

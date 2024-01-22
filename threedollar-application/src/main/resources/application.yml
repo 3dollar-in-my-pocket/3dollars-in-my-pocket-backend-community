@@ -1,3 +1,8 @@
+spring.profiles.default: local
+spring.config:
+  import:
+    - classpath:/application-core.yml
+
 server:
   port: 7000
   servlet:

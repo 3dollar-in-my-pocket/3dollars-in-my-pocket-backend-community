@@ -1,15 +1,15 @@
-package com.threedollar.domain.redis.sticker;
+package com.threedollar.domain.stickeraction;
 
-import com.threedollar.common.exception.util.JsonUtils;
-import com.threedollar.domain.redis.StringRedisKey;
+import com.threedollar.common.util.JsonUtils;
 import com.threedollar.domain.sticker.StickerGroup;
+import com.threedollar.infra.redis.StringRedisKey;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Duration;
 
 @Getter
-public class StickerCountKey implements StringRedisKey<StickerCountKey, Long> {
+public class StickerActionCountKey implements StringRedisKey<StickerActionCountKey, Long> {
 
     private static final long DEFAULT_VALUE = 0L;
 
@@ -20,14 +20,14 @@ public class StickerCountKey implements StringRedisKey<StickerCountKey, Long> {
     private final Long stickerId;
 
     @Builder
-    public StickerCountKey(StickerGroup stickerGroup, String targetId, Long stickerId) {
+    public StickerActionCountKey(StickerGroup stickerGroup, String targetId, Long stickerId) {
         this.stickerGroup = stickerGroup;
         this.targetId = targetId;
         this.stickerId = stickerId;
     }
 
-    public static StickerCountKey of(StickerGroup stickerGroup, String targetId, Long stickerId) {
-        return StickerCountKey.builder()
+    public static StickerActionCountKey of(StickerGroup stickerGroup, String targetId, Long stickerId) {
+        return StickerActionCountKey.builder()
                 .stickerId(stickerId)
                 .stickerGroup(stickerGroup)
                 .targetId(targetId)
@@ -36,7 +36,7 @@ public class StickerCountKey implements StringRedisKey<StickerCountKey, Long> {
 
     @Override
     public String getKey() {
-        return "stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
+        return "stickerAction:stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
     }
 
     @Override

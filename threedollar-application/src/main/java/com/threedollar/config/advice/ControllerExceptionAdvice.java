@@ -1,7 +1,7 @@
 package com.threedollar.config.advice;
 
-import com.threedollar.common.exception.dto.response.ApiResponse;
-import com.threedollar.common.exception.exception.NotFoundException;
+import com.threedollar.common.dto.response.ApiResponse;
+import com.threedollar.common.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;

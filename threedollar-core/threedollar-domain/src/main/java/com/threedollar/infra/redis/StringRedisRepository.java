@@ -1,14 +1,14 @@
-package com.threedollar.domain.redis;
+package com.threedollar.infra.redis;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
-public interface StringRedisRepository<K extends StringRedisKey<K, V>,V> {
+public interface StringRedisRepository<K extends StringRedisKey<K, V>, V> {
 
     V get(K k);
 
-    List<V> getBulk(List<K> keys);
+    Map<K, V> getBulk(List<K> keys);
 
     void set(K k, V v);
 

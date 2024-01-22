@@ -1,17 +1,17 @@
 package com.threedollar.service.sticker;
 
 
-import com.threedollar.domain.stickeraction.StickerAction;
-import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
-import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
+import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
+import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -22,12 +22,12 @@ public class StickerReactionService {
 
     private final StickerRepository stickerRepository;
 
-    private final StickerCountRepository stickerCountRepository;
+    private final StickerActionCountRepository stickerCountRepository;
 
     @Transactional
     public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup) {
 
-        List<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(request.getStickerIds(), stickerGroup);
+        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(request.getStickerIds(), stickerGroup);
         if (stickerList.isEmpty()) {
             throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", request.getStickerIds()));
         }

@@ -12,6 +12,7 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,8 +27,13 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: Setup Docker compose
+      run: docker-compose -f "docker/test/docker-compose.yml" up -d
+
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
+
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:

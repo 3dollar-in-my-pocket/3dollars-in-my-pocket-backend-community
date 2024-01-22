@@ -24,6 +24,7 @@ public class Sticker extends BaseEntity {
     private String imageUrl;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StickerStatus status;
 
     private int priority;

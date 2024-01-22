@@ -1,7 +1,4 @@
-package com.threedollar.common.exception.exception;
-
-import com.threedollar.common.exception.ErrorCode;
-import com.threedollar.common.exception.model.BaseException;
+package com.threedollar.common.exception;
 
 public class NotFoundException extends BaseException {
 

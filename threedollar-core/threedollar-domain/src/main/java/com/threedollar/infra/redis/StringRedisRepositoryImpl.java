@@ -1,4 +1,4 @@
-package com.threedollar.domain.redis;
+package com.threedollar.infra.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisCallback;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Repository
-public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implements StringRedisRepository<K, V>{
+public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implements StringRedisRepository<K, V> {
 
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -28,28 +28,36 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implem
         return k.deserializeValue(operations.get(k.getKey()));
     }
 
+
     @Override
-    public List<V> getBulk(List<K> keys) {
+    public Map<K, V> getBulk(List<K> keys) {
         if (keys.isEmpty()) {
-            return new ArrayList<>();
+            return Collections.emptyMap();
         }
         K k = keys.get(0);
 
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
-        List<String> values = operations.multiGet(keys.stream()
-                .map(K::getKey)
-                .collect(Collectors.toList())
+        List<String> rawValues = operations.multiGet(keys.stream()
+            .map(K::getKey)
+            .collect(Collectors.toList())
         );
 
-        if (values == null) {
-            return Collections.emptyList();
+        if (rawValues == null) {
+            return Collections.emptyMap();
         }
 
-        return values.stream()
-                .map(k::deserializeValue)
-                .collect(Collectors.toList());
+        List<V> values = rawValues.stream()
+            .map(k::deserializeValue)
+            .toList();
+
+        Map<K, V> keyValues = new HashMap<>();
+        for (int i = 0; i < keys.size(); i++) {
+            keyValues.put(keys.get(i), values.get(i));
+        }
+        return keyValues;
     }
+
 
     @Override
     public void set(K k, V v) {
@@ -84,7 +92,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implem
     @Override
     public void incrBulk(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
-            keys.forEach(k -> pipeline.incr(k.getKey().getBytes(StandardCharsets.UTF_8)));
+            keys.forEach(k -> pipeline.stringCommands().incr(k.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;
         });
     }
@@ -105,7 +113,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implem
     @Override
     public void decrBulk(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
-            keys.forEach(k -> pipeline.decr(k.getKey().getBytes(StandardCharsets.UTF_8)));
+            keys.forEach(k -> pipeline.stringCommands().decr(k.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;
         });
     }
@@ -124,8 +132,8 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<K, V>, V> implem
     @Override
     public void delBulk(List<K> keys) {
         Set<String> keyStrings = keys.stream()
-                .map(K::getKey)
-                .collect(Collectors.toSet());
+            .map(K::getKey)
+            .collect(Collectors.toSet());
         redisTemplate.delete(keyStrings);
     }
 }

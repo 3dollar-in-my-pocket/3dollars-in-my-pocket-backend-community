@@ -1,24 +1,22 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.domain.redis.sticker.StickerCountKey;
-import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
-import com.threedollar.domain.stickeraction.StickerAction;
-import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
+import com.threedollar.IntegrationTest;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
+import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-public class StickerActionServiceTest {
+public class StickerActionServiceTest extends IntegrationTest {
 
     @Autowired
     private StickerActionRepository stickerActionRepository;
@@ -29,11 +27,8 @@ public class StickerActionServiceTest {
     @Autowired
     private StickerRepository stickerRepository;
 
-    @Autowired
-    private StickerCountRepository stickerCountRepository;
-
     @AfterEach
-    void clean_up() {
+    void cleanUp() {
         stickerActionRepository.deleteAll();
         stickerRepository.deleteAll();
     }
@@ -52,7 +47,7 @@ public class StickerActionServiceTest {
         assertReaction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
     }
 
-    private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, List<Long> stickerIds) {
+    private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, Set<Long> stickerIds) {
         assertThat(stickerAction.getStickerGroup()).isEqualTo(stickerGroup);
         assertThat(stickerAction.getTargetId()).isEqualTo(targetId);
         assertThat(stickerAction.getAccountId()).isEqualTo(accountId);
@@ -67,12 +62,12 @@ public class StickerActionServiceTest {
     private AddReactionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
-        List<Long> stickerIds = List.of(sticker.getId());
+        Set<Long> stickerIds = Set.of(sticker.getId());
         return AddReactionRequest.builder()
-                .targetId(targetId)
-                .stickerIds(stickerIds)
-                .accountId(accountId)
-                .build();
+            .targetId(targetId)
+            .stickerIds(stickerIds)
+            .accountId(accountId)
+            .build();
     }
 
     private Sticker createSticker() {
