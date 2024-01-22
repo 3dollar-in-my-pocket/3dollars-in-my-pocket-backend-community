@@ -28,17 +28,24 @@ public class StickerReactionService {
     public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup) {
 
         List<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(request.getStickerIds(), stickerGroup);
-        if (request.getStickerIds().size() != stickerList.size()) {
+        if (stickerList.isEmpty()) {
             throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", request.getStickerIds()));
         }
 
         StickerAction stickerAction = stickerActionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
+
+        if (request.getStickerIds().isEmpty()) {
+            stickerCountRepository.decrBulkByCount(stickerGroup, request.getTargetId(), stickerAction.getStickerIds());
+            stickerActionRepository.delete(stickerAction);
+        }
+
         if (stickerAction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, stickerAction.getTargetId(), stickerAction.getStickerIds());
             stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
             stickerAction.update(request.getStickerIds());
             return;
         }
+
         stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
         stickerActionRepository.save(StickerAction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
