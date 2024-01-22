@@ -1,5 +1,7 @@
 package com.threedollar.common.exception;
 
+import com.threedollar.common.enums.HttpStatusCode;
+
 public enum ErrorCode {
     E400_INVALID(HttpStatusCode.BAD_REQUEST, "invalid_request", "잘못된 요청입니다"),
     E404_NOT_FOUND(HttpStatusCode.NOT_FOUND, "not_found", "찾을 수 없습니다"),

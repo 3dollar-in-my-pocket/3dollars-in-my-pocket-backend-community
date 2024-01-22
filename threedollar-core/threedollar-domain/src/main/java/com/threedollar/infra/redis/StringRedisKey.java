@@ -1,4 +1,4 @@
-package com.threedollar.domain.redis;
+package com.threedollar.infra.redis;
 
 import java.time.Duration;
 

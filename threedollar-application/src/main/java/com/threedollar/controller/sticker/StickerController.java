@@ -1,6 +1,6 @@
 package com.threedollar.controller.sticker;
 
-import com.threedollar.common.exception.dto.response.ApiResponse;
+import com.threedollar.common.dto.response.ApiResponse;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.service.sticker.StickerReactionRetrieveService;
 import com.threedollar.service.sticker.StickerReactionService;

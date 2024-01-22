@@ -1,4 +1,4 @@
-package com.threedollar.common.exception;
+package com.threedollar.common.enums;
 
 import lombok.Getter;
 

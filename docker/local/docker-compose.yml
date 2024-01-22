@@ -1,0 +1,37 @@
+services:
+  threedollar-mariadb-master:
+    container_name: community-mariadb-local
+    image: docker.io/bitnami/mariadb:10.9
+    ports:
+      - '23306:3306'
+    volumes:
+      - community-local-mariadb-volume:/bitnami/mariadb
+    restart: unless-stopped
+    environment:
+      - MARIADB_DATABASE=community_local
+      - MARIADB_ROOT_PASSWORD=community
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - community-local-network
+
+  threedollar-redis:
+    image: redis:6.0
+    container_name: community-redis-local
+    command: redis-server --port 6379 --appendonly yes
+    ports:
+      - '26379:6379'
+    restart: unless-stopped
+    volumes:
+      - community-local-redis-volume:/data
+    networks:
+      - community-local-network
+
+volumes:
+  community-local-mariadb-volume:
+    driver: local
+  community-local-redis-volume:
+    driver: local
+
+networks:
+  community-local-network:
+    driver: bridge

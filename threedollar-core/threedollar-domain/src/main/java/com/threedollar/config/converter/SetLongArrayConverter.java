@@ -1,25 +1,27 @@
-package com.threedollar;
+package com.threedollar.config.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Converter
-public class StringArrayConverter implements AttributeConverter<List<String>, String> {
+public class SetLongArrayConverter implements AttributeConverter<Set<Long>, String> {
 
     private static final String SPLIT_CHAR = ",";
 
     @Override
-    public String convertToDatabaseColumn(List<String> attribute) {
+    public String convertToDatabaseColumn(Set<Long> attribute) {
         return attribute.stream().map(String::valueOf).collect(Collectors.joining(SPLIT_CHAR));
     }
 
     @Override
-    public List<String> convertToEntityAttribute(String dbData) {
+    public Set<Long> convertToEntityAttribute(String dbData) {
         return Arrays.stream(dbData.split(SPLIT_CHAR))
-                .collect(Collectors.toList());
+            .map(Long::valueOf)
+            .collect(Collectors.toSet());
     }
+
 }

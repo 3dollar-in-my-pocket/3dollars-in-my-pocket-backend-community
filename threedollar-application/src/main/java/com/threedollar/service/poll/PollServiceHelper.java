@@ -1,6 +1,6 @@
 package com.threedollar.service.poll;
 
-import com.threedollar.common.exception.exception.NotFoundException;
+import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.AccountType;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.repository.PollRepository;

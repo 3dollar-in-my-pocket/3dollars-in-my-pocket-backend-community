@@ -1,14 +1,13 @@
 package com.threedollar.service.sticker.dto.response.request;
 
-import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.sticker.StickerGroup;
+import com.threedollar.domain.stickeraction.StickerAction;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -21,10 +20,10 @@ public class AddReactionRequest {
     private String accountId;
 
     @NotBlank
-    private List<Long> stickerIds;
+    private Set<Long> stickerIds;
 
     @Builder
-    public AddReactionRequest(String targetId, String accountId, List<Long> stickerIds) {
+    public AddReactionRequest(String targetId, String accountId, Set<Long> stickerIds) {
         this.targetId = targetId;
         this.accountId = accountId;
         this.stickerIds = stickerIds;

@@ -1,6 +1,5 @@
-package com.threedollar.common.exception.model;
+package com.threedollar.common.exception;
 
-import com.threedollar.common.exception.ErrorCode;
 import lombok.Getter;
 
 

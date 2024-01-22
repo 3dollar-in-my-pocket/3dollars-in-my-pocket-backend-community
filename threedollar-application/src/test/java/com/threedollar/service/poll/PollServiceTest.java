@@ -1,5 +1,6 @@
 package com.threedollar.service.poll;
 
+import com.threedollar.IntegrationTest;
 import com.threedollar.domain.AccountType;
 import com.threedollar.domain.poll.Poll;
 import com.threedollar.domain.poll.PollCategory;
@@ -9,7 +10,6 @@ import com.threedollar.service.poll.dto.request.PollCreateRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -17,8 +17,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-public class PollServiceTest {
+public class PollServiceTest extends IntegrationTest {
 
     @Autowired
     private PollService pollService;
@@ -27,7 +26,7 @@ public class PollServiceTest {
     private PollRepository pollRepository;
 
     @AfterEach
-    void clean_up() {
+    void cleanUp() {
         pollRepository.deleteAll();
     }
 
@@ -39,8 +38,8 @@ public class PollServiceTest {
         String accountId = "1L";
         String title = "제목";
         String content = "내용";
-        LocalDateTime startDateTime = LocalDateTime.of(2024,1,2,19,0);
-        LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18,59);
+        LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
 
         PollCreateRequest request = PollCreateRequest.builder()
                 .pollCategory(pollCategory)
@@ -69,8 +68,8 @@ public class PollServiceTest {
         String accountId = "1L";
         String title = "제목";
         String content = "내용";
-        LocalDateTime startDateTime = LocalDateTime.of(2024,1,2,19,0);
-        LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18,59);
+        LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
         Poll poll = pollRepository.save(Poll.newInstance(pollCategory, title, content, accountType, accountId, startDateTime, endDateTime));
 
         // when

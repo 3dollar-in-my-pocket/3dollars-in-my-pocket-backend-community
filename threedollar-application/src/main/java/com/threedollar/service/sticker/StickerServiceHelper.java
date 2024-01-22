@@ -1,6 +1,6 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.common.exception.exception.NotFoundException;
+import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;

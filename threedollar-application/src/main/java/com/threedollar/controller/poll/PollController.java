@@ -1,7 +1,7 @@
 package com.threedollar.controller.poll;
 
 
-import com.threedollar.common.exception.dto.response.ApiResponse;
+import com.threedollar.common.dto.response.ApiResponse;
 import com.threedollar.domain.AccountType;
 import com.threedollar.service.poll.dto.request.PollCreateRequest;
 import com.threedollar.service.poll.PollService;

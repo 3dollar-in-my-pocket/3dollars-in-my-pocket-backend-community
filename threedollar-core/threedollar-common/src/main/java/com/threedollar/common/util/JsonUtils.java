@@ -1,4 +1,4 @@
-package com.threedollar.common.exception.util;
+package com.threedollar.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

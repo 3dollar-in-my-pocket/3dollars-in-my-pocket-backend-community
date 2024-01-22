@@ -1,12 +1,12 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.domain.redis.sticker.StickerCountKey;
-import com.threedollar.domain.stickeraction.StickerAction;
-import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
-import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
+import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.StickerActionCountKey;
+import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
+import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
 import com.threedollar.service.sticker.dto.response.TargetStickerReactionResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class StickerReactionRetrieveService {
 
     private final StickerRepository stickerRepository;
 
-    private final StickerCountRepository stickerCountRepository;
+    private final StickerActionCountRepository stickerActionCountRepository;
 
     @Transactional(readOnly = true)
     public List<TargetStickerReactionResponse> getStickerReactionResponse(StickerGroup stickerGroup,
@@ -35,7 +35,7 @@ public class StickerReactionRetrieveService {
 
         List<Sticker> stickers = stickerRepository.getStickerByStickerGroup(stickerGroup);
 
-        Map<StickerCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, targetIds, stickers);
+        Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, targetIds, stickers);
 
         Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(targetIds, accountId, stickerGroup);
 
@@ -44,7 +44,7 @@ public class StickerReactionRetrieveService {
                     List<StickerInfoDetail> stickerInfoDetails = stickers.stream().map(
 
                             sticker -> {
-                                long count = stickerCountKeyLongMap.getOrDefault(StickerCountKey.of(stickerGroup, targetId, sticker.getId()), 0L);
+                                long count = stickerCountKeyLongMap.getOrDefault(StickerActionCountKey.of(stickerGroup, targetId, sticker.getId()), 0L);
                                 StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
                                 return StickerInfoDetail.of(sticker,
                                         count,
@@ -59,14 +59,14 @@ public class StickerReactionRetrieveService {
 
     }
 
-    private Map<StickerCountKey, Long> getStickerCountKey(StickerGroup stickerGroup,
-                                                          Set<String> targetIds,
-                                                          List<Sticker> stickers) {
-        List<StickerCountKey> stickerCountKeys = targetIds.stream()
+    private Map<StickerActionCountKey, Long> getStickerCountKey(StickerGroup stickerGroup,
+                                                                Set<String> targetIds,
+                                                                List<Sticker> stickers) {
+        List<StickerActionCountKey> stickerCountKeys = targetIds.stream()
                 .flatMap(targetId -> stickers.stream()
-                        .map(sticker -> StickerCountKey.of(stickerGroup, targetId, sticker.getId()))
+                        .map(sticker -> StickerActionCountKey.of(stickerGroup, targetId, sticker.getId()))
                 ).collect(Collectors.toList());
-        return stickerCountRepository.stickerCount(stickerCountKeys);
+        return stickerActionCountRepository.getStickerCountMap(stickerCountKeys);
 
     }
 
