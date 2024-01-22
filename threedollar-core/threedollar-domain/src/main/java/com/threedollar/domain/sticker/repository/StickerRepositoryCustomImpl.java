@@ -1,11 +1,13 @@
 package com.threedollar.domain.sticker.repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.StickerStatus;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.threedollar.domain.sticker.QSticker.sticker;
@@ -38,11 +40,19 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom{
         return jpaQueryFactory.select(sticker.id)
                 .from(sticker)
                 .where(
-                        sticker.id.in(stickerIds),
+                        sticker.id.in(isEmpty(stickerIds)),
                         sticker.stickerGroup.eq(stickerGroup),
                         sticker.status.eq(StickerStatus.ACTIVE)
                 ).fetch();
     }
+
+    private List<Long> isEmpty(List<Long> stickerIds) {
+        if (stickerIds == null) {
+            return Collections.emptyList();
+        }
+        return stickerIds;
+    }
+
 
 
 }

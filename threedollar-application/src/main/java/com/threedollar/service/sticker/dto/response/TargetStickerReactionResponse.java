@@ -1,7 +1,5 @@
 package com.threedollar.service.sticker.dto.response;
 
-import com.threedollar.domain.redis.sticker.repository.StickerCountRepository;
-import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import lombok.Builder;
 import lombok.Getter;

@@ -7,6 +7,7 @@ import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class StickerStickerActionServiceTest {
+public class StickerActionServiceTest {
 
     @Autowired
     private StickerActionRepository stickerActionRepository;
@@ -32,6 +33,21 @@ public class StickerStickerActionServiceTest {
         stickerRepository.deleteAll();
     }
 
+    @Test
+    void 스티커를_추가한다() {
+        // given
+        Sticker sticker = createSticker();
+        AddReactionRequest request = getRequest();
+
+        // when
+        stickerReactionService.upsertSticker(request, sticker.getStickerGroup());
+
+        // then
+        StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
+        assertReaction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
+
+    }
+
     private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, List<Long> stickerIds) {
         assertThat(stickerAction.getStickerGroup()).isEqualTo(stickerGroup);
         assertThat(stickerAction.getTargetId()).isEqualTo(targetId);
@@ -40,7 +56,7 @@ public class StickerStickerActionServiceTest {
     }
 
 
-    private StickerAction getReaction(AddReactionRequest request, StickerGroup stickerGroup) {
+    private StickerAction getStickerAction(AddReactionRequest request, StickerGroup stickerGroup) {
         return request.toEntity(stickerGroup);
     }
 
