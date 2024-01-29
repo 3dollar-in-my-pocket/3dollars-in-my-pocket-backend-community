@@ -29,7 +29,6 @@ public class StickerController {
     public ApiResponse<String> createReaction(@Valid @RequestBody AddReactionRequest request,
                                               @PathVariable StickerGroup stickerGroup) {
         stickerFacadeService.upsertSticker(request, stickerGroup);
-
         return ApiResponse.OK;
     }
 
@@ -37,7 +36,7 @@ public class StickerController {
     @GetMapping("/v1/sticker-group/{stickerGroup}/stickers")
     public ApiResponse<List<TargetStickerAction>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
                                                                             @RequestParam Set<String> targetIds,
-                                                                            @RequestParam String accountId) {
+                                                                            @RequestParam(required = false) String accountId) {
         return ApiResponse.success(stickerFacadeService.getTargetStickerReactionResponse(stickerGroup, accountId, targetIds));
     }
 
