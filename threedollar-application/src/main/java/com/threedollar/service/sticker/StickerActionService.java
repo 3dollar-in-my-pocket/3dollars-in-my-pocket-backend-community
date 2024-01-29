@@ -3,7 +3,6 @@ package com.threedollar.service.sticker;
 
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
-import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.stickeraction.StickerActionCountKey;
 import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
@@ -27,19 +26,10 @@ public class StickerActionService {
 
     private final StickerActionRepository stickerActionRepository;
 
-    private final StickerRepository stickerRepository;
-
     private final StickerActionCountRepository stickerCountRepository;
 
-
     @Transactional
-    public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup) {
-
-        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(request.getStickerIds(), stickerGroup);
-        if (stickerList.isEmpty()) {
-            throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", request.getStickerIds()));
-        }
-
+    public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup, Set<Long> stickerList) {
         StickerAction stickerAction = stickerActionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
 
         if (request.getStickerIds().isEmpty()) {
@@ -62,9 +52,8 @@ public class StickerActionService {
     @Transactional(readOnly = true)
     public List<TargetStickerReactionResponse> getStickerReactionResponse(StickerGroup stickerGroup,
                                                                           String accountId,
-                                                                          Set<String> targetIds) {
-
-        List<Sticker> stickers = stickerRepository.getStickerByStickerGroup(stickerGroup);
+                                                                          Set<String> targetIds,
+                                                                          List<Sticker> stickers) {
 
         Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, targetIds, stickers);
 
@@ -107,9 +96,6 @@ public class StickerActionService {
         List<StickerAction> stickerActions = stickerActionRepository.getStickerActionByMe(accountId, targetIds, stickerGroup);
         return stickerActions.stream()
             .collect(Collectors.toMap(StickerAction::getTargetId, stickerAction -> stickerAction));
-
     }
-
-
 
 }

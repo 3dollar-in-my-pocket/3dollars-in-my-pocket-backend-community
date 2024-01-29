@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,4 +26,18 @@ public class StickerService {
             .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup) {
+        return stickerRepository.getStickerByStickerGroup(stickerGroup);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Long> getStickerListByStickerIdAndGroup(Set<Long> stickerIds, StickerGroup stickerGroup) {
+
+        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(stickerIds, stickerGroup);
+        if (stickerList.isEmpty()) {
+            throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerIds));
+        }
+        return stickerList;
+    }
 }

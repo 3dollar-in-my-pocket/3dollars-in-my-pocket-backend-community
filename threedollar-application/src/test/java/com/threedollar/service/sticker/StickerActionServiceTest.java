@@ -39,7 +39,7 @@ public class StickerActionServiceTest extends IntegrationTest {
         AddReactionRequest request = getRequest(sticker);
 
         // when
-        stickerActionService.upsertSticker(request, sticker.getStickerGroup());
+        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds());
 
         // then
         StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
