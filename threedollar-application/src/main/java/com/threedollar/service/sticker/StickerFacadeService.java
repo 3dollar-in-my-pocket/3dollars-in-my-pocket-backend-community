@@ -2,7 +2,6 @@ package com.threedollar.service.sticker;
 
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
-import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddReactionRequest;
 import jakarta.validation.constraints.NotNull;
@@ -26,9 +25,6 @@ public class StickerFacadeService {
         stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
     }
 
-    public List<StickerInfoResponse> getStickerList(@NotNull StickerGroup stickerGroup) {
-        return stickerService.getStickerList(stickerGroup);
-    }
 
     public List<TargetStickerAction> getTargetStickerReactionResponse(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
         List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup);
