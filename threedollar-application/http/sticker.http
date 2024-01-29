@@ -1,0 +1,9 @@
+### 스티커를 등록합니다.
+POST {{host_api}}/community/v1/sticker-group/POLL/stickers
+Content-Type: application/json
+
+{
+  "targetId": "1",
+  "accountId": "1",
+  "stickerIds": [1, 2]
+}

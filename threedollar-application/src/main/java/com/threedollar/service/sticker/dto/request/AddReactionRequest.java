@@ -3,6 +3,7 @@ package com.threedollar.service.sticker.dto.request;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.stickeraction.StickerAction;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class AddReactionRequest {
     @NotBlank
     private String accountId;
 
-    @NotBlank
+    @NotEmpty
     private Set<Long> stickerIds;
 
     @Builder
