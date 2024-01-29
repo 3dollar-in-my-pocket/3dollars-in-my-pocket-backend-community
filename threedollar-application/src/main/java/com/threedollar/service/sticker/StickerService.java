@@ -11,18 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
-public class StickerRetrieveService {
+@RequiredArgsConstructor
+public class StickerService {
+
     private final StickerRepository stickerRepository;
 
     @Transactional(readOnly = true)
     public List<StickerInfoResponse> getStickerList(StickerGroup group) {
         List<Sticker> stickers = stickerRepository.getStickerByStickerGroup(group);
         return stickers.stream()
-                .map(StickerInfoResponse::of)
-                .collect(Collectors.toList());
+            .map(StickerInfoResponse::of)
+            .collect(Collectors.toList());
     }
-
 
 }

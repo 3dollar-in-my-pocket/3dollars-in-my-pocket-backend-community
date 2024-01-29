@@ -11,7 +11,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +21,7 @@ public class StickerActionServiceTest extends IntegrationTest {
     private StickerActionRepository stickerActionRepository;
 
     @Autowired
-    private StickerReactionService stickerReactionService;
+    private StickerActionService stickerActionService;
 
     @Autowired
     private StickerRepository stickerRepository;
@@ -40,7 +39,7 @@ public class StickerActionServiceTest extends IntegrationTest {
         AddReactionRequest request = getRequest(sticker);
 
         // when
-        stickerReactionService.upsertSticker(request, sticker.getStickerGroup());
+        stickerActionService.upsertSticker(request, sticker.getStickerGroup());
 
         // then
         StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
