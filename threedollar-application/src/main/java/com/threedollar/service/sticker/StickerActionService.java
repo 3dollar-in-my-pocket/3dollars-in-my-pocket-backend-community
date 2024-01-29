@@ -10,6 +10,7 @@ import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddReactionRequest;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class StickerActionService {
 
     @Transactional(readOnly = true)
     public List<TargetStickerAction> getStickerActionResponse(StickerGroup stickerGroup,
-                                                              String accountId,
+                                                              @Nullable String accountId,
                                                               Set<String> targetIds,
                                                               List<Sticker> stickers) {
 
