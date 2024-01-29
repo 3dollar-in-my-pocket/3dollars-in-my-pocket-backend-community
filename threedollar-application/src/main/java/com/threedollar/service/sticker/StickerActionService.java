@@ -94,7 +94,7 @@ public class StickerActionService {
     }
 
     private Map<String, StickerAction> getTargetIdActedByMe(Set<String> targetIds,
-                                                            String accountId,
+                                                            @Nullable String accountId,
                                                             StickerGroup stickerGroup) {
         if (StringUtils.isBlank(accountId)) {
             return Collections.emptyMap();
