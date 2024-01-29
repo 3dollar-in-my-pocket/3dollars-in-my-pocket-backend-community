@@ -26,9 +26,9 @@ public class StickerFacadeService {
     }
 
 
-    public List<TargetStickerAction> getTargetStickerReactionResponse(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
+    public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
         List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup);
-        return stickerActionService.getStickerReactionResponse(stickerGroup, accountId, targetIds, stickers);
+        return stickerActionService.getStickerActionResponse(stickerGroup, accountId, targetIds, stickers);
     }
 
 

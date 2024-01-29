@@ -37,7 +37,7 @@ public class StickerController {
     public ApiResponse<List<TargetStickerAction>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
                                                                             @RequestParam Set<String> targetIds,
                                                                             @RequestParam(required = false) String accountId) {
-        return ApiResponse.success(stickerFacadeService.getTargetStickerReactionResponse(stickerGroup, accountId, targetIds));
+        return ApiResponse.success(stickerFacadeService.getTargetStickers(stickerGroup, accountId, targetIds));
     }
 
 }

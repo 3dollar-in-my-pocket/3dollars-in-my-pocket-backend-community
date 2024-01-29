@@ -11,9 +11,11 @@ import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddReactionRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,10 +52,10 @@ public class StickerActionService {
     }
 
     @Transactional(readOnly = true)
-    public List<TargetStickerAction> getStickerReactionResponse(StickerGroup stickerGroup,
-                                                                String accountId,
-                                                                Set<String> targetIds,
-                                                                List<Sticker> stickers) {
+    public List<TargetStickerAction> getStickerActionResponse(StickerGroup stickerGroup,
+                                                              String accountId,
+                                                              Set<String> targetIds,
+                                                              List<Sticker> stickers) {
 
         Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, targetIds, stickers);
 
@@ -93,6 +95,9 @@ public class StickerActionService {
     private Map<String, StickerAction> getTargetIdActedByMe(Set<String> targetIds,
                                                             String accountId,
                                                             StickerGroup stickerGroup) {
+        if (StringUtils.isBlank(accountId)) {
+            return Collections.emptyMap();
+        }
         List<StickerAction> stickerActions = stickerActionRepository.getStickerActionByMe(accountId, targetIds, stickerGroup);
         return stickerActions.stream()
             .collect(Collectors.toMap(StickerAction::getTargetId, stickerAction -> stickerAction));
