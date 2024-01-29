@@ -7,11 +7,13 @@ import com.threedollar.service.sticker.dto.response.TargetStickerReactionRespons
 import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
+@Service
 public class StickerFacadeService {
 
     private final StickerActionService stickerActionService;
