@@ -8,8 +8,8 @@ import com.threedollar.domain.stickeraction.StickerActionCountKey;
 import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
-import com.threedollar.service.sticker.dto.response.TargetStickerReactionResponse;
-import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.TargetStickerAction;
+import com.threedollar.service.sticker.dto.request.AddReactionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,10 +50,10 @@ public class StickerActionService {
     }
 
     @Transactional(readOnly = true)
-    public List<TargetStickerReactionResponse> getStickerReactionResponse(StickerGroup stickerGroup,
-                                                                          String accountId,
-                                                                          Set<String> targetIds,
-                                                                          List<Sticker> stickers) {
+    public List<TargetStickerAction> getStickerReactionResponse(StickerGroup stickerGroup,
+                                                                String accountId,
+                                                                Set<String> targetIds,
+                                                                List<Sticker> stickers) {
 
         Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, targetIds, stickers);
 
@@ -71,7 +71,7 @@ public class StickerActionService {
                             stickerAction == null || stickerAction.getStickerIds().contains(sticker.getId()));
 
                     }).toList();
-                return TargetStickerReactionResponse.builder()
+                return TargetStickerAction.builder()
                     .stickerInfoDetailList(stickerInfoDetails)
                     .targetId(targetId)
                     .build();

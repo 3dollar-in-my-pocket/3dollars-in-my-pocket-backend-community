@@ -1,4 +1,4 @@
-package com.threedollar.service.sticker.dto.response.request;
+package com.threedollar.service.sticker.dto.request;
 
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.stickeraction.StickerAction;

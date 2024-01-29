@@ -3,8 +3,8 @@ package com.threedollar.service.sticker;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
-import com.threedollar.service.sticker.dto.response.TargetStickerReactionResponse;
-import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.TargetStickerAction;
+import com.threedollar.service.sticker.dto.request.AddReactionRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class StickerFacadeService {
         return stickerService.getStickerList(stickerGroup);
     }
 
-    public List<TargetStickerReactionResponse> getTargetStickerReactionResponse(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
+    public List<TargetStickerAction> getTargetStickerReactionResponse(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
         List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup);
         return stickerActionService.getStickerReactionResponse(stickerGroup, accountId, targetIds, stickers);
     }

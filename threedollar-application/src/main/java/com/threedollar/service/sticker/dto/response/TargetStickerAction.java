@@ -9,7 +9,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class TargetStickerReactionResponse {
+public class TargetStickerAction {
 
     private String targetId;
 
@@ -18,7 +18,7 @@ public class TargetStickerReactionResponse {
     private List<StickerInfoDetail> stickerInfoDetailList;
 
     @Builder
-    public TargetStickerReactionResponse(String targetId, StickerGroup stickerGroup, List<StickerInfoDetail> stickerInfoDetailList) {
+    public TargetStickerAction(String targetId, StickerGroup stickerGroup, List<StickerInfoDetail> stickerInfoDetailList) {
         this.targetId = targetId;
         this.stickerGroup = stickerGroup;
         this.stickerInfoDetailList = stickerInfoDetailList;

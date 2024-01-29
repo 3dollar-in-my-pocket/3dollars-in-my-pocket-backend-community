@@ -3,8 +3,8 @@ package com.threedollar.controller.sticker;
 import com.threedollar.common.dto.response.ApiResponse;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.service.sticker.StickerFacadeService;
-import com.threedollar.service.sticker.dto.response.TargetStickerReactionResponse;
-import com.threedollar.service.sticker.dto.response.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.response.TargetStickerAction;
+import com.threedollar.service.sticker.dto.request.AddReactionRequest;
 import com.threedollar.service.sticker.dto.response.StickerInfoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -42,9 +42,9 @@ public class StickerController {
 
     @Operation(summary = "[스티커] 타겟들에 대한 스티커들을 조회합니다")
     @GetMapping("v1/sticker-group/{stickerGroup}/stickers/targetIds")
-    public ApiResponse<List<TargetStickerReactionResponse>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
-                                                                                      @RequestParam Set<String> targetIds,
-                                                                                      @RequestParam String accountId) {
+    public ApiResponse<List<TargetStickerAction>> getTargetStickerReactions(@PathVariable StickerGroup stickerGroup,
+                                                                            @RequestParam Set<String> targetIds,
+                                                                            @RequestParam String accountId) {
         return ApiResponse.success(stickerFacadeService.getTargetStickerReactionResponse(stickerGroup, accountId, targetIds));
     }
 
