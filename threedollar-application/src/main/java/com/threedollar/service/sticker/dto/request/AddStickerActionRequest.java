@@ -2,6 +2,7 @@ package com.threedollar.service.sticker.dto.request;
 
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.stickeraction.StickerAction;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
@@ -17,7 +18,7 @@ public class AddStickerActionRequest {
     @NotBlank
     private String targetId;
 
-    @NotBlank
+    @Nullable
     private String accountId;
 
     @NotEmpty

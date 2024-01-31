@@ -2,6 +2,7 @@ package com.threedollar.service.sticker;
 
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
+import com.threedollar.service.sticker.dto.request.DeleteStickerAction;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,10 @@ public class StickerFacadeService {
     public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup) {
         Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerIds(), stickerGroup);
         stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
+    }
+
+    public void deleteSticker(DeleteStickerAction request, @NotNull StickerGroup stickerGroup) {
+        stickerActionService.deleteStickers(stickerGroup, request.getTargetId(), request.getAccountId());
     }
 
 

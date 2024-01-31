@@ -35,11 +35,6 @@ public class StickerActionService {
     public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerList) {
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
 
-        if (request.getStickerIds().isEmpty()) {
-            stickerCountRepository.decrBulkByCount(stickerGroup, request.getTargetId(), stickerAction.getStickerIds());
-            stickerActionRepository.delete(stickerAction);
-        }
-
         if (stickerAction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, stickerAction.getTargetId(), stickerAction.getStickerIds());
             stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
@@ -50,6 +45,20 @@ public class StickerActionService {
         stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
         stickerActionRepository.save(StickerAction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
+    }
+
+    @Transactional
+    public void deleteStickers(StickerGroup stickerGroup, String targetId, String accountId) {
+        if (accountId == null) {
+            throw new IllegalArgumentException("로그인 한 후 이용해주세요.");
+        }
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, targetId, accountId);
+
+        if (stickerAction == null) {
+            throw new IllegalArgumentException(String.format("targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", targetId));
+        }
+        stickerCountRepository.decrBulkByCount(stickerGroup, targetId, stickerAction.getStickerIds());
+        stickerActionRepository.delete(stickerAction);
     }
 
     @Transactional(readOnly = true)
