@@ -16,9 +16,9 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public StickerAction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
-                                                                          String targetId,
-                                                                          String accountId) {
+    public StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
+                                                                               String targetId,
+                                                                               String accountId) {
         return jpaQueryFactory.selectFrom(stickerAction)
                 .where(stickerAction.stickerGroup.eq(stickerGroup),
                         stickerAction.targetId.eq(targetId),

@@ -6,7 +6,7 @@ import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
-import com.threedollar.service.sticker.dto.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +36,17 @@ public class StickerActionServiceTest extends IntegrationTest {
     void 스티커를_추가한다() {
         // given
         Sticker sticker = createSticker();
-        AddReactionRequest request = getRequest(sticker);
+        AddStickerActionRequest request = getRequest(sticker);
 
         // when
         stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds());
 
         // then
         StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
-        assertReaction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
+        assertStickerAction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
     }
 
-    private void assertReaction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, Set<Long> stickerIds) {
+    private void assertStickerAction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, Set<Long> stickerIds) {
         assertThat(stickerAction.getStickerGroup()).isEqualTo(stickerGroup);
         assertThat(stickerAction.getTargetId()).isEqualTo(targetId);
         assertThat(stickerAction.getAccountId()).isEqualTo(accountId);
@@ -54,15 +54,15 @@ public class StickerActionServiceTest extends IntegrationTest {
     }
 
 
-    private StickerAction getStickerAction(AddReactionRequest request, StickerGroup stickerGroup) {
+    private StickerAction getStickerAction(AddStickerActionRequest request, StickerGroup stickerGroup) {
         return request.toEntity(stickerGroup);
     }
 
-    private AddReactionRequest getRequest(Sticker sticker) {
+    private AddStickerActionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
         Set<Long> stickerIds = Set.of(sticker.getId());
-        return AddReactionRequest.builder()
+        return AddStickerActionRequest.builder()
             .targetId(targetId)
             .stickerIds(stickerIds)
             .accountId(accountId)

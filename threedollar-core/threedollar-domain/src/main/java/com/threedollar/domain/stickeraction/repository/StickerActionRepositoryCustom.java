@@ -9,9 +9,9 @@ import java.util.Set;
 
 public interface StickerActionRepositoryCustom {
 
-    StickerAction getReactionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
-                                                                   String targetId,
-                                                                   String accountId);
+    StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
+                                                                        String targetId,
+                                                                        String accountId);
 
 
 

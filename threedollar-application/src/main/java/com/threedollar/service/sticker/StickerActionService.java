@@ -9,7 +9,7 @@ import com.threedollar.domain.stickeraction.repository.StickerActionCountReposit
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
-import com.threedollar.service.sticker.dto.request.AddReactionRequest;
+import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -32,8 +32,8 @@ public class StickerActionService {
     private final StickerActionCountRepository stickerCountRepository;
 
     @Transactional
-    public void upsertSticker(AddReactionRequest request, StickerGroup stickerGroup, Set<Long> stickerList) {
-        StickerAction stickerAction = stickerActionRepository.getReactionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
+    public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerList) {
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
 
         if (request.getStickerIds().isEmpty()) {
             stickerCountRepository.decrBulkByCount(stickerGroup, request.getTargetId(), stickerAction.getStickerIds());

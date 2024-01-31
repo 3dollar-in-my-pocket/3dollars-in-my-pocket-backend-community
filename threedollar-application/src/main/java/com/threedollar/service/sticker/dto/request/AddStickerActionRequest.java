@@ -12,7 +12,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @Getter
-public class AddReactionRequest {
+public class AddStickerActionRequest {
 
     @NotBlank
     private String targetId;
@@ -24,7 +24,7 @@ public class AddReactionRequest {
     private Set<Long> stickerIds;
 
     @Builder
-    public AddReactionRequest(String targetId, String accountId, Set<Long> stickerIds) {
+    public AddStickerActionRequest(String targetId, String accountId, Set<Long> stickerIds) {
         this.targetId = targetId;
         this.accountId = accountId;
         this.stickerIds = stickerIds;
