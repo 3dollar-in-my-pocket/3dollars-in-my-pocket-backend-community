@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,6 +45,22 @@ public class StickerActionServiceTest extends IntegrationTest {
         // then
         StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
         assertStickerAction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
+    }
+
+    @Test
+    void 스티커를_제거한다() {
+        // given
+        Sticker sticker = createSticker();
+        String accountId = "USER999L";
+        String targetId = "1";
+        StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(sticker.getStickerGroup(), Set.of(sticker.getId()), accountId, targetId));
+
+        // when
+        stickerActionService.deleteStickers(sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId());
+
+        // then
+        List<StickerAction> stickerActionList = stickerActionRepository.findAll();
+        assertThat(stickerActionList).isEmpty();
     }
 
     private void assertStickerAction(StickerAction stickerAction, StickerGroup stickerGroup, String targetId, String accountId, Set<Long> stickerIds) {
