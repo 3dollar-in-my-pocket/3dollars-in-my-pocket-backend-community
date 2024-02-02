@@ -49,16 +49,14 @@ public class StickerActionService {
 
     @Transactional
     public void deleteStickers(StickerGroup stickerGroup, String targetId, String accountId) {
-        if (accountId == null) {
-            throw new IllegalArgumentException("로그인 한 후 이용해주세요.");
-        }
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, targetId, accountId);
 
         if (stickerAction == null) {
-            throw new IllegalArgumentException(String.format("targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", targetId));
+            throw new IllegalArgumentException(String.format("스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", stickerGroup, targetId));
         }
-        stickerCountRepository.decrBulkByCount(stickerGroup, targetId, stickerAction.getStickerIds());
         stickerActionRepository.delete(stickerAction);
+        stickerCountRepository.decrBulkByCount(stickerGroup, targetId, stickerAction.getStickerIds());
+
     }
 
     @Transactional(readOnly = true)

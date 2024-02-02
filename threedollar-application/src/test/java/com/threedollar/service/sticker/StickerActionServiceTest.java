@@ -5,6 +5,7 @@ import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import org.junit.jupiter.api.AfterEach;
@@ -26,6 +27,9 @@ public class StickerActionServiceTest extends IntegrationTest {
 
     @Autowired
     private StickerRepository stickerRepository;
+
+    @Autowired
+    private StickerActionCountRepository stickerActionCountRepository;
 
     @AfterEach
     void cleanUp() {
@@ -54,12 +58,19 @@ public class StickerActionServiceTest extends IntegrationTest {
         String accountId = "USER999L";
         String targetId = "1";
         StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(sticker.getStickerGroup(), Set.of(sticker.getId()), accountId, targetId));
+        stickerActionCountRepository.incrBulkByCount(sticker.getStickerGroup(), targetId, Set.of(sticker.getId()));
 
         // when
         stickerActionService.deleteStickers(sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId());
 
         // then
         List<StickerAction> stickerActionList = stickerActionRepository.findAll();
+
+        /**
+         * redis 테스트 추가
+         */
+        // StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), sticker.getId());
+
         assertThat(stickerActionList).isEmpty();
     }
 
