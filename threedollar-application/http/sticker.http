@@ -7,3 +7,10 @@ Content-Type: application/json
   "accountId": "1",
   "stickerIds": [1, 2]
 }
+
+### 스티커를 제거합니다
+DELETE {{host_api}}/community/v1/sticker-group/POLL/stickers
+Content_Type: application/json
+{
+
+}

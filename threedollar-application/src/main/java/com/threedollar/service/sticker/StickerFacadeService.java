@@ -23,6 +23,9 @@ public class StickerFacadeService {
 
     public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup) {
         Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerIds(), stickerGroup);
+        if (stickerIds.size() != request.getStickerIds().size()) {
+            throw new IllegalArgumentException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerIds()));
+        }
         stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
     }
 
