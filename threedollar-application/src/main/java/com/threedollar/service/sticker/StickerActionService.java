@@ -1,6 +1,7 @@
 package com.threedollar.service.sticker;
 
 
+import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.stickeraction.StickerAction;
@@ -52,7 +53,7 @@ public class StickerActionService {
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, targetId, accountId);
 
         if (stickerAction == null) {
-            throw new IllegalArgumentException(String.format("스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", stickerGroup, targetId));
+            throw new NotFoundException(String.format("스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", stickerGroup, targetId));
         }
         stickerActionRepository.delete(stickerAction);
         stickerCountRepository.decrBulkByCount(stickerGroup, targetId, stickerAction.getStickerIds());
