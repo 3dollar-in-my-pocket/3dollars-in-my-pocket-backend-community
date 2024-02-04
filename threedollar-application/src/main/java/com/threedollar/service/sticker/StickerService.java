@@ -1,5 +1,6 @@
 package com.threedollar.service.sticker;
 
+import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
@@ -26,7 +27,7 @@ public class StickerService {
 
         Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(stickerIds, stickerGroup);
         if (stickerList.isEmpty()) {
-            throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerIds));
+            throw new NotFoundException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerIds));
         }
         return stickerList;
     }

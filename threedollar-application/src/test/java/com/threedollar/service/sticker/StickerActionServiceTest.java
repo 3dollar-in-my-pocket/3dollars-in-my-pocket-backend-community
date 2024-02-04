@@ -5,6 +5,7 @@ import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
 import com.threedollar.domain.stickeraction.StickerAction;
+import com.threedollar.domain.stickeraction.StickerActionCountKey;
 import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
@@ -68,8 +69,10 @@ public class StickerActionServiceTest extends IntegrationTest {
 
         /**
          * redis 테스트 추가
+         * 테스트 통과 안됨
          */
         // StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), sticker.getId());
+        // assertThat(stickerActionCountRepository.getStickerCountMap(List.of(key))).hasSize(0);
 
         assertThat(stickerActionList).isEmpty();
     }
