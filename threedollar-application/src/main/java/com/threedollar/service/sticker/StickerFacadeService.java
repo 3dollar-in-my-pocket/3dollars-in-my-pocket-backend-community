@@ -3,7 +3,6 @@ package com.threedollar.service.sticker;
 import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
-import com.threedollar.service.sticker.dto.request.DeleteStickerAction;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import jakarta.validation.constraints.NotNull;
@@ -30,8 +29,8 @@ public class StickerFacadeService {
         stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
     }
 
-    public void deleteSticker(DeleteStickerAction request, @NotNull StickerGroup stickerGroup) {
-        stickerActionService.deleteStickers(stickerGroup, request.getTargetId(), request.getAccountId());
+    public void deleteSticker(@NotNull StickerGroup stickerGroup, String targetId, String accountId) {
+        stickerActionService.deleteStickers(stickerGroup, targetId, accountId);
     }
 
 
