@@ -7,9 +7,9 @@ import com.threedollar.domain.stickeraction.StickerAction;
 import com.threedollar.domain.stickeraction.StickerActionCountKey;
 import com.threedollar.domain.stickeraction.repository.StickerActionCountRepository;
 import com.threedollar.domain.stickeraction.repository.StickerActionRepository;
+import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import com.threedollar.service.sticker.dto.response.StickerInfoDetail;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
-import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +36,7 @@ public class StickerActionService {
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(workspaceId, stickerGroup, request.getTargetId(), request.getAccountId());
 
         if (request.getStickerIds().isEmpty()) {
-            stickerCountRepository.decrBulkByCount(stickerGroup, request.getTargetId(), stickerAction.getStickerIds());
+            stickerCountRepository.decrBulkByCount(workspaceId, stickerGroup, request.getTargetId(), stickerAction.getStickerIds());
             stickerActionRepository.delete(stickerAction);
         }
 
@@ -47,20 +47,20 @@ public class StickerActionService {
             return;
         }
 
-        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getStickerIds());
-        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
+        stickerCountRepository.incrBulkByCount(workspaceId, stickerGroup, request.getTargetId(), request.getStickerIds());
+        stickerActionRepository.save(StickerAction.newInstance(workspaceId, stickerGroup, stickerList, request.getAccountId(), request.getTargetId()));
 
     }
 
     @Transactional
-    public void deleteStickers(StickerGroup stickerGroup, String targetId, String accountId) {
-        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, targetId, accountId);
+    public void deleteStickers(String workspaceId, StickerGroup stickerGroup, String targetId, String accountId) {
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(workspaceId, stickerGroup, targetId, accountId);
 
         if (stickerAction == null) {
-            throw new IllegalArgumentException(String.format("스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", stickerGroup, targetId));
+            throw new IllegalArgumentException(String.format("워크스페이스(%s)-스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", workspaceId, stickerGroup, targetId));
         }
         stickerActionRepository.delete(stickerAction);
-        stickerCountRepository.decrBulkByCount(stickerGroup, targetId, stickerAction.getStickerIds());
+        stickerCountRepository.decrBulkByCount(workspaceId, stickerGroup, targetId, stickerAction.getStickerIds());
 
     }
 

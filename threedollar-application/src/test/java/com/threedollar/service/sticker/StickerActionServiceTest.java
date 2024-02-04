@@ -55,14 +55,15 @@ public class StickerActionServiceTest extends IntegrationTest {
     @Test
     void 스티커를_제거한다() {
         // given
-        Sticker sticker = createSticker();
+        String workspaceId = "workspaceId";
+        Sticker sticker = createSticker(workspaceId);
         String accountId = "USER999L";
         String targetId = "1";
-        StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(sticker.getStickerGroup(), Set.of(sticker.getId()), accountId, targetId));
-        stickerActionCountRepository.incrBulkByCount(sticker.getStickerGroup(), targetId, Set.of(sticker.getId()));
+        StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(workspaceId, sticker.getStickerGroup(), Set.of(sticker.getId()), accountId, targetId));
+        stickerActionCountRepository.incrBulkByCount(workspaceId, sticker.getStickerGroup(), targetId, Set.of(sticker.getId()));
 
         // when
-        stickerActionService.deleteStickers(sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId());
+        stickerActionService.deleteStickers(workspaceId, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId());
 
         // then
         List<StickerAction> stickerActionList = stickerActionRepository.findAll();
