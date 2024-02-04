@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,12 +68,9 @@ public class StickerActionServiceTest extends IntegrationTest {
         // then
         List<StickerAction> stickerActionList = stickerActionRepository.findAll();
 
-        /**
-         * redis 테스트 추가
-         * 테스트 통과 안됨
-         */
-        // StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), sticker.getId());
-        // assertThat(stickerActionCountRepository.getStickerCountMap(List.of(key))).hasSize(0);
+        StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), sticker.getId());
+        Map<StickerActionCountKey, Long> keyMap = stickerActionCountRepository.getStickerCountMap(List.of(key));
+        assertThat(keyMap.get(key)).isEqualTo(0);
 
         assertThat(stickerActionList).isEmpty();
     }
