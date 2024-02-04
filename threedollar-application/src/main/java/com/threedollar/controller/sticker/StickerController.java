@@ -6,10 +6,12 @@ import com.threedollar.config.resolver.RequestApiKey;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.service.sticker.StickerFacadeService;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
+import com.threedollar.service.sticker.dto.request.DeleteStickerAction;
 import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,15 @@ public class StickerController {
                                                    @RequestApiKey ApiKeyContext apiKeyContext,
                                                    @PathVariable StickerGroup stickerGroup) {
         stickerFacadeService.upsertSticker(apiKeyContext.getWorkspaceId(), request, stickerGroup);
+        return ApiResponse.OK;
+    }
+
+    @Operation(summary = "[스티커] 스티커를 제거합니다", description = "스티커를 제거합니다")
+    @DeleteMapping("/v1/sticker-group/{stickerGroup}/stickers")
+    public ApiResponse<String> deleteStickerAction(@Valid @RequestBody DeleteStickerAction request,
+                                                   @RequestApiKey ApiKeyContext apiKeyContext,
+                                                   @PathVariable StickerGroup stickerGroup) {
+        stickerFacadeService.deleteSticker(apiKeyContext.getWorkspaceId(), request, stickerGroup);
         return ApiResponse.OK;
     }
 
