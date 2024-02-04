@@ -2,8 +2,8 @@ package com.threedollar.service.sticker;
 
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
-import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import com.threedollar.service.sticker.dto.request.AddStickerActionRequest;
+import com.threedollar.service.sticker.dto.response.TargetStickerAction;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ public class StickerFacadeService {
     private final StickerService stickerService;
 
 
-    public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup) {
-        Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerIds(), stickerGroup);
-        stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
+    public void upsertSticker(@NotNull String workspaceId, AddStickerActionRequest request, @NotNull StickerGroup stickerGroup) {
+        Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(workspaceId, request.getStickerIds(), stickerGroup);
+        stickerActionService.upsertSticker(workspaceId, request, stickerGroup, stickerIds);
     }
 
 
-    public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
-        List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup);
-        return stickerActionService.getStickerActionResponse(stickerGroup, accountId, targetIds, stickers);
+    public List<TargetStickerAction> getTargetStickers(@NotNull String workspaceId, @NotNull StickerGroup stickerGroup, String accountId, Set<String> targetIds) {
+        List<Sticker> stickers = stickerService.getStickersByStickerGroup(workspaceId, stickerGroup);
+        return stickerActionService.getStickerActionResponse(workspaceId, stickerGroup, accountId, targetIds, stickers);
     }
 
 

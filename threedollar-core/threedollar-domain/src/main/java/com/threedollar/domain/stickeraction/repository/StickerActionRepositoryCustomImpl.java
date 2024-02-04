@@ -16,20 +16,23 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
+    public StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(String workspaceId,
+                                                                               StickerGroup stickerGroup,
                                                                                String targetId,
                                                                                String accountId) {
         return jpaQueryFactory.selectFrom(stickerAction)
-                .where(stickerAction.stickerGroup.eq(stickerGroup),
+                .where(stickerAction.workspaceId.eq(workspaceId),
+                        stickerAction.stickerGroup.eq(stickerGroup),
                         stickerAction.targetId.eq(targetId),
                         stickerAction.accountId.eq(accountId))
                 .fetchOne();
     }
 
     @Override
-    public List<StickerAction> getStickerActionByMe(String accountId, Set<String> targetIds, StickerGroup stickerGroup) {
+    public List<StickerAction> getStickerActionByMe(String workspaceId, String accountId, Set<String> targetIds, StickerGroup stickerGroup) {
         return jpaQueryFactory.selectFrom(stickerAction)
-                .where(stickerAction.stickerGroup.eq(stickerGroup),
+                .where(stickerAction.workspaceId.eq(workspaceId),
+                        stickerAction.stickerGroup.eq(stickerGroup),
                         stickerAction.targetId.in(targetIds),
                         stickerAction.accountId.eq(accountId))
                 .fetch();

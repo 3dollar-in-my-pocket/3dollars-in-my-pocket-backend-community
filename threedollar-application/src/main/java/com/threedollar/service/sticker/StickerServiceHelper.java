@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 public class StickerServiceHelper {
 
     public static Sticker getStickerByIdAndStickerGroup(StickerRepository stickerRepository,
-                                                         StickerGroup stickerGroup,
-                                                         Long stickerId) {
-        Sticker sticker = stickerRepository.getStickerByIdAndStickerGroup(stickerId, stickerGroup);
+                                                        String workspaceId,
+                                                        StickerGroup stickerGroup,
+                                                        Long stickerId) {
+        Sticker sticker = stickerRepository.getStickerByIdAndStickerGroup(workspaceId, stickerId, stickerGroup);
         if (sticker == null) {
             throw new NotFoundException(String.format("(%s) 에 해당하는 스티커는 존재하지 않습니다.", stickerId));
         }

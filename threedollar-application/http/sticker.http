@@ -1,6 +1,7 @@
 ### 스티커를 등록합니다.
 POST {{host_api}}/community/v1/sticker-group/POLL/stickers
 Content-Type: application/json
+X-Community-Api-Key: {{api_key}}
 
 {
   "targetId": "1",

@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 public class Sticker extends BaseEntity {
 
     @Column(nullable = false)
+    private String workspaceId;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StickerGroup stickerGroup;
 
@@ -30,19 +33,21 @@ public class Sticker extends BaseEntity {
     private int priority;
 
     @Builder
-    public Sticker(StickerGroup stickerGroup, String imageUrl, StickerStatus status, int priority) {
+    public Sticker(String workspaceId, StickerGroup stickerGroup, String imageUrl, StickerStatus status, int priority) {
+        this.workspaceId = workspaceId;
         this.stickerGroup = stickerGroup;
         this.imageUrl = imageUrl;
         this.status = status;
         this.priority = priority;
     }
 
-    public static Sticker newInstance(String imageUrl, StickerGroup stickerGroup) {
+    public static Sticker newInstance(String workspaceId, String imageUrl, StickerGroup stickerGroup) {
         return Sticker.builder()
-                .imageUrl(imageUrl)
-                .stickerGroup(stickerGroup)
-                .status(StickerStatus.ACTIVE)
-                .build();
+            .workspaceId(workspaceId)
+            .imageUrl(imageUrl)
+            .stickerGroup(stickerGroup)
+            .status(StickerStatus.ACTIVE)
+            .build();
     }
 
 }

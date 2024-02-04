@@ -13,6 +13,8 @@ public class StickerActionCountKey implements StringRedisKey<StickerActionCountK
 
     private static final long DEFAULT_VALUE = 0L;
 
+    private final String workspaceId;
+
     private final StickerGroup stickerGroup;
 
     private final String targetId;
@@ -20,30 +22,33 @@ public class StickerActionCountKey implements StringRedisKey<StickerActionCountK
     private final Long stickerId;
 
     @Builder
-    public StickerActionCountKey(StickerGroup stickerGroup, String targetId, Long stickerId) {
+    public StickerActionCountKey(String workspaceId, StickerGroup stickerGroup, String targetId, Long stickerId) {
+        this.workspaceId = workspaceId;
         this.stickerGroup = stickerGroup;
         this.targetId = targetId;
         this.stickerId = stickerId;
     }
 
-    public static StickerActionCountKey of(StickerGroup stickerGroup, String targetId, Long stickerId) {
+    public static StickerActionCountKey of(String workspaceId, StickerGroup stickerGroup, String targetId, Long stickerId) {
         return StickerActionCountKey.builder()
-                .stickerId(stickerId)
-                .stickerGroup(stickerGroup)
-                .targetId(targetId)
-                .build();
+            .workspaceId(workspaceId)
+            .stickerId(stickerId)
+            .stickerGroup(stickerGroup)
+            .targetId(targetId)
+            .build();
     }
 
     @Override
     public String getKey() {
-        return "stickerAction:stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
+        return "stickerAction:workspace:" + workspaceId + "," + "stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
     }
 
     @Override
     public Long deserializeValue(String value) {
         if (value == null) {
             return DEFAULT_VALUE;
-        } try {
+        }
+        try {
             return Long.valueOf(value);
         } catch (Exception e) {
             throw new IllegalArgumentException(String.format("역직렬화 중 에러가 발생하였습니다. value: (%s)", value));

@@ -30,7 +30,7 @@ public class AddStickerActionRequest {
         this.stickerIds = stickerIds;
     }
 
-    public StickerAction toEntity(StickerGroup stickerGroup) {
-        return StickerAction.newInstance(stickerGroup, stickerIds, accountId, targetId);
+    public StickerAction toEntity(String workspaceId, StickerGroup stickerGroup) {
+        return StickerAction.newInstance(workspaceId, stickerGroup, stickerIds, accountId, targetId);
     }
 }

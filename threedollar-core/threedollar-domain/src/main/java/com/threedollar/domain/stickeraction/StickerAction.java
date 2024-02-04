@@ -24,10 +24,13 @@ import java.util.Set;
 @Table(uniqueConstraints = {
     @UniqueConstraint(
         name = "uni_sticker_action_1",
-        columnNames = {"accountId", "targetId", "stickerGroup"}
+        columnNames = {"workspaceId", "accountId", "targetId", "stickerGroup"}
     )
 })
 public class StickerAction extends BaseEntity {
+
+    @Column(nullable = false)
+    private String workspaceId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -44,18 +47,21 @@ public class StickerAction extends BaseEntity {
 
 
     @Builder
-    public StickerAction(@NotNull StickerGroup stickerGroup,
+    public StickerAction(@NotNull String workspaceId,
+                         @NotNull StickerGroup stickerGroup,
                          @NotBlank Set<Long> stickerIds,
                          @NotBlank String accountId,
                          @NotBlank String targetId) {
+        this.workspaceId = workspaceId;
         this.stickerGroup = stickerGroup;
         this.stickerIds = stickerIds;
         this.accountId = accountId;
         this.targetId = targetId;
     }
 
-    public static StickerAction newInstance(StickerGroup stickerGroup, Set<Long> stickerIds, String accountId, String targetId) {
+    public static StickerAction newInstance(String workspaceId, StickerGroup stickerGroup, Set<Long> stickerIds, String accountId, String targetId) {
         return StickerAction.builder()
+            .workspaceId(workspaceId)
             .stickerGroup(stickerGroup)
             .stickerIds(stickerIds)
             .accountId(accountId)

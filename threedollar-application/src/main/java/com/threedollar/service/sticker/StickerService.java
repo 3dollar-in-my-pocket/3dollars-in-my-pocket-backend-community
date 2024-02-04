@@ -17,14 +17,14 @@ public class StickerService {
     private final StickerRepository stickerRepository;
 
     @Transactional(readOnly = true)
-    public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup) {
-        return stickerRepository.getStickerByStickerGroup(stickerGroup);
+    public List<Sticker> getStickersByStickerGroup(String workspaceId, StickerGroup stickerGroup) {
+        return stickerRepository.getStickerByStickerGroup(workspaceId, stickerGroup);
     }
 
     @Transactional(readOnly = true)
-    public Set<Long> getStickerListByStickerIdAndGroup(Set<Long> stickerIds, StickerGroup stickerGroup) {
+    public Set<Long> getStickerListByStickerIdAndGroup(String workspaceId, Set<Long> stickerIds, StickerGroup stickerGroup) {
 
-        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(stickerIds, stickerGroup);
+        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(workspaceId, stickerIds, stickerGroup);
         if (stickerList.isEmpty()) {
             throw new IllegalArgumentException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerIds));
         }

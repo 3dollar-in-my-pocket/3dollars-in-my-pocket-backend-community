@@ -9,13 +9,13 @@ import java.util.Set;
 
 public interface StickerActionRepositoryCustom {
 
-    StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(StickerGroup stickerGroup,
+    StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(String workspaceId, StickerGroup stickerGroup,
                                                                         String targetId,
                                                                         String accountId);
 
 
 
-    List<StickerAction> getStickerActionByMe(String accountId,
+    List<StickerAction> getStickerActionByMe(String workspaceId, String accountId,
                                              Set<String> targetIds,
                                              StickerGroup stickerGroup);
 

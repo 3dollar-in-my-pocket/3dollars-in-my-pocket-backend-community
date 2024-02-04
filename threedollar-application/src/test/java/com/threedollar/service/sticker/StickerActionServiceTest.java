@@ -35,14 +35,15 @@ public class StickerActionServiceTest extends IntegrationTest {
     @Test
     void 스티커를_추가한다() {
         // given
-        Sticker sticker = createSticker();
+        String workspaceId = "workspaceId";
+        Sticker sticker = createSticker(workspaceId);
         AddStickerActionRequest request = getRequest(sticker);
 
         // when
-        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds());
+        stickerActionService.upsertSticker(workspaceId, request, sticker.getStickerGroup(), request.getStickerIds());
 
         // then
-        StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
+        StickerAction stickerAction = getStickerAction(workspaceId, request, sticker.getStickerGroup());
         assertStickerAction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
     }
 
@@ -54,8 +55,8 @@ public class StickerActionServiceTest extends IntegrationTest {
     }
 
 
-    private StickerAction getStickerAction(AddStickerActionRequest request, StickerGroup stickerGroup) {
-        return request.toEntity(stickerGroup);
+    private StickerAction getStickerAction(String workspaceId, AddStickerActionRequest request, StickerGroup stickerGroup) {
+        return request.toEntity(workspaceId, stickerGroup);
     }
 
     private AddStickerActionRequest getRequest(Sticker sticker) {
@@ -69,10 +70,10 @@ public class StickerActionServiceTest extends IntegrationTest {
             .build();
     }
 
-    private Sticker createSticker() {
+    private Sticker createSticker(String workspaceId) {
         String imageUrl = "imageUrl";
         StickerGroup stickerGroup = StickerGroup.COMMUNITY_COMMENT;
-        return stickerRepository.save(Sticker.newInstance(imageUrl, stickerGroup));
+        return stickerRepository.save(Sticker.newInstance(workspaceId, imageUrl, stickerGroup));
     }
 
 }
