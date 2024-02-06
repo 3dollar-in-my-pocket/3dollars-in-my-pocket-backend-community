@@ -1,0 +1,3 @@
+### API-key 검증용
+GET {{host_api}}/community/v1/api-key
+X-Community-Api-Key: {{api_key}}
