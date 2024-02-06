@@ -1,6 +1,7 @@
 package com.threedollar.config.interceptor;
 
 import com.threedollar.common.enums.CommunityHttpHeaders;
+import com.threedollar.common.exception.ApiKeyInvalidException;
 import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.apikey.ApiKeyStatus;
 import com.threedollar.service.apikey.ApiKeyQueryService;
@@ -24,7 +25,7 @@ public class ApiKeyHandleInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String requestApiKey = request.getHeader(CommunityHttpHeaders.API_KEY.getHeaderName());
         if (StringUtils.isBlank(requestApiKey)) {
-            throw new IllegalArgumentException("Api-Key 헤더가 비어있습니다.");
+            throw new ApiKeyInvalidException("Api-Key 헤더가 비어있습니다.");
         }
 
         try {
@@ -32,7 +33,7 @@ public class ApiKeyHandleInterceptor implements HandlerInterceptor {
             request.setAttribute(SESSION_KEY, ApiKeyContext.from(apiKey));
             return true;
         } catch (NotFoundException exception) {
-            throw new IllegalArgumentException(String.format("등록되지 않은 Api-Key(%s)가 요청 되었습니다.", requestApiKey));
+            throw new ApiKeyInvalidException(String.format("등록되지 않은 Api-Key(%s)가 요청 되었습니다.", requestApiKey));
         }
     }
 }
