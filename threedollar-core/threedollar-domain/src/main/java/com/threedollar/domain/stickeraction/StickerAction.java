@@ -24,7 +24,7 @@ import java.util.Set;
 @Table(uniqueConstraints = {
     @UniqueConstraint(
         name = "uni_sticker_action_1",
-        columnNames = {"accountId", "targetId", "stickerGroup"}
+        columnNames = {"accountId", "targetId", "stickerGroup", "worspaceId"}
     )
 })
 public class StickerAction extends BaseEntity {
@@ -32,6 +32,9 @@ public class StickerAction extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StickerGroup stickerGroup;
+
+    @Column(nullable = false)
+    private String workspaceId;
 
     @Convert(converter = SetLongArrayConverter.class)
     private Set<Long> stickerIds;
@@ -45,18 +48,21 @@ public class StickerAction extends BaseEntity {
 
     @Builder
     public StickerAction(@NotNull StickerGroup stickerGroup,
+                         @NotBlank String workspaceId,
                          @NotBlank Set<Long> stickerIds,
                          @NotBlank String accountId,
                          @NotBlank String targetId) {
         this.stickerGroup = stickerGroup;
+        this.workspaceId = workspaceId;
         this.stickerIds = stickerIds;
         this.accountId = accountId;
         this.targetId = targetId;
     }
 
-    public static StickerAction newInstance(StickerGroup stickerGroup, Set<Long> stickerIds, String accountId, String targetId) {
+    public static StickerAction newInstance(StickerGroup stickerGroup, String workspaceId, Set<Long> stickerIds, String accountId, String targetId) {
         return StickerAction.builder()
             .stickerGroup(stickerGroup)
+            .workspaceId(workspaceId)
             .stickerIds(stickerIds)
             .accountId(accountId)
             .targetId(targetId)
