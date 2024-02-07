@@ -16,10 +16,11 @@ public class StickerActionCountRepository {
 
     private final StringRedisRepository<StickerActionCountKey, Long> stickerRedisRepository;
 
-    public void incrBulkByCount(StickerGroup stickerGroup, String targetId, Set<Long> stickerIds) {
+    public void incrBulkByCount(StickerGroup stickerGroup, String workspaceId, String targetId, Set<Long> stickerIds) {
         List<StickerActionCountKey> stickerCountKeys = stickerIds.stream()
             .map(id -> StickerActionCountKey.builder()
                 .stickerId(id)
+                .workspaceId(workspaceId)
                 .targetId(targetId)
                 .stickerGroup(stickerGroup)
                 .build())
@@ -28,10 +29,11 @@ public class StickerActionCountRepository {
 
     }
 
-    public void decrBulkByCount(StickerGroup stickerGroup, String targetId, Set<Long> stickerIds) {
+    public void decrBulkByCount(StickerGroup stickerGroup, String workspaceId, String targetId, Set<Long> stickerIds) {
         List<StickerActionCountKey> stickerCountKeys = stickerIds.stream()
             .map(id -> StickerActionCountKey.builder()
                 .stickerId(id)
+                .workspaceId(workspaceId)
                 .targetId(targetId)
                 .stickerGroup(stickerGroup)
                 .build())

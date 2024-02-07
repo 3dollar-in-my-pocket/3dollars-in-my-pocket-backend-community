@@ -36,18 +36,20 @@ public class StickerController {
     @Operation(summary = "[스티커] 스티커를 제거합니다", description = "스티커를 제거합니다")
     @DeleteMapping("/v1/sticker-group/{stickerGroup}/stickers")
     public ApiResponse<String> deleteStickerAction(@PathVariable StickerGroup stickerGroup,
+                                                   @RequestParam String workspaceId,
                                                    @RequestParam String targetId,
                                                    @RequestParam String accountId) {
-        stickerFacadeService.deleteSticker(stickerGroup, targetId, accountId);
+        stickerFacadeService.deleteSticker(stickerGroup, workspaceId, targetId, accountId);
         return ApiResponse.OK;
     }
 
     @Operation(summary = "[스티커] 타겟들에 대한 스티커들을 조회합니다")
     @GetMapping("/v1/sticker-group/{stickerGroup}/stickers")
     public ApiResponse<List<TargetStickerAction>> getTargetStickerActions(@PathVariable StickerGroup stickerGroup,
+                                                                          @RequestParam String workspaceId,
                                                                           @RequestParam Set<String> targetIds,
                                                                           @RequestParam(required = false) String accountId) {
-        return ApiResponse.success(stickerFacadeService.getTargetStickers(stickerGroup, accountId, targetIds));
+        return ApiResponse.success(stickerFacadeService.getTargetStickers(stickerGroup, workspaceId, accountId, targetIds));
     }
 
 }

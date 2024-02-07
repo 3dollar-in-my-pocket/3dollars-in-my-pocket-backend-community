@@ -59,16 +59,17 @@ public class StickerActionServiceTest extends IntegrationTest {
         Sticker sticker = createSticker();
         String accountId = "USER999L";
         String targetId = "1";
-        StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(sticker.getStickerGroup(), Set.of(sticker.getId()), accountId, targetId));
-        stickerActionCountRepository.incrBulkByCount(sticker.getStickerGroup(), targetId, Set.of(sticker.getId()));
+        String workspaceId = "3";
+        StickerAction stickerAction = stickerActionRepository.save(StickerAction.newInstance(sticker.getStickerGroup(), workspaceId, Set.of(sticker.getId()), accountId, targetId));
+        stickerActionCountRepository.incrBulkByCount(sticker.getStickerGroup(), workspaceId, targetId, Set.of(sticker.getId()));
 
         // when
-        stickerActionService.deleteStickers(sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId());
+        stickerActionService.deleteStickers(sticker.getStickerGroup(), workspaceId, stickerAction.getTargetId(), stickerAction.getAccountId());
 
         // then
         List<StickerAction> stickerActionList = stickerActionRepository.findAll();
 
-        StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), sticker.getId());
+        StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), workspaceId, sticker.getId());
         Map<StickerActionCountKey, Long> keyMap = stickerActionCountRepository.getStickerCountMap(List.of(key));
         assertThat(keyMap.get(key)).isEqualTo(0);
 
