@@ -91,9 +91,11 @@ public class StickerActionServiceTest extends IntegrationTest {
     private AddStickerActionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
+        String workspaceId = "99";
         Set<Long> stickerIds = Set.of(sticker.getId());
         return AddStickerActionRequest.builder()
             .targetId(targetId)
+            .workspaceId(workspaceId)
             .stickerIds(stickerIds)
             .accountId(accountId)
             .build();
