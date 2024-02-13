@@ -18,9 +18,6 @@ public class AddStickerActionRequest {
     @NotBlank
     private String targetId;
 
-    @NotBlank
-    private String workspaceId;
-
     @Nullable
     private String accountId;
 
@@ -28,14 +25,13 @@ public class AddStickerActionRequest {
     private Set<Long> stickerIds;
 
     @Builder
-    public AddStickerActionRequest(String targetId, String workspaceId, String accountId, Set<Long> stickerIds) {
+    public AddStickerActionRequest(String targetId, String accountId, Set<Long> stickerIds) {
         this.targetId = targetId;
-        this.workspaceId = workspaceId;
         this.accountId = accountId;
         this.stickerIds = stickerIds;
     }
 
-    public StickerAction toEntity(StickerGroup stickerGroup) {
+    public StickerAction toEntity(StickerGroup stickerGroup, String workspaceId) {
         return StickerAction.newInstance(stickerGroup, workspaceId, stickerIds, accountId, targetId);
     }
 }

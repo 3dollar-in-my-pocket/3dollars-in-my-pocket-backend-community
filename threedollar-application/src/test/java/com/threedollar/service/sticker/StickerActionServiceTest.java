@@ -44,12 +44,13 @@ public class StickerActionServiceTest extends IntegrationTest {
         // given
         Sticker sticker = createSticker();
         AddStickerActionRequest request = getRequest(sticker);
+        String workspaceId = "3";
 
         // when
-        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds());
+        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds(), workspaceId);
 
         // then
-        StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup());
+        StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup(), workspaceId);
         assertStickerAction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
     }
 
@@ -84,18 +85,16 @@ public class StickerActionServiceTest extends IntegrationTest {
     }
 
 
-    private StickerAction getStickerAction(AddStickerActionRequest request, StickerGroup stickerGroup) {
-        return request.toEntity(stickerGroup);
+    private StickerAction getStickerAction(AddStickerActionRequest request, StickerGroup stickerGroup, String workspaceId) {
+        return request.toEntity(stickerGroup, workspaceId);
     }
 
     private AddStickerActionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
-        String workspaceId = "99";
         Set<Long> stickerIds = Set.of(sticker.getId());
         return AddStickerActionRequest.builder()
             .targetId(targetId)
-            .workspaceId(workspaceId)
             .stickerIds(stickerIds)
             .accountId(accountId)
             .build();

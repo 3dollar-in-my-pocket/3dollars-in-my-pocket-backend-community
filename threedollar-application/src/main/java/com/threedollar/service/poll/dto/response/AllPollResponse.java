@@ -1,6 +1,5 @@
 package com.threedollar.service.poll.dto.response;
 
-import com.threedollar.domain.AccountType;
 import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.poll.Poll;
 import lombok.Builder;
@@ -19,8 +18,6 @@ public class AllPollResponse {
 
     private String content;
 
-    private AccountType accountType;
-
     private String accountId;
 
     private List<OptionsResponse> optionsResponses;
@@ -30,11 +27,10 @@ public class AllPollResponse {
     private CursorResponse cursorResponse;
 
     @Builder
-    public AllPollResponse(String title, String content, AccountType accountType, String accountId, List<OptionsResponse> optionsResponses, LocalDateTime endTime,
+    public AllPollResponse(String title, String content, String accountId, List<OptionsResponse> optionsResponses, LocalDateTime endTime,
                            CursorResponse cursorResponse) {
         this.title = title;
         this.content = content;
-        this.accountType = accountType;
         this.accountId = accountId;
         this.optionsResponses = optionsResponses;
         this.endTime = endTime;
@@ -45,7 +41,6 @@ public class AllPollResponse {
         return AllPollResponse.builder()
                 .title(poll.getTitle())
                 .content(poll.getContent())
-                .accountType(poll.getAccountType())
                 .accountId(poll.getAccountId())
                 .optionsResponses(getOptionResponse(poll.getOptions()))
                 .endTime(poll.getEndDateTime())

@@ -33,18 +33,18 @@ public class StickerActionService {
     private final StickerActionCountRepository stickerCountRepository;
 
     @Transactional
-    public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerList) {
+    public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerList, String workspaceId) {
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
 
         if (stickerAction != null) {
-            stickerCountRepository.decrBulkByCount(stickerGroup, request.getWorkspaceId(), stickerAction.getTargetId(), stickerAction.getStickerIds());
-            stickerCountRepository.incrBulkByCount(stickerGroup, request.getWorkspaceId(), request.getTargetId(), request.getStickerIds());
+            stickerCountRepository.decrBulkByCount(stickerGroup, workspaceId, stickerAction.getTargetId(), stickerAction.getStickerIds());
+            stickerCountRepository.incrBulkByCount(stickerGroup, workspaceId, request.getTargetId(), request.getStickerIds());
             stickerAction.update(request.getStickerIds());
             return;
         }
 
-        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), request.getWorkspaceId(), request.getStickerIds());
-        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, request.getWorkspaceId(), stickerList, request.getAccountId(), request.getTargetId()));
+        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), workspaceId, request.getStickerIds());
+        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, workspaceId, stickerList, request.getAccountId(), request.getTargetId()));
 
     }
 

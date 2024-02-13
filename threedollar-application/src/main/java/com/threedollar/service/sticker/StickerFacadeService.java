@@ -22,12 +22,12 @@ public class StickerFacadeService {
     private final StickerService stickerService;
 
 
-    public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup) {
+    public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup, String workspaceId) {
         Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerIds(), stickerGroup);
         if (stickerIds.size() != request.getStickerIds().size()) {
             throw new NotFoundException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerIds()));
         }
-        stickerActionService.upsertSticker(request, stickerGroup, stickerIds);
+        stickerActionService.upsertSticker(request, stickerGroup, stickerIds, workspaceId);
     }
 
     public void deleteSticker(@NotNull StickerGroup stickerGroup, @NotBlank String workspaceId, String targetId, String accountId) {
