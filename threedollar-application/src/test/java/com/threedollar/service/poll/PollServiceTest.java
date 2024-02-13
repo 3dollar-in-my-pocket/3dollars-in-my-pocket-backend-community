@@ -38,17 +38,19 @@ public class PollServiceTest extends IntegrationTest {
         String accountId = "1L";
         String title = "제목";
         String content = "내용";
+        String workspaceId = "3";
         LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
 
         PollCreateRequest request = PollCreateRequest.builder()
-                .pollCategory(pollCategory)
-                .startTime(startDateTime)
-                .endTime(endDateTime)
-                .title(title)
-                .content(content)
-                .options(Collections.emptyList())
-                .build();
+            .pollCategory(pollCategory)
+            .startTime(startDateTime)
+            .endTime(endDateTime)
+            .workspaceId(workspaceId)
+            .title(title)
+            .content(content)
+            .options(Collections.emptyList())
+            .build();
 
         // when
         pollService.addPoll(request, accountType, accountId);
@@ -56,7 +58,7 @@ public class PollServiceTest extends IntegrationTest {
         // then
         List<Poll> polls = pollRepository.findAll();
         assertThat(polls).hasSize(1);
-        assertPoll(polls.get(0), pollCategory, accountId, title, content);
+        assertPoll(polls.get(0), pollCategory, accountId, title, content, workspaceId);
 
     }
 
@@ -66,14 +68,15 @@ public class PollServiceTest extends IntegrationTest {
         AccountType accountType = AccountType.USER_ACCOUNT;
         PollCategory pollCategory = PollCategory.BEST_FOOD;
         String accountId = "1L";
+        String workspaceId = "3";
         String title = "제목";
         String content = "내용";
         LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
-        Poll poll = pollRepository.save(Poll.newInstance(pollCategory, title, content, accountType, accountId, startDateTime, endDateTime));
+        Poll poll = pollRepository.save(Poll.newInstance(pollCategory, workspaceId, title, content, accountType, accountId, startDateTime, endDateTime));
 
         // when
-        pollService.deletePoll(poll.getId(), accountType, accountId);
+        pollService.deletePoll(poll.getId(), accountType, accountId, workspaceId);
 
         // then
         List<Poll> polls = pollRepository.findAll();
@@ -83,10 +86,11 @@ public class PollServiceTest extends IntegrationTest {
     }
 
 
-    private void assertPoll(Poll poll, PollCategory pollCategory, String accountId, String title, String content) {
+    private void assertPoll(Poll poll, PollCategory pollCategory, String accountId, String title, String content, String workspaceId) {
         assertThat(poll.getPollCategory()).isEqualTo(pollCategory);
         assertThat(poll.getAccountId()).isEqualTo(accountId);
         assertThat(poll.getTitle()).isEqualTo(title);
         assertThat(poll.getContent()).isEqualTo(content);
+        assertThat(poll.getWorkspaceId()).isEqualTo(workspaceId);
     }
 }

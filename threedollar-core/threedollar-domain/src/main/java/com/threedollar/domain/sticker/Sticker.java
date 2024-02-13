@@ -21,6 +21,9 @@ public class Sticker extends BaseEntity {
     private StickerGroup stickerGroup;
 
     @Column(nullable = false)
+    private String workspaceId;
+
+    @Column(nullable = false)
     private String imageUrl;
 
     @Column(nullable = false)
@@ -30,16 +33,18 @@ public class Sticker extends BaseEntity {
     private int priority;
 
     @Builder
-    public Sticker(StickerGroup stickerGroup, String imageUrl, StickerStatus status, int priority) {
+    public Sticker(StickerGroup stickerGroup, String workspaceId, String imageUrl, StickerStatus status, int priority) {
         this.stickerGroup = stickerGroup;
+        this.workspaceId = workspaceId;
         this.imageUrl = imageUrl;
         this.status = status;
         this.priority = priority;
     }
 
-    public static Sticker newInstance(String imageUrl, StickerGroup stickerGroup) {
+    public static Sticker newInstance(String imageUrl, String workspaceId, StickerGroup stickerGroup) {
         return Sticker.builder()
                 .imageUrl(imageUrl)
+            .workspaceId(workspaceId)
                 .stickerGroup(stickerGroup)
                 .status(StickerStatus.ACTIVE)
                 .build();

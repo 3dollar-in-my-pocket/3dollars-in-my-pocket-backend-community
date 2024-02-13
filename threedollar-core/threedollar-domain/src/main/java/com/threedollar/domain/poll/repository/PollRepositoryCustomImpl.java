@@ -28,11 +28,12 @@ public class PollRepositoryCustomImpl implements PollRepositoryCustom{
     }
 
     @Override
-    public Poll findByPollIdAndAccount(Long pollId, AccountType accountType, String accountId) {
+    public Poll findByPollIdAndAccountAndWorkspaceId(Long pollId, AccountType accountType, String accountId, String workspaceId) {
         return jpaQueryFactory.selectFrom(poll)
                 .where(poll.id.eq(pollId),
                         poll.accountType.eq(accountType),
                         poll.accountId.eq(accountId),
+                        poll.workspaceId.eq(workspaceId),
                         poll.pollStatus.eq(PollStatus.ACTIVE))
                 .fetchOne();
     }

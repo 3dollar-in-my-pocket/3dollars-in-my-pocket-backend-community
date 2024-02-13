@@ -22,22 +22,17 @@ public class PollService {
 
     @Transactional
     public Long addPoll(PollCreateRequest request, AccountType accountType, String accountId) {
-        Poll poll = request.toEntity(accountType, accountId);
+        Poll poll = request.toEntity(accountType, accountId, request.getWorkspaceId());
         return pollRepository.save(poll).getId();
     }
 
     @Transactional
-    public void deletePoll(Long pollId, AccountType accountType, String accountId) {
-        Poll poll = PollServiceHelper.getPollByIdAndAccountType(pollRepository, pollId, accountType, accountId);
+    public void deletePoll(Long pollId, AccountType accountType, String accountId, String workspaceId) {
+        Poll poll = PollServiceHelper.getPollByIdAndAccountTypeAndWorkspaceId(pollRepository, pollId, accountType, accountId, workspaceId);
         poll.delete();
     }
 
 
-    public List<PollTypeResponse> getPollTypes() {
-        return PollCategory.pollTypeList().stream()
-                .map(PollTypeResponse::of)
-                .collect(Collectors.toList());
-    }
 
     @Transactional(readOnly = true)
     public List<AllPollResponse> getAllPollResponse(Long cursor, int size, PollCategory pollCategory) {

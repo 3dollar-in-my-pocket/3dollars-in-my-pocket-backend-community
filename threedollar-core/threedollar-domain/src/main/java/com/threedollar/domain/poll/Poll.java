@@ -26,6 +26,9 @@ public class Poll extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PollCategory pollCategory;
 
+    @Column(nullable = false, length = 10)
+    private String workspaceId;
+
     @Column(nullable = false, length = 100)
     private String title;
 
@@ -53,8 +56,9 @@ public class Poll extends BaseEntity {
     private final List<PollOption> options = new ArrayList<>();
 
     @Builder
-    public Poll(PollCategory pollCategory, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
+    public Poll(PollCategory pollCategory, String workspaceId, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
         this.pollCategory = pollCategory;
+        this.workspaceId = workspaceId;
         this.title = title;
         this.content = content;
         this.accountType = accountType;
@@ -78,17 +82,18 @@ public class Poll extends BaseEntity {
         this.options.add(pollOption);
     }
 
-    public static Poll newInstance(PollCategory pollCategory, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static Poll newInstance(PollCategory pollCategory, String workspaceId, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return Poll.builder()
-                .pollCategory(pollCategory)
-                .title(title)
-                .content(content)
-                .accountType(accountType)
-                .accountId(accountId)
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .pollStatus(PollStatus.ACTIVE)
-                .build();
+            .pollCategory(pollCategory)
+            .workspaceId(workspaceId)
+            .title(title)
+            .content(content)
+            .accountType(accountType)
+            .accountId(accountId)
+            .startDateTime(startDateTime)
+            .endDateTime(endDateTime)
+            .pollStatus(PollStatus.ACTIVE)
+            .build();
     }
 
 }

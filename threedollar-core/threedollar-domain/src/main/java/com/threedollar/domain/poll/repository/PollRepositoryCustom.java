@@ -11,7 +11,7 @@ public interface PollRepositoryCustom {
 
     List<Poll> findAllPollList(Long cursor, int size, PollCategory pollCategory);
 
-    Poll findByPollIdAndAccount(Long pollId, AccountType accountType, String accountId);
+    Poll findByPollIdAndAccountAndWorkspaceId(Long pollId, AccountType accountType, String accountId, String workspaceId);
 
-    
+
 }
