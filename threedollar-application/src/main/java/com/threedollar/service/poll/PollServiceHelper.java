@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PollServiceHelper {
 
-    public static Poll getPollByIdAndAccountType(PollRepository pollRepository, Long pollId, AccountType accountType, String accountId) {
-        Poll poll = pollRepository.findByPollIdAndAccount(pollId, accountType, accountId);
+    public static Poll getPollByIdAndAccountTypeAndWorkspaceId(PollRepository pollRepository, Long pollId, AccountType accountType, String accountId, String workspaceId) {
+        Poll poll = pollRepository.findByPollIdAndAccountAndWorkspaceId(pollId, accountType, accountId, workspaceId);
         if(poll == null) {
             throw new NotFoundException(String.format("(%s)에 해당하는 투표는 존재하지 않습니다.", pollId));
         }

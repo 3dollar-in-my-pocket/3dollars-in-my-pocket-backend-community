@@ -25,6 +25,9 @@ public class PollCreateRequest {
     @NotBlank
     private String title;
 
+    @NotBlank
+    private String workspaceId;
+
     @Nullable
     private String content;
 
@@ -37,17 +40,18 @@ public class PollCreateRequest {
     private List<PollOptionCreateRequest> options;
 
     @Builder
-    public PollCreateRequest(PollCategory pollCategory, String title, @Nullable String content, LocalDateTime startTime, LocalDateTime endTime, List<PollOptionCreateRequest> options) {
+    public PollCreateRequest(PollCategory pollCategory, String title, String workspaceId, @Nullable String content, LocalDateTime startTime, LocalDateTime endTime, List<PollOptionCreateRequest> options) {
         this.pollCategory = pollCategory;
         this.title = title;
+        this.workspaceId = workspaceId;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
         this.options = options;
     }
 
-    public Poll toEntity(AccountType accountType, String accountId) {
-        Poll poll = Poll.newInstance(pollCategory, title, content, accountType, accountId, startTime, endTime);
+    public Poll toEntity(AccountType accountType, String accountId, String workspaceId) {
+        Poll poll = Poll.newInstance(pollCategory, workspaceId, title, content, accountType, accountId, startTime, endTime);
         List<PollOption> options = this.options.stream()
                 .map(option -> option.toEntity(poll))
                 .collect(Collectors.toList());

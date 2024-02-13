@@ -37,8 +37,9 @@ public class PollController {
     @DeleteMapping("/v1/poll/{pollId}")
     public ApiResponse<String> deletePoll(@PathVariable Long pollId,
                                           @RequestParam AccountType accountType,
-                                          @RequestParam String accountId) {
-        pollService.deletePoll(pollId, accountType, accountId);
+                                          @RequestParam String accountId,
+                                          @RequestParam String workspaceId) {
+        pollService.deletePoll(pollId, accountType, accountId, workspaceId);
         return ApiResponse.OK;
 
     }
