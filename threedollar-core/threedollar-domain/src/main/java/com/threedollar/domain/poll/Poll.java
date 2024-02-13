@@ -1,6 +1,5 @@
 package com.threedollar.domain.poll;
 
-import com.threedollar.domain.AccountType;
 import com.threedollar.domain.options.PollOption;
 import com.threedollar.domain.BaseEntity;
 import jakarta.persistence.CascadeType;
@@ -9,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,12 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+    @UniqueConstraint(
+        name = "uni_poll_1",
+        columnNames = {"accountId", "targetId", "workspaceId"}
+    )
+})
 public class Poll extends BaseEntity {
 
     @Column(nullable = false, length = 50)
@@ -29,15 +36,14 @@ public class Poll extends BaseEntity {
     @Column(nullable = false, length = 10)
     private String workspaceId;
 
+    @Column(nullable = false, length = 10)
+    private String targetId;
+
     @Column(nullable = false, length = 100)
     private String title;
 
     @Column(length = 300)
     private String content;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
 
     @Column(nullable = false)
     private String accountId;
@@ -56,12 +62,12 @@ public class Poll extends BaseEntity {
     private final List<PollOption> options = new ArrayList<>();
 
     @Builder
-    public Poll(PollCategory pollCategory, String workspaceId, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
+    public Poll(PollCategory pollCategory, String workspaceId, String targetId, String title, String content, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime, PollStatus pollStatus) {
         this.pollCategory = pollCategory;
         this.workspaceId = workspaceId;
+        this.targetId = targetId;
         this.title = title;
         this.content = content;
-        this.accountType = accountType;
         this.accountId = accountId;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -82,13 +88,13 @@ public class Poll extends BaseEntity {
         this.options.add(pollOption);
     }
 
-    public static Poll newInstance(PollCategory pollCategory, String workspaceId, String title, String content, AccountType accountType, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static Poll newInstance(PollCategory pollCategory, String workspaceId, String targetId, String title, String content, String accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return Poll.builder()
             .pollCategory(pollCategory)
             .workspaceId(workspaceId)
+            .targetId(targetId)
             .title(title)
             .content(content)
-            .accountType(accountType)
             .accountId(accountId)
             .startDateTime(startDateTime)
             .endDateTime(endDateTime)

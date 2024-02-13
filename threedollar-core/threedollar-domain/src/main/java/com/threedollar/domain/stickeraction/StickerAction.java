@@ -24,7 +24,7 @@ import java.util.Set;
 @Table(uniqueConstraints = {
     @UniqueConstraint(
         name = "uni_sticker_action_1",
-        columnNames = {"accountId", "targetId", "stickerGroup", "worspaceId"}
+        columnNames = {"accountId", "targetId", "stickerGroup", "workspaceId"}
     )
 })
 public class StickerAction extends BaseEntity {
