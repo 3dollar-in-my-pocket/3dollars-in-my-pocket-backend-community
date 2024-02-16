@@ -29,7 +29,7 @@ public class PollController {
     public ApiResponse<Long> createPoll(@Valid @RequestBody PollCreateRequest request,
                                         @NotBlank @RequestParam String accountId,
                                         @RequestApiKey ApiKeyContext workspaceId) {
-        Long pollId = pollService.addPoll(request, accountId, String.valueOf(workspaceId));
+        Long pollId = pollService.addPoll(request, accountId, workspaceId.getWorkspaceId());
         return ApiResponse.success(pollId);
     }
 
@@ -39,7 +39,7 @@ public class PollController {
                                           @RequestParam String accountId,
                                           @RequestParam String targetId,
                                           @RequestApiKey ApiKeyContext workspaceId) {
-        pollService.deletePoll(pollId, accountId, targetId, String.valueOf(workspaceId));
+        pollService.deletePoll(pollId, accountId, targetId, workspaceId.getWorkspaceId());
         return ApiResponse.OK;
 
     }

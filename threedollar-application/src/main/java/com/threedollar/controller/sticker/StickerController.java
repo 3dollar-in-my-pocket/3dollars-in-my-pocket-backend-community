@@ -32,7 +32,7 @@ public class StickerController {
     public ApiResponse<String> createStickerAction(@Valid @RequestBody AddStickerActionRequest request,
                                                    @RequestApiKey ApiKeyContext workspaceId,
                                                    @PathVariable StickerGroup stickerGroup) {
-        stickerFacadeService.upsertSticker(request, stickerGroup, String.valueOf(workspaceId));
+        stickerFacadeService.upsertSticker(request, stickerGroup, workspaceId.getWorkspaceId());
         return ApiResponse.OK;
     }
 
@@ -42,7 +42,7 @@ public class StickerController {
                                                    @RequestApiKey ApiKeyContext workspaceId,
                                                    @RequestParam String targetId,
                                                    @RequestParam String accountId) {
-        stickerFacadeService.deleteSticker(stickerGroup, String.valueOf(workspaceId), targetId, accountId);
+        stickerFacadeService.deleteSticker(stickerGroup, workspaceId.getWorkspaceId(), targetId, accountId);
         return ApiResponse.OK;
     }
 
@@ -52,7 +52,7 @@ public class StickerController {
                                                                           @RequestApiKey ApiKeyContext workspaceId,
                                                                           @RequestParam Set<String> targetIds,
                                                                           @RequestParam(required = false) String accountId) {
-        return ApiResponse.success(stickerFacadeService.getTargetStickers(stickerGroup, String.valueOf(workspaceId), accountId, targetIds));
+        return ApiResponse.success(stickerFacadeService.getTargetStickers(stickerGroup, workspaceId.getWorkspaceId(), accountId, targetIds));
     }
 
 }
