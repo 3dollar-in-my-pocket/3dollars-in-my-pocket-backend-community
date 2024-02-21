@@ -19,12 +19,11 @@ public class StickerService {
     private final StickerRepository stickerRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "sticker", key = "#stickerGroup")
+    @Cacheable(cacheNames = "sticker", key = "#stickerGroup", value = "sticker")
     public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup) {
         return stickerRepository.getStickerByStickerGroup(stickerGroup);
     }
 
-    // TODO: 캐시 붙이기 (key, value)
     @Transactional(readOnly = true)
     public Set<Long> getStickerListByStickerIdAndGroup(Set<Long> stickerIds, StickerGroup stickerGroup) {
 
