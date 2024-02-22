@@ -8,9 +8,9 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -22,7 +22,7 @@ public class CacheConfig {
     public List<CaffeineCache> caffeineCaches() {
         return Arrays.stream(CacheType.values())
             .map(cache -> new CaffeineCache(cache.getCacheName(), Caffeine.newBuilder().recordStats()
-                .expireAfterWrite(cache.getExpiredAfterWrite(), TimeUnit.HOURS)
+                .expireAfterWrite(Duration.ofMinutes(cache.getDuration()))
                 .maximumSize(cache.getMaxSize())
                 .build()))
             .collect(Collectors.toList());
