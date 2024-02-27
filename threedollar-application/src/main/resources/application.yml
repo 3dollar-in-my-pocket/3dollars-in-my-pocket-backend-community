@@ -11,6 +11,22 @@ server:
       charset: UTF-8
       force: true
 
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - local
+logging:
+  level:
+    org.springframework.cache: TRACE
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - test
 logging:
   level:
     org.springframework.cache: TRACE
