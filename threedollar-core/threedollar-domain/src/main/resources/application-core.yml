@@ -77,13 +77,17 @@ spring.config:
   activate:
     on-profile:
       - dev
-
-# TODO: dev, prod 환경 설정 추가
-
----
-spring.config:
-  activate:
-    on-profile:
       - prod
+spring:
+  datasource:
+    url: ${secret.jdbc.uri}
+    username: ${secret.jdbc.username}
+    password: ${secret.jdbc.password}
+    hikari:
+      maximum-pool-size: ${jdbc.connection-pool-size:10}
+  data:
+    redis:
+      host: ${secret.redis.host}
+      port: ${secret.redis.port}
 
-# TODO: dev, prod 환경 설정 추가
+
