@@ -6,11 +6,13 @@ spring:
       hibernate:
         default_batch_fetch_size: 300
         query.in_clause_parameter_padding: true
+        dialect: org.hibernate.dialect.MariaDBDialect
     open-in-view: false
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     hikari:
       connection-timeout: 5000
+      driver-class-name: org.mariadb.jdbc.Driver
   data:
     redis:
       timeout: 3000
