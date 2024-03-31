@@ -6,7 +6,7 @@ jar {
 }
 
 application {
-    mainClass.set("com.threedollar.threedollarservice.ThreedollarServiceApplication")
+    mainClass.set("com.threedollar.ThreedollarServiceApplication")
 }
 
 dependencies {

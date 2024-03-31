@@ -43,11 +43,11 @@ public class Sticker extends BaseEntity {
 
     public static Sticker newInstance(String imageUrl, String workspaceId, StickerGroup stickerGroup) {
         return Sticker.builder()
-                .imageUrl(imageUrl)
+            .imageUrl(imageUrl)
             .workspaceId(workspaceId)
-                .stickerGroup(stickerGroup)
-                .status(StickerStatus.ACTIVE)
-                .build();
+            .stickerGroup(stickerGroup)
+            .status(StickerStatus.ACTIVE)
+            .build();
     }
 
 }
