@@ -20,16 +20,17 @@ public class Sticker extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private StickerGroup stickerGroup;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String workspaceId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String imageUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     @Enumerated(EnumType.STRING)
     private StickerStatus status;
 
+    @Column(length = 20)
     private int priority;
 
     @Builder
