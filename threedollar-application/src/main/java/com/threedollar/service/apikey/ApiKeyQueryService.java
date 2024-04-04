@@ -17,8 +17,8 @@ public class ApiKeyQueryService {
 
     private final ApiKeyRepository apiKeyRepository;
 
-    @Cacheable(cacheNames = "apiKeys", key = "#key")
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "apiKeys", key = "#key")
     public ApiKeyResponse getApiKey(@NotNull String key, @NotNull ApiKeyStatus status) {
         ApiKey findApiKey = apiKeyRepository.findByApiKeyAndStatus(key, status);
         if (findApiKey == null) {
