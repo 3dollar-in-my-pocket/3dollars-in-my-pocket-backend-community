@@ -7,6 +7,7 @@ import com.threedollar.domain.apikey.ApiKeyStatus;
 import com.threedollar.service.apikey.dto.response.ApiKeyResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +17,12 @@ public class ApiKeyQueryService {
 
     private final ApiKeyRepository apiKeyRepository;
 
-    /**
-     * TODO: 캐시 붙이기
-     */
+    @Cacheable(cacheNames = "apiKeys", key = "#key")
     @Transactional(readOnly = true)
-    public ApiKeyResponse getApiKey(@NotNull String apiKey, @NotNull ApiKeyStatus status) {
-        ApiKey findApiKey = apiKeyRepository.findByApiKeyAndStatus(apiKey, status);
+    public ApiKeyResponse getApiKey(@NotNull String key, @NotNull ApiKeyStatus status) {
+        ApiKey findApiKey = apiKeyRepository.findByApiKeyAndStatus(key, status);
         if (findApiKey == null) {
-            throw new NotFoundException(String.format("해당하는 status(%s)의 ApiKey(%s)는 존재하지 않습니다.", status, apiKey));
+            throw new NotFoundException(String.format("해당하는 status(%s)의 ApiKey(%s)는 존재하지 않습니다.", status, key));
         }
         return ApiKeyResponse.from(findApiKey);
     }
