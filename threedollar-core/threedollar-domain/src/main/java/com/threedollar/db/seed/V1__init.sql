@@ -2,7 +2,8 @@ CREATE TABLE `sticker`
 (
     `id`    BIGINT  NOT NULL AUTO_INCREMENT,
     `sticker_group` VARCHAR(100)    NOT NULL,
-    `workspace_id`  VARCHAR(10)     NOT NULL,
+    `workspace_id`  VARCHAR(100)    NOT NULL,
+    `name`          VARCHAR(100)    NOT NULL,
     `image_url`     VARCHAR(200)    NOT NULL,
     `status`        VARCHAR(30)     NOT NULL,
     `priority`      INTEGER         NOT NULL,
@@ -20,8 +21,8 @@ CREATE TABLE `sticker_action`
     `sticker_ids`       VARCHAR(500) NOT NULL,
     `account_id`        VARCHAR(100)  NOT NULL,
     `target_id`         VARCHAR(100)  NOT NULL,
-    `created_at`        DATETIME(6)     DEFAULT NULL,
-    `updated_at`        DATETIME(6)     DEFAULT NULL,
+    `created_at`        DATETIME(6)   DEFAULT NULL,
+    `updated_at`        DATETIME(6)   DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uni_sticker_action_1` (`account_id`, `target_id`, `sticker_group`, `workspace_id`)
 

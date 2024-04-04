@@ -23,6 +23,10 @@ public class Sticker extends BaseEntity {
     @Column(nullable = false, length = 10)
     private String workspaceId;
 
+    @Column(nullable = false, length = 100)
+    @Enumerated(EnumType.STRING)
+    private String name;
+
     @Column(nullable = false, length = 200)
     private String imageUrl;
 
@@ -34,18 +38,20 @@ public class Sticker extends BaseEntity {
     private int priority;
 
     @Builder
-    public Sticker(StickerGroup stickerGroup, String workspaceId, String imageUrl, StickerStatus status, int priority) {
+    public Sticker(StickerGroup stickerGroup, String workspaceId, String name, String imageUrl, StickerStatus status, int priority) {
         this.stickerGroup = stickerGroup;
         this.workspaceId = workspaceId;
+        this.name = name;
         this.imageUrl = imageUrl;
         this.status = status;
         this.priority = priority;
     }
 
-    public static Sticker newInstance(String imageUrl, String workspaceId, StickerGroup stickerGroup) {
+    public static Sticker newInstance(String imageUrl, String workspaceId, String name, StickerGroup stickerGroup) {
         return Sticker.builder()
             .imageUrl(imageUrl)
             .workspaceId(workspaceId)
+            .name(name)
             .stickerGroup(stickerGroup)
             .status(StickerStatus.ACTIVE)
             .build();
