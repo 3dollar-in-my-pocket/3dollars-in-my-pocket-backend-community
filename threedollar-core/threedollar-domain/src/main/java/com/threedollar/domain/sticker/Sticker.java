@@ -24,7 +24,6 @@ public class Sticker extends BaseEntity {
     private String workspaceId;
 
     @Column(nullable = false, length = 100)
-    @Enumerated(EnumType.STRING)
     private String name;
 
     @Column(nullable = false, length = 200)
