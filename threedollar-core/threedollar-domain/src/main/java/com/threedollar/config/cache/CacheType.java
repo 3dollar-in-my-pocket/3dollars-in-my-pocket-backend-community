@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CacheType {
 
-    STICKER("sticker", 1, 10000);
+    STICKER("sticker", 1, 10000),
+
+    APIKEY("apikey", 1, 10000);
 
     private final String cacheName; // 이름
 
