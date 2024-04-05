@@ -1,6 +1,7 @@
 package com.threedollar.service.apikey;
 
 import com.threedollar.common.exception.NotFoundException;
+import com.threedollar.config.cache.CacheType;
 import com.threedollar.domain.apikey.ApiKey;
 import com.threedollar.domain.apikey.ApiKeyRepository;
 import com.threedollar.domain.apikey.ApiKeyStatus;
@@ -18,7 +19,7 @@ public class ApiKeyQueryService {
     private final ApiKeyRepository apiKeyRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "apiKeys", key = "#key")
+    @Cacheable(cacheNames = CacheType.CacheConstants.APIKEY, key = "{#key, #status}")
     public ApiKeyResponse getApiKey(@NotNull String key, @NotNull ApiKeyStatus status) {
         ApiKey findApiKey = apiKeyRepository.findByApiKeyAndStatus(key, status);
         if (findApiKey == null) {
@@ -26,6 +27,5 @@ public class ApiKeyQueryService {
         }
         return ApiKeyResponse.from(findApiKey);
     }
-
 
 }

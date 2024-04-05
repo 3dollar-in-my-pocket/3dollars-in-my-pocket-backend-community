@@ -1,6 +1,7 @@
 package com.threedollar.service.sticker;
 
 import com.threedollar.common.exception.NotFoundException;
+import com.threedollar.config.cache.CacheType;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.sticker.repository.StickerRepository;
@@ -19,7 +20,7 @@ public class StickerService {
     private final StickerRepository stickerRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "sticker", key = "#stickerGroup", value = "sticker")
+    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "#stickerGroup", value = "sticker")
     public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup) {
         return stickerRepository.getStickerByStickerGroup(stickerGroup);
     }
