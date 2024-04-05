@@ -20,7 +20,7 @@ public class StickerService {
     private final StickerRepository stickerRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "#stickerGroup", value = "sticker")
+    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "#stickerGroup")
     public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup) {
         return stickerRepository.getStickerByStickerGroup(stickerGroup);
     }
