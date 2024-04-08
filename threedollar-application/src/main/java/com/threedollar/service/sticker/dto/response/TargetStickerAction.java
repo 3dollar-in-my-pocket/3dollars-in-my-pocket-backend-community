@@ -1,6 +1,5 @@
 package com.threedollar.service.sticker.dto.response;
 
-import com.threedollar.domain.sticker.StickerGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,16 +12,12 @@ public class TargetStickerAction {
 
     private String targetId;
 
-    private StickerGroup stickerGroup;
-
-    private List<StickerInfoDetail> stickerInfoDetailList;
+    private List<StickerInfoDetail> stickers;
 
     @Builder
-    public TargetStickerAction(String targetId, StickerGroup stickerGroup, List<StickerInfoDetail> stickerInfoDetailList) {
+    public TargetStickerAction(String targetId, List<StickerInfoDetail> stickers) {
         this.targetId = targetId;
-        this.stickerGroup = stickerGroup;
-        this.stickerInfoDetailList = stickerInfoDetailList;
+        this.stickers = stickers;
     }
-
 
 }
