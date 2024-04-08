@@ -84,7 +84,7 @@ public class StickerActionService {
 
                     }).toList();
                 return TargetStickerAction.builder()
-                    .stickerInfoDetailList(stickerInfoDetails)
+                    .stickers(stickerInfoDetails)
                     .targetId(targetId)
                     .build();
             }).collect(Collectors.toList());
