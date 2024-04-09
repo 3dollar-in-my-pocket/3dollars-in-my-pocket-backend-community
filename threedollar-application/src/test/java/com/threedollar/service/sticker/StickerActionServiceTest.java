@@ -45,13 +45,15 @@ public class StickerActionServiceTest extends IntegrationTest {
         Sticker sticker = createSticker();
         AddStickerActionRequest request = getRequest(sticker);
         String workspaceId = "3";
+        Set<Long> stickerIds = Set.of(1L, 2L);
 
         // when
-        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), request.getStickerIds(), workspaceId);
+        stickerActionService.upsertSticker(request, sticker.getStickerGroup(), stickerIds, workspaceId);
 
         // then
-        StickerAction stickerAction = getStickerAction(request, sticker.getStickerGroup(), workspaceId);
+        StickerAction stickerAction = StickerAction.newInstance(sticker.getStickerGroup(), workspaceId, stickerIds, request.getAccountId(), request.getTargetId());
         assertStickerAction(stickerAction, sticker.getStickerGroup(), stickerAction.getTargetId(), stickerAction.getAccountId(), stickerAction.getStickerIds());
+
     }
 
     @Test
@@ -73,7 +75,6 @@ public class StickerActionServiceTest extends IntegrationTest {
         StickerActionCountKey key = StickerActionCountKey.of(sticker.getStickerGroup(), stickerAction.getTargetId(), workspaceId, sticker.getId());
         Map<StickerActionCountKey, Long> keyMap = stickerActionCountRepository.getStickerCountMap(List.of(key));
         assertThat(keyMap.get(key)).isEqualTo(0);
-
         assertThat(stickerActionList).isEmpty();
     }
 
@@ -85,17 +86,12 @@ public class StickerActionServiceTest extends IntegrationTest {
     }
 
 
-    private StickerAction getStickerAction(AddStickerActionRequest request, StickerGroup stickerGroup, String workspaceId) {
-        return request.toEntity(stickerGroup, workspaceId);
-    }
-
     private AddStickerActionRequest getRequest(Sticker sticker) {
         String targetId = "1L";
         String accountId = "USER_ACCOUNT999L";
-        Set<Long> stickerIds = Set.of(sticker.getId());
         return AddStickerActionRequest.builder()
             .targetId(targetId)
-            .stickerIds(stickerIds)
+            .stickerNames(Set.of(sticker.getName()))
             .accountId(accountId)
             .build();
     }
@@ -104,8 +100,9 @@ public class StickerActionServiceTest extends IntegrationTest {
         String imageUrl = "imageUrl";
         String workspaceId = "2";
         StickerGroup stickerGroup = StickerGroup.COMMUNITY_COMMENT;
-        String name = "name";
-        return stickerRepository.save(Sticker.newInstance(imageUrl, workspaceId, name, stickerGroup));
+        String name = "POLL";
+        String targetId = "1";
+        return stickerRepository.save(Sticker.newInstance(imageUrl, workspaceId, targetId, name, stickerGroup));
     }
 
 }

@@ -9,10 +9,10 @@ import java.util.Set;
 
 public interface StickerRepositoryCustom {
 
-    List<Sticker> getStickerByStickerGroup(@NotNull StickerGroup stickerGroup);
+    List<Sticker> getStickerByStickerGroup(@NotNull StickerGroup stickerGroup, String workspaceId, Set<String> targetIds);
 
     Sticker getStickerByIdAndStickerGroup(@NotNull Long stickerId, @NotNull StickerGroup stickerGroup);
 
-    Set<Long> getStickerByIdsAndStickerGroup(@NotNull Set<Long> stickerIds, @NotNull StickerGroup stickerGroup);
+    Set<Long> getStickerByIdsAndStickerGroup(@NotNull Set<String> stickerNames, @NotNull StickerGroup stickerGroup, String workspaceId);
 
 }

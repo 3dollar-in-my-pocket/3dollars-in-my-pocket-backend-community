@@ -18,9 +18,13 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Sticker> getStickerByStickerGroup(StickerGroup stickerGroup) {
+    public List<Sticker> getStickerByStickerGroup(StickerGroup stickerGroup,
+                                                  String workspaceId,
+                                                  Set<String> targetIds) {
         return jpaQueryFactory.selectFrom(sticker)
             .where(sticker.stickerGroup.eq(stickerGroup),
+                sticker.workspaceId.eq(workspaceId),
+                sticker.targetId.in(targetIds),
                 sticker.status.eq(StickerStatus.ACTIVE))
             .fetch();
     }
@@ -36,14 +40,16 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom {
     }
 
     @Override
-    public Set<Long> getStickerByIdsAndStickerGroup(Set<Long> stickerIds, StickerGroup stickerGroup) {
+    public Set<Long> getStickerByIdsAndStickerGroup(Set<String> stickerNames, StickerGroup stickerGroup, String workspaceId) {
         return new HashSet<>(jpaQueryFactory.select(sticker.id)
             .from(sticker)
             .where(
-                sticker.id.in(stickerIds),
+                sticker.name.in(stickerNames),
                 sticker.stickerGroup.eq(stickerGroup),
+                sticker.workspaceId.eq(workspaceId),
                 sticker.status.eq(StickerStatus.ACTIVE)
             ).fetch());
     }
+
 
 }

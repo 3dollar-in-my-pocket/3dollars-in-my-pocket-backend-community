@@ -1,16 +1,28 @@
 ### 스티커를 등록합니다.
 POST {{host_api}}/community/v1/sticker-group/POLL/stickers
+X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 {
   "targetId": "1",
   "accountId": "1",
-  "stickerIds": [1, 2]
+  "stickerIds": [2]
 }
 
 ### 스티커를 제거합니다
 DELETE {{host_api}}/community/v1/sticker-group/POLL/stickers
+X-Community-Api-Key: {{api_key}}
 Content_Type: application/json
+
 {
+    "targetId": "1",
 
 }
+
+
+### 타겟들에 대한 스티커를 조회합니다
+GET {{host_api}}/community/v1/sticker-group/POLL/stickers?targetIds=1&accountId=1
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+

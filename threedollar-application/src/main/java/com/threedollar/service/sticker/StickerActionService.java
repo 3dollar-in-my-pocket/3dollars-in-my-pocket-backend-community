@@ -33,18 +33,18 @@ public class StickerActionService {
     private final StickerActionCountRepository stickerCountRepository;
 
     @Transactional
-    public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerList, String workspaceId) {
+    public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerIds, String workspaceId) {
         StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
 
         if (stickerAction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, workspaceId, stickerAction.getTargetId(), stickerAction.getStickerIds());
-            stickerCountRepository.incrBulkByCount(stickerGroup, workspaceId, request.getTargetId(), request.getStickerIds());
-            stickerAction.update(request.getStickerIds());
+            stickerCountRepository.incrBulkByCount(stickerGroup, workspaceId, request.getTargetId(), stickerIds);
+            stickerAction.update(stickerIds);
             return;
         }
 
-        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), workspaceId, request.getStickerIds());
-        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, workspaceId, stickerList, request.getAccountId(), request.getTargetId()));
+        stickerCountRepository.incrBulkByCount(stickerGroup, request.getTargetId(), workspaceId, stickerIds);
+        stickerActionRepository.save(StickerAction.newInstance(stickerGroup, workspaceId, stickerIds, request.getAccountId(), request.getTargetId()));
 
     }
 
@@ -73,21 +73,20 @@ public class StickerActionService {
 
         return targetIds.stream()
             .map(targetId -> {
-                List<StickerInfoDetail> stickerInfoDetails = stickers.stream().map(
-
-                    sticker -> {
+                List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
+                    .map(
+                        sticker -> {
                         long count = stickerCountKeyLongMap.getOrDefault(StickerActionCountKey.of(stickerGroup, targetId, workspaceId, sticker.getId()), 0L);
                         StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
-                        return StickerInfoDetail.of(sticker,
-                            count,
+                        return StickerInfoDetail.of(sticker, count,
                             stickerAction == null || stickerAction.getStickerIds().contains(sticker.getId()));
-
                     }).toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
                     .targetId(targetId)
                     .build();
-            }).collect(Collectors.toList());
+            })
+            .collect(Collectors.toList());
 
     }
 
@@ -109,6 +108,7 @@ public class StickerActionService {
         if (StringUtils.isBlank(accountId)) {
             return Collections.emptyMap();
         }
+
         List<StickerAction> stickerActions = stickerActionRepository.getStickerActionByMe(accountId, targetIds, stickerGroup);
         return stickerActions.stream()
             .collect(Collectors.toMap(StickerAction::getTargetId, stickerAction -> stickerAction));

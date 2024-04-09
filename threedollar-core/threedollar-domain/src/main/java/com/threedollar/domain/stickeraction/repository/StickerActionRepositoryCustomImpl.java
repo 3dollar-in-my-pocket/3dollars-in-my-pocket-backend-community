@@ -31,7 +31,8 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
         return jpaQueryFactory.selectFrom(stickerAction)
                 .where(stickerAction.stickerGroup.eq(stickerGroup),
                         stickerAction.targetId.in(targetIds),
-                        stickerAction.accountId.eq(accountId))
+                        stickerAction.accountId.eq(accountId)
+                )
                 .fetch();
     }
 

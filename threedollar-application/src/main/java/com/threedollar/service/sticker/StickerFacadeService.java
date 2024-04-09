@@ -23,9 +23,9 @@ public class StickerFacadeService {
 
 
     public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup, String workspaceId) {
-        Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerIds(), stickerGroup);
-        if (stickerIds.size() != request.getStickerIds().size()) {
-            throw new NotFoundException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerIds()));
+        Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroup(request.getStickerNames(), stickerGroup, workspaceId);
+        if (stickerIds.size() != request.getStickerNames().size()) {
+            throw new NotFoundException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerNames()));
         }
         stickerActionService.upsertSticker(request, stickerGroup, stickerIds, workspaceId);
     }
@@ -36,7 +36,7 @@ public class StickerFacadeService {
 
 
     public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, @NotBlank String workspaceId, String accountId, Set<String> targetIds) {
-        List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup);
+        List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup, workspaceId, targetIds);
         return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, targetIds, stickers);
     }
 
