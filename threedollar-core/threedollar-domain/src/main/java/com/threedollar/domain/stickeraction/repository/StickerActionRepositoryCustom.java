@@ -11,14 +11,15 @@ import java.util.Set;
 
 public interface StickerActionRepositoryCustom {
 
-    StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountId(@NotNull StickerGroup stickerGroup,
-                                                                        @NotBlank String targetId,
-                                                                        @NotBlank String accountId);
-
+    StickerAction getStickerActionByStickerGroupAndTargetIdAndAccountIdAndWorkspaceId(@NotNull StickerGroup stickerGroup,
+                                                                                      @NotBlank String targetId,
+                                                                                      @NotBlank String accountId,
+                                                                                      @NotBlank String workspaceId);
 
 
     List<StickerAction> getStickerActionByMe(String accountId,
                                              Set<String> targetIds,
-                                             StickerGroup stickerGroup);
+                                             StickerGroup stickerGroup,
+                                             String workspaceId);
 
 }

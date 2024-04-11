@@ -20,7 +20,7 @@ Content_Type: application/json
 
 
 ### 타겟들에 대한 스티커를 조회합니다
-GET {{host_api}}/community/v1/sticker-group/POLL/stickers?targetIds=1,2&accountId=1
+GET {{host_api}}/community/v1/sticker-group/POLL/stickers?targetIds=1&accountId=1
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 

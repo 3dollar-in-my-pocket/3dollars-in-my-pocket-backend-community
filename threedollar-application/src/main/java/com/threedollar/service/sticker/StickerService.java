@@ -21,15 +21,15 @@ public class StickerService {
 
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "#stickerGroup")
-    public List<Sticker> getStickersByStickerGroup(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
-        return stickerRepository.getStickerByStickerGroup(stickerGroup, workspaceId, targetIds);
+    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "{#stickerGroup, #workspaceId}")
+    public List<Sticker> getStickersByStickerGroupAndWorkspaceId(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
+        return stickerRepository.getStickerByStickerGroupAndWorkspaceIdAndTargetIds(stickerGroup, workspaceId, targetIds);
     }
 
     @Transactional(readOnly = true)
-    public Set<Long> getStickerListByStickerIdAndGroup(Set<String> stickerNames, StickerGroup stickerGroup, String workspaceId) {
+    public Set<Long> getStickerListByStickerIdAndGroupAndWorkspaceId(Set<String> stickerNames, StickerGroup stickerGroup, String workspaceId) {
 
-        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroup(stickerNames, stickerGroup, workspaceId);
+        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroupAndWorkspaceId(stickerNames, stickerGroup, workspaceId);
         if (stickerList.isEmpty()) {
             throw new NotFoundException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerNames));
         }

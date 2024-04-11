@@ -34,7 +34,10 @@ public class StickerActionService {
 
     @Transactional
     public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerIds, String workspaceId) {
-        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, request.getTargetId(), request.getAccountId());
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountIdAndWorkspaceId(stickerGroup,
+            request.getTargetId(),
+            request.getAccountId(),
+            workspaceId);
 
         if (stickerAction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, workspaceId, stickerAction.getTargetId(), stickerAction.getStickerIds());
@@ -50,7 +53,7 @@ public class StickerActionService {
 
     @Transactional
     public void deleteStickers(StickerGroup stickerGroup, String workspaceId, String targetId, String accountId) {
-        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountId(stickerGroup, targetId, accountId);
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountIdAndWorkspaceId(stickerGroup, targetId, accountId, workspaceId);
 
         if (stickerAction == null) {
             throw new NotFoundException(String.format("스티커 그룹 (%s)인 targetId (%s)에 해당하는 stickerAction 이 존재하지 않습니다.", stickerGroup, targetId));
@@ -69,7 +72,7 @@ public class StickerActionService {
 
         Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, workspaceId, targetIds, stickers);
 
-        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(targetIds, accountId, stickerGroup);
+        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(targetIds, accountId, stickerGroup, workspaceId);
 
         return targetIds.stream()
             .map(targetId -> {
@@ -79,7 +82,8 @@ public class StickerActionService {
                         long count = stickerCountKeyLongMap.getOrDefault(StickerActionCountKey.of(stickerGroup, targetId, workspaceId, sticker.getId()), 0L);
                         StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
                         return StickerInfoDetail.of(sticker, count,
-                            stickerAction == null || stickerAction.getStickerIds().contains(sticker.getId()));
+                            targetedByMe(stickerAction, sticker));
+                             //stickerAction == null && stickerAction.getStickerIds().contains(sticker.getId()));
                     }).toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
@@ -87,6 +91,14 @@ public class StickerActionService {
                     .build();
             })
             .collect(Collectors.toList());
+
+    }
+
+    private boolean targetedByMe(StickerAction stickerAction, Sticker sticker) {
+        if (stickerAction == null || stickerAction.getStickerIds().isEmpty()){
+            return false;
+        }
+        return stickerAction.getStickerIds().contains(sticker.getId());
 
     }
 
@@ -104,12 +116,13 @@ public class StickerActionService {
 
     private Map<String, StickerAction> getTargetIdActedByMe(Set<String> targetIds,
                                                             @Nullable String accountId,
-                                                            StickerGroup stickerGroup) {
+                                                            StickerGroup stickerGroup,
+                                                            String workspaceId) {
         if (StringUtils.isBlank(accountId)) {
             return Collections.emptyMap();
         }
 
-        List<StickerAction> stickerActions = stickerActionRepository.getStickerActionByMe(accountId, targetIds, stickerGroup);
+        List<StickerAction> stickerActions = stickerActionRepository.getStickerActionByMe(accountId, targetIds, stickerGroup, workspaceId);
         return stickerActions.stream()
             .collect(Collectors.toMap(StickerAction::getTargetId, stickerAction -> stickerAction));
     }
