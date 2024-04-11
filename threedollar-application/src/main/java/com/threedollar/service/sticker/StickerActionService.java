@@ -83,7 +83,6 @@ public class StickerActionService {
                         StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
                         return StickerInfoDetail.of(sticker, count,
                             targetedByMe(stickerAction, sticker));
-                             //stickerAction == null && stickerAction.getStickerIds().contains(sticker.getId()));
                     }).toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
