@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -37,8 +38,10 @@ public class StickerFacadeService {
 
     public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, @NotBlank String workspaceId, String accountId, Set<String> targetIds) {
         List<Sticker> stickers = stickerService.getStickersByStickerGroup(stickerGroup, workspaceId, targetIds);
-        return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, targetIds, stickers);
+        Set<String> stickerTargetIds = stickers.stream()
+            .map(Sticker::getTargetId)
+            .collect(Collectors.toSet());
+        return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, stickerTargetIds, stickers);
     }
-
 
 }
