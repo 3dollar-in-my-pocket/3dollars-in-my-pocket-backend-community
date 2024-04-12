@@ -26,7 +26,7 @@ public class Sticker extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 200)
+    @Column(length = 200)
     private String imageUrl;
 
     @Column(nullable = false, length = 100)

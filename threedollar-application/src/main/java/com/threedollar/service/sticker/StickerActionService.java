@@ -34,10 +34,7 @@ public class StickerActionService {
 
     @Transactional
     public void upsertSticker(AddStickerActionRequest request, StickerGroup stickerGroup, Set<Long> stickerIds, String workspaceId) {
-        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountIdAndWorkspaceId(stickerGroup,
-            request.getTargetId(),
-            request.getAccountId(),
-            workspaceId);
+        StickerAction stickerAction = stickerActionRepository.getStickerActionByStickerGroupAndTargetIdAndAccountIdAndWorkspaceId(stickerGroup, request.getTargetId(), request.getAccountId(), workspaceId);
 
         if (stickerAction != null) {
             stickerCountRepository.decrBulkByCount(stickerGroup, workspaceId, stickerAction.getTargetId(), stickerAction.getStickerIds());
@@ -79,11 +76,11 @@ public class StickerActionService {
                 List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
                     .map(
                         sticker -> {
-                        long count = stickerCountKeyLongMap.getOrDefault(StickerActionCountKey.of(stickerGroup, targetId, workspaceId, sticker.getId()), 0L);
-                        StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
-                        return StickerInfoDetail.of(sticker, count,
-                            targetedByMe(stickerAction, sticker));
-                    }).toList();
+                            long count = stickerCountKeyLongMap.getOrDefault(StickerActionCountKey.of(stickerGroup, targetId, workspaceId, sticker.getId()), 0L);
+                            StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
+                            return StickerInfoDetail.of(sticker, count,
+                                targetedByMe(stickerAction, sticker));
+                        }).toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
                     .targetId(targetId)
@@ -94,7 +91,7 @@ public class StickerActionService {
     }
 
     private boolean targetedByMe(StickerAction stickerAction, Sticker sticker) {
-        if (stickerAction == null || stickerAction.getStickerIds().isEmpty()){
+        if (stickerAction == null || stickerAction.getStickerIds().isEmpty()) {
             return false;
         }
         return stickerAction.getStickerIds().contains(sticker.getId());
