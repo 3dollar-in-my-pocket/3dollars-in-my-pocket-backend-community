@@ -45,4 +45,8 @@ public class StickerActionCountRepository {
         return stickerRedisRepository.getBulk(stickerCountKeys);
     }
 
+    public Long getCount(StickerActionCountKey stickerActionCountKey) {
+        return stickerRedisRepository.get(stickerActionCountKey);
+    }
+
 }

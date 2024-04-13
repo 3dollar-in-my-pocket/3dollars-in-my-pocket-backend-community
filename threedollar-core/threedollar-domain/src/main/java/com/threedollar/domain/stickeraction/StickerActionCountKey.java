@@ -29,7 +29,7 @@ public class StickerActionCountKey implements StringRedisKey<StickerActionCountK
         this.stickerId = stickerId;
     }
 
-    public static StickerActionCountKey of(StickerGroup stickerGroup, String targetId, String workspaceId, Long stickerId) {
+    public static StickerActionCountKey of(StickerGroup stickerGroup, String workspaceId, String targetId, Long stickerId) {
         return StickerActionCountKey.builder()
             .stickerId(stickerId)
             .workspaceId(workspaceId)
@@ -40,7 +40,7 @@ public class StickerActionCountKey implements StringRedisKey<StickerActionCountK
 
     @Override
     public String getKey() {
-        return "stickerAction:stickerGroup:" + stickerGroup + "," + "workspaceId:" + workspaceId + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
+        return "stickerAction:stickerGroup:" + stickerGroup + ":" + "workspaceId:" + workspaceId + ":" + "targetId:" + targetId + ":" + "stickerId:" + stickerId;
     }
 
     @Override
