@@ -22,8 +22,8 @@ public class StickerService {
 
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "{#stickerGroup, #workspaceId}")
-    public List<Sticker> getStickersByStickerGroupAndWorkspaceId(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
-        return stickerRepository.getStickerByStickerGroupAndWorkspaceIdAndTargetIds(stickerGroup, workspaceId, targetIds);
+    public List<Sticker> getStickersByStickerGroupAndWorkspaceId(StickerGroup stickerGroup, String workspaceId) {
+        return stickerRepository.getStickerByStickerGroupAndWorkspaceIdAndTargetIds(stickerGroup, workspaceId);
     }
 
     @Transactional(readOnly = true)

@@ -5,6 +5,7 @@ import com.threedollar.domain.sticker.StickerGroup;
 import com.threedollar.domain.stickeraction.StickerAction;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +38,17 @@ public class StickerActionRepositoryCustomImpl implements StickerActionRepositor
                 stickerAction.targetId.in(targetIds),
                 stickerAction.accountId.eq(accountId))
             .fetch();
+    }
+
+    @Override
+    public Set<String> validatedTargetIds(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
+        return new HashSet<>(
+            jpaQueryFactory.select(stickerAction.targetId)
+                .from(stickerAction)
+                .where(stickerAction.stickerGroup.eq(stickerGroup),
+                    stickerAction.workspaceId.eq(workspaceId),
+                    stickerAction.targetId.in(targetIds))
+                .fetch());
     }
 
 }

@@ -40,7 +40,7 @@ public class StickerActionCountKey implements StringRedisKey<StickerActionCountK
 
     @Override
     public String getKey() {
-        return "stickerAction:stickerGroup:" + stickerGroup + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
+        return "stickerAction:stickerGroup:" + stickerGroup + "," + "workspaceId:" + workspaceId + "," + "targetId:" + targetId + "," + "stickerId:" + stickerId;
     }
 
     @Override

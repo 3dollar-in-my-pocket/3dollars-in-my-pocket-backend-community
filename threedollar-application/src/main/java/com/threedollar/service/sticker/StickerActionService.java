@@ -67,11 +67,13 @@ public class StickerActionService {
                                                               Set<String> targetIds,
                                                               List<Sticker> stickers) {
 
-        Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, workspaceId, targetIds, stickers);
+        Set<String> validatedTargetIds = getValidatedTargetIds(stickerGroup, workspaceId, targetIds);
 
-        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(targetIds, accountId, stickerGroup, workspaceId);
+        Map<StickerActionCountKey, Long> stickerCountKeyLongMap = getStickerCountKey(stickerGroup, workspaceId, validatedTargetIds, stickers);
 
-        return targetIds.stream()
+        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(validatedTargetIds, accountId, stickerGroup, workspaceId);
+
+        return validatedTargetIds.stream()
             .map(targetId -> {
                 List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
                     .map(
@@ -96,6 +98,10 @@ public class StickerActionService {
         }
         return stickerAction.getStickerIds().contains(sticker.getId());
 
+    }
+
+    private Set<String> getValidatedTargetIds(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
+        return stickerActionRepository.validatedTargetIds(stickerGroup, workspaceId, targetIds);
     }
 
     private Map<StickerActionCountKey, Long> getStickerCountKey(StickerGroup stickerGroup,

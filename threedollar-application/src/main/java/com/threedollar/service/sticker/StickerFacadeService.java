@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +24,7 @@ public class StickerFacadeService {
 
     public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup, String workspaceId) {
         Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroupAndWorkspaceId(request.getStickerNames(), stickerGroup, workspaceId);
+
         if (stickerIds.size() != request.getStickerNames().size()) {
             throw new NotFoundException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerNames()));
         }
@@ -37,11 +37,8 @@ public class StickerFacadeService {
 
 
     public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, @NotBlank String workspaceId, String accountId, Set<String> targetIds) {
-        List<Sticker> stickers = stickerService.getStickersByStickerGroupAndWorkspaceId(stickerGroup, workspaceId, targetIds);
-        Set<String> stickerTargetIds = stickers.stream()
-            .map(Sticker::getTargetId)
-            .collect(Collectors.toSet());
-        return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, stickerTargetIds, stickers);
+        List<Sticker> stickers = stickerService.getStickersByStickerGroupAndWorkspaceId(stickerGroup, workspaceId);
+        return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, targetIds, stickers);
     }
 
 }

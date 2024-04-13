@@ -101,8 +101,7 @@ public class StickerActionServiceTest extends IntegrationTest {
         String workspaceId = "2";
         StickerGroup stickerGroup = StickerGroup.COMMUNITY_COMMENT;
         String name = "POLL";
-        String targetId = "1";
-        return stickerRepository.save(Sticker.newInstance(imageUrl, workspaceId, targetId, name, stickerGroup));
+        return stickerRepository.save(Sticker.newInstance(imageUrl, workspaceId, name, stickerGroup));
     }
 
 }

@@ -19,12 +19,10 @@ public class StickerRepositoryCustomImpl implements StickerRepositoryCustom {
 
     @Override
     public List<Sticker> getStickerByStickerGroupAndWorkspaceIdAndTargetIds(StickerGroup stickerGroup,
-                                                                            String workspaceId,
-                                                                            Set<String> targetIds) {
+                                                                            String workspaceId) {
         return jpaQueryFactory.selectFrom(sticker)
             .where(sticker.stickerGroup.eq(stickerGroup),
                 sticker.workspaceId.eq(workspaceId),
-                sticker.targetId.in(targetIds),
                 sticker.status.eq(StickerStatus.ACTIVE))
             .fetch();
     }
