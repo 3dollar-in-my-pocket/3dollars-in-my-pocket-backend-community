@@ -76,7 +76,7 @@ public class StickerActionService {
                 List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
                     .map(
                         sticker -> {
-                            long count = stickerCountRepository.getCount(StickerActionCountKey.of(stickerGroup, workspaceId, targetId, sticker.getId()));
+                            long count = stickerCountRepository.getStickerCount(StickerActionCountKey.of(stickerGroup, workspaceId, targetId, sticker.getId()));
                             StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
                             return StickerInfoDetail.of(sticker, count,
                                 targetedByMe(stickerAction, sticker));
@@ -95,7 +95,6 @@ public class StickerActionService {
             return false;
         }
         return stickerAction.getStickerIds().contains(sticker.getId());
-
     }
 
     private Set<String> getValidatedTargetIds(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
