@@ -68,11 +68,11 @@ public class StickerActionService {
                                                               Set<String> targetIds,
                                                               List<Sticker> stickers) {
 
-        Set<String> validatedTargetIds = getValidatedTargetIds(stickerGroup, workspaceId, targetIds);
 
-        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(validatedTargetIds, accountId, stickerGroup, workspaceId);
 
-        return validatedTargetIds.stream()
+        Map<String, StickerAction> targetIdActedByMe = getTargetIdActedByMe(targetIds, accountId, stickerGroup, workspaceId);
+
+        return targetIds.stream()
             .map(targetId -> {
                 List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
                     .sorted(Comparator.comparingInt(Sticker::getPriority))
@@ -98,10 +98,6 @@ public class StickerActionService {
             return false;
         }
         return stickerAction.getStickerIds().contains(sticker.getId());
-    }
-
-    private Set<String> getValidatedTargetIds(StickerGroup stickerGroup, String workspaceId, Set<String> targetIds) {
-        return stickerActionRepository.validatedTargetIds(stickerGroup, workspaceId, targetIds);
     }
 
 

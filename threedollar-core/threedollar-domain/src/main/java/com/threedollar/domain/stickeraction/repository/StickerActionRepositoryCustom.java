@@ -22,8 +22,4 @@ public interface StickerActionRepositoryCustom {
                                              StickerGroup stickerGroup,
                                              String workspaceId);
 
-    Set<String> validatedTargetIds(StickerGroup stickerGroup,
-                                     String workspaceId,
-                                     Set<String> targetIds);
-
 }

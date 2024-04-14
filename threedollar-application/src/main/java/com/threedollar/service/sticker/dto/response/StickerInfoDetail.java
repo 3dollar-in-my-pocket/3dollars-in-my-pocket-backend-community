@@ -26,12 +26,24 @@ public class StickerInfoDetail {
     }
 
     public static StickerInfoDetail of(Sticker sticker, Long stickerCount, boolean isSelected) {
+        if (sticker == null) {
+            return nullOf();
+        }
         return StickerInfoDetail.builder()
                 .stickerName(sticker.getName())
                 .imageUrl(sticker.getImageUrl())
                 .stickerCount(stickerCount)
                 .selectedByMe(isSelected)
                 .build();
+    }
+
+    public static StickerInfoDetail nullOf() {
+        return StickerInfoDetail.builder()
+            .stickerName(null)
+            .imageUrl(null)
+            .stickerCount(null)
+            .selectedByMe(false)
+            .build();
     }
 
 }
