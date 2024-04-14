@@ -15,23 +15,19 @@ public class StickerInfoDetail {
 
     private String imageUrl;
 
-    private int priority;
-
     private boolean selectedByMe;
 
     @Builder
-    public StickerInfoDetail(String stickerName, Long stickerCount, String imageUrl, int priority, boolean selectedByMe) {
+    public StickerInfoDetail(String stickerName, Long stickerCount, String imageUrl, boolean selectedByMe) {
         this.stickerName = stickerName;
         this.stickerCount = stickerCount;
         this.imageUrl = imageUrl;
-        this.priority = priority;
         this.selectedByMe = selectedByMe;
     }
 
     public static StickerInfoDetail of(Sticker sticker, Long stickerCount, boolean isSelected) {
         return StickerInfoDetail.builder()
                 .stickerName(sticker.getName())
-                .priority(sticker.getPriority())
                 .imageUrl(sticker.getImageUrl())
                 .stickerCount(stickerCount)
                 .selectedByMe(isSelected)

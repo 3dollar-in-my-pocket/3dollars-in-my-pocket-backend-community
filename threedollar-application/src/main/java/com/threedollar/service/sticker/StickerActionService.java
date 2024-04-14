@@ -75,6 +75,7 @@ public class StickerActionService {
         return validatedTargetIds.stream()
             .map(targetId -> {
                 List<StickerInfoDetail> stickerInfoDetails = stickers.stream()
+                    .sorted(Comparator.comparingInt(Sticker::getPriority))
                     .map(
                         sticker -> {
                             long count = stickerCountRepository.getStickerCount(StickerActionCountKey.of(stickerGroup, workspaceId, targetId, sticker.getId()));
@@ -82,7 +83,6 @@ public class StickerActionService {
                             return StickerInfoDetail.of(sticker, count,
                                 targetedByMe(stickerAction, sticker));
                         })
-                    .sorted(Comparator.comparingInt(StickerInfoDetail::getPriority))
                     .toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
