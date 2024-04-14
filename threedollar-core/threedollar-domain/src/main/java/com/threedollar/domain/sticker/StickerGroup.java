@@ -8,9 +8,8 @@ import java.util.List;
 @Getter
 public enum StickerGroup {
 
-    POLL("투표"),
+    POLL_COMMENT("투표댓글"),
     REVIEW("리뷰"),
-    COMMUNITY_COMMENT("커뮤니티 댓글")
     ;
     private final String description;
 

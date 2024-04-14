@@ -99,7 +99,7 @@ public class StickerActionServiceTest extends IntegrationTest {
     private Sticker createSticker() {
         String imageUrl = "imageUrl";
         String workspaceId = "2";
-        StickerGroup stickerGroup = StickerGroup.COMMUNITY_COMMENT;
+        StickerGroup stickerGroup = StickerGroup.POLL_COMMENT;
         String name = "POLL";
         return stickerRepository.save(Sticker.newInstance(imageUrl, workspaceId, name, stickerGroup));
     }
