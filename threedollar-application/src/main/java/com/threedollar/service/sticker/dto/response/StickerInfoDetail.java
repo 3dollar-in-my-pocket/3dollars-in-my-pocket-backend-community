@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class StickerInfoDetail {
 
-    private Long stickerId;
+    private String stickerName;
 
     private Long stickerCount;
 
@@ -20,8 +20,8 @@ public class StickerInfoDetail {
     private boolean selectedByMe;
 
     @Builder
-    public StickerInfoDetail(Long stickerId, Long stickerCount, String imageUrl, int priority, boolean selectedByMe) {
-        this.stickerId = stickerId;
+    public StickerInfoDetail(String stickerName, Long stickerCount, String imageUrl, int priority, boolean selectedByMe) {
+        this.stickerName = stickerName;
         this.stickerCount = stickerCount;
         this.imageUrl = imageUrl;
         this.priority = priority;
@@ -30,7 +30,7 @@ public class StickerInfoDetail {
 
     public static StickerInfoDetail of(Sticker sticker, Long stickerCount, boolean isSelected) {
         return StickerInfoDetail.builder()
-                .stickerId(sticker.getId())
+                .stickerName(sticker.getName())
                 .priority(sticker.getPriority())
                 .imageUrl(sticker.getImageUrl())
                 .stickerCount(stickerCount)
