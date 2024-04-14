@@ -4,8 +4,8 @@ X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 {
-  "targetId": "2",
-  "accountId": "1",
+  "targetId": "5",
+  "accountId": "2",
   "stickerNames": ["LIKE"]
 }
 
@@ -20,7 +20,7 @@ Content_Type: application/json
 
 
 ### 타겟들에 대한 스티커를 조회합니다
-GET {{host_api}}/community/v1/sticker-group/REVIEW/stickers?targetIds=2&accountId=100
+GET {{host_api}}/community/v1/sticker-group/REVIEW/stickers?targetIds=5&accountId=2
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
