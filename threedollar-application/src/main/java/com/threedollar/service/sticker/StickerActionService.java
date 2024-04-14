@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,7 +81,9 @@ public class StickerActionService {
                             StickerAction stickerAction = targetIdActedByMe.getOrDefault(targetId, null);
                             return StickerInfoDetail.of(sticker, count,
                                 targetedByMe(stickerAction, sticker));
-                        }).toList();
+                        })
+                    .sorted(Comparator.comparingInt(StickerInfoDetail::getPriority))
+                    .toList();
                 return TargetStickerAction.builder()
                     .stickers(stickerInfoDetails)
                     .targetId(targetId)
