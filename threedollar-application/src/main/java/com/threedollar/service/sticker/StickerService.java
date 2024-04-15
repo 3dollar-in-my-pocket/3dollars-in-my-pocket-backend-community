@@ -27,6 +27,7 @@ public class StickerService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "{#stickerNames, #stickerGroup, #workspaceId}")
     public Set<Long> getStickerListByStickerIdAndGroupAndWorkspaceId(Set<String> stickerNames, StickerGroup stickerGroup, String workspaceId) {
 
         Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroupAndWorkspaceId(stickerNames, stickerGroup, workspaceId);
