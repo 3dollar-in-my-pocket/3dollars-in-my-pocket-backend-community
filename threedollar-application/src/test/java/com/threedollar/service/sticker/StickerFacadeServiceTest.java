@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class StickerServiceTest extends IntegrationTest {
+public class StickerFacadeServiceTest extends IntegrationTest {
 
     @Autowired
     private StickerRepository stickerRepository;

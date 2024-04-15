@@ -10,8 +10,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,8 +25,8 @@ public class StickerFacadeService {
 
 
     public void upsertSticker(AddStickerActionRequest request, @NotNull StickerGroup stickerGroup, String workspaceId) {
-        Set<Long> stickerIds = stickerService.getStickerListByStickerIdAndGroupAndWorkspaceId(request.getStickerNames(), stickerGroup, workspaceId);
-
+        List<Sticker> stickers = stickerService.getStickersByStickerGroupAndWorkspaceId(stickerGroup, workspaceId);
+        Set<Long> stickerIds = getStickerIds(stickers, stickerGroup, workspaceId, request.getStickerNames());
         if (stickerIds.size() != request.getStickerNames().size()) {
             throw new NotFoundException(String.format("(%s)에 해당하는 스티커는 사용할 수 없습니다.", request.getStickerNames()));
         }
@@ -39,6 +41,19 @@ public class StickerFacadeService {
     public List<TargetStickerAction> getTargetStickers(@NotNull StickerGroup stickerGroup, @NotBlank String workspaceId, String accountId, Set<String> targetIds) {
         List<Sticker> stickers = stickerService.getStickersByStickerGroupAndWorkspaceId(stickerGroup, workspaceId);
         return stickerActionService.getStickerActionResponse(stickerGroup, workspaceId, accountId, targetIds, stickers);
+    }
+
+    private Set<Long> getStickerIds(List<Sticker> stickers, StickerGroup stickerGroup, String workspaceId, Set<String> names) {
+        Set<Long> stickerSet = new HashSet<>();
+        for (String name : names) {
+            stickerSet.addAll(stickers.stream()
+                .filter(sticker -> sticker.getName().equals(name) &
+                    sticker.getStickerGroup().equals(stickerGroup) &
+                    sticker.getWorkspaceId().equals(workspaceId))
+                .map(Sticker::getId)
+                .collect(Collectors.toSet()));
+        }
+        return stickerSet;
     }
 
 }

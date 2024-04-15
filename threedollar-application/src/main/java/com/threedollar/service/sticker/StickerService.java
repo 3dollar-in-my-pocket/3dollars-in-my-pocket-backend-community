@@ -1,6 +1,5 @@
 package com.threedollar.service.sticker;
 
-import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.config.cache.CacheType;
 import com.threedollar.domain.sticker.Sticker;
 import com.threedollar.domain.sticker.StickerGroup;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,21 +17,10 @@ public class StickerService {
 
     private final StickerRepository stickerRepository;
 
-
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "{#stickerGroup, #workspaceId}")
     public List<Sticker> getStickersByStickerGroupAndWorkspaceId(StickerGroup stickerGroup, String workspaceId) {
         return stickerRepository.getStickerByStickerGroupAndWorkspaceIdAndTargetIds(stickerGroup, workspaceId);
     }
 
-    @Transactional(readOnly = true)
-    @Cacheable(cacheNames = CacheType.CacheConstants.STICKER, key = "{#stickerNames, #stickerGroup, #workspaceId}")
-    public Set<Long> getStickerListByStickerIdAndGroupAndWorkspaceId(Set<String> stickerNames, StickerGroup stickerGroup, String workspaceId) {
-
-        Set<Long> stickerList = stickerRepository.getStickerByIdsAndStickerGroupAndWorkspaceId(stickerNames, stickerGroup, workspaceId);
-        if (stickerList.isEmpty()) {
-            throw new NotFoundException(String.format("요청하신 스티커(%s)를 사용할 수 없습니다.", stickerNames));
-        }
-        return stickerList;
-    }
 }
