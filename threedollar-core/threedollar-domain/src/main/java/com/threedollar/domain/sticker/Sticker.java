@@ -20,7 +20,7 @@ public class Sticker extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private StickerGroup stickerGroup;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 100)
     private String workspaceId;
 
     @Column(nullable = false, length = 100)
