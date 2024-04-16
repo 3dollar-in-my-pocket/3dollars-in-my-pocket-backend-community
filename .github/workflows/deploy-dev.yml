@@ -74,7 +74,7 @@ jobs:
       - name: Download task definition
         id: download-task-definition
         run:  |
-          aws ecs describe --task-definition threedollar-community-dev --query taskDefinition > task-definition-community-dev.json
+          aws ecs describe --task-definition threedollar-community-api-dev --query taskDefinition > task-definition-community-dev.json
           echo "task-definition=$GITHUB_WORKSPACE/task-definition-community-dev.json" >> $GITHUB_OUTPUT
 
       - name: Update Amazon ECS task definition
@@ -89,7 +89,7 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{  steps.render-web-container.outputs.task-definition  }}
-          cluster: community-dev
-          service: threedollar-community-dev
+          cluster: three-dollar-community-ecs
+          service: threedollar-community-api-dev
           wait-for-service-stability: true
 
