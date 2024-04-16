@@ -83,12 +83,12 @@ jobs:
         with:
           task-definition: ${{  steps.download-task-definition.outputs.task-definition  }}
           container-name: threedollar-community-api-dev
-          image: ${{  steps.release-api.outputs.image }}
+          image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{  steps.render-web-container.outputs.task-definition  }}
+          task-definition: ${{  steps.render-api-container.outputs.task-definition  }}
           cluster: three-dollar-community-ecs
           service: threedollar-community-api-dev
           wait-for-service-stability: true
