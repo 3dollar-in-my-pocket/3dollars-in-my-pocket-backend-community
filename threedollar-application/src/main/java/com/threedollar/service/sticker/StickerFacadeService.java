@@ -44,16 +44,16 @@ public class StickerFacadeService {
     }
 
     private Set<Long> getStickerIds(List<Sticker> stickers, StickerGroup stickerGroup, String workspaceId, Set<String> names) {
-        Set<Long> stickerSet = new HashSet<>();
+        Set<Long> stickerIds = new HashSet<>();
         for (String name : names) {
-            stickerSet.addAll(stickers.stream()
+            stickerIds.addAll(stickers.stream()
                 .filter(sticker -> sticker.getName().equals(name) &
                     sticker.getStickerGroup().equals(stickerGroup) &
                     sticker.getWorkspaceId().equals(workspaceId))
                 .map(Sticker::getId)
                 .collect(Collectors.toSet()));
         }
-        return stickerSet;
+        return stickerIds;
     }
 
 }
