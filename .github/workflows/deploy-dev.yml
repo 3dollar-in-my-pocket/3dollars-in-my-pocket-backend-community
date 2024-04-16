@@ -8,6 +8,16 @@ on:
         required: true
         type: string
 
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: validate semantic versioning
+        uses: actions/github-script@v3
+        if: ${{ !startWith(github.event.inputs.version, 'v') }}
+        with:
+          script: core.setFailed('input semantic version ex) v0.0.1')
+
   deploy:
     name: community-deploy
     runs-on: ubuntu-latest
