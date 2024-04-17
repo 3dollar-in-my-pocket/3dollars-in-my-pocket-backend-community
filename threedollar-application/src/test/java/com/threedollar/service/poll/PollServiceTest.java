@@ -33,11 +33,11 @@ public class PollServiceTest extends IntegrationTest {
     void 투표를_추가합니다() {
         // given
         PollCategory pollCategory = PollCategory.BEST_FOOD;
-        String accountId = "1L";
+        String accountId = "user111";
         String title = "제목";
-        String targetId = "10";
+        String targetId = "POLL30";
         String content = "내용";
-        String workspaceId = "3";
+        String workspaceId = "three-dollar-prod";
         LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
 
@@ -66,10 +66,10 @@ public class PollServiceTest extends IntegrationTest {
         // given
         PollCategory pollCategory = PollCategory.BEST_FOOD;
         String accountId = "1L";
-        String workspaceId = "3";
+        String workspaceId = "three-dollar-dev";
         String title = "제목";
         String content = "내용";
-        String targetId = "10";
+        String targetId = "POLL10";
         LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 2, 19, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 31, 18, 59);
         Poll poll = pollRepository.save(Poll.newInstance(pollCategory, workspaceId, targetId, title, content, accountId, startDateTime, endDateTime));
