@@ -33,10 +33,10 @@ public class Poll extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PollCategory pollCategory;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 100)
     private String workspaceId;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 100)
     private String targetId;
 
     @Column(nullable = false, length = 100)
