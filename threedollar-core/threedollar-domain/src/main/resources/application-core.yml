@@ -91,5 +91,3 @@ spring:
     redis:
       host: ${secret.redis.host}
       port: ${secret.redis.port}
-
-
