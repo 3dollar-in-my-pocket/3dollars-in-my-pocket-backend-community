@@ -34,10 +34,8 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=${VERSIONING#v}-${{ github.run_id }}
+          VERSION=${GITHUB_REF_NAME#v}
           echo "::set-output name=version::$VERSION"
-        env:
-          VERSIONING: ${{ github.event.inputs.version }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
