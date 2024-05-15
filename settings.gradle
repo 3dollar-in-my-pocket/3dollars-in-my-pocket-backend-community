@@ -1,4 +1,5 @@
 rootProject.name = 'threedollar-community'
 
 include 'threedollar-core:threedollar-domain'
-include 'threedollar-service'
+include 'threedollar-application'
+include 'threedollar-core:threedollar-common'

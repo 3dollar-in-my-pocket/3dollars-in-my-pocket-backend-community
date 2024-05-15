@@ -1,0 +1,23 @@
+spring.profiles.default: local
+spring.config:
+  import:
+    - classpath:/application-core.yml
+
+server:
+  port: 7000
+  servlet:
+    context-path: /community
+    encoding:
+      charset: UTF-8
+      force: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - local
+        - test
+logging:
+  level:
+    org.springframework.cache: TRACE

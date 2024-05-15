@@ -1,0 +1,22 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    api("org.apache.commons:commons-lang3")
+}
+
+
+def queryDslDir = 'src/main/generated'
+sourceSets {
+    main.java.srcDirs += [queryDslDir]
+}
+
+
+clean.doLast {
+    file(queryDslDir).deleteDir()
+}

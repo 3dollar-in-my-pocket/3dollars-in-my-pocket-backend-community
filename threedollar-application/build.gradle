@@ -1,0 +1,36 @@
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
+application {
+    mainClass.set("com.threedollar.ThreedollarServiceApplication")
+}
+
+dependencies {
+    // Common
+    implementation project(":threedollar-core:threedollar-common")
+    implementation project(":threedollar-core:threedollar-domain")
+
+    // Spring MVC
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-test")
+
+    // H2
+    runtimeOnly 'com.h2database:h2'
+
+    // Session
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // Swagger
+    api("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}")
+
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+}

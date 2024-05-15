@@ -1,0 +1,27 @@
+### 스티커를 등록합니다.
+POST {{host_api}}/community/v1/sticker-group/REVIEW/stickers
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+{
+  "targetId": "5",
+  "accountId": "2",
+  "stickerNames": ["DISLIKE"]
+}
+
+### 스티커를 제거합니다
+DELETE {{host_api}}/community/v1/sticker-group/REVIEW/stickers
+X-Community-Api-Key: {{api_key}}
+Content_Type: application/json
+
+{
+    "targetId": "5"
+}
+
+
+### 타겟들에 대한 스티커를 조회합니다
+GET {{host_api}}/community/v1/sticker-group/REVIEW/stickers?targetIds=4,5,22&accountId=100
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+
