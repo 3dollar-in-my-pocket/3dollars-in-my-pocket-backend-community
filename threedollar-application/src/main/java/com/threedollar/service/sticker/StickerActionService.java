@@ -44,9 +44,8 @@ public class StickerActionService {
             return;
         }
 
-        stickerCountRepository.incrBulkByCount(stickerGroup, workspaceId, request.getTargetId(), stickerIds);
         stickerActionRepository.save(StickerAction.newInstance(stickerGroup, workspaceId, stickerIds, request.getAccountId(), request.getTargetId()));
-
+        stickerCountRepository.incrBulkByCount(stickerGroup, workspaceId, request.getTargetId(), stickerIds);
     }
 
     @Transactional
