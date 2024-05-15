@@ -2,11 +2,6 @@ name: "운영계 배포"
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Release Version"
-        required: true
-        type: string
 
 jobs:
   validate-version:
