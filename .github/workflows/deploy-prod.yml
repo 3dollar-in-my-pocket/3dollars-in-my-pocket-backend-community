@@ -60,7 +60,7 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: threedollar-community-api
+          DOCKER_REPOSITORY: 3dollar-community-api
           IMAGE_TAG: ${{  steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-application/Dockerfile .
@@ -74,15 +74,15 @@ jobs:
       - name: Download task definition
         id: download-task-definition
         run:  |
-          aws ecs describe-task-definition --task-definition threedollar-community-api-dev --query taskDefinition > task-definition-community-dev.json
-          echo "task-definition=$GITHUB_WORKSPACE/task-definition-community-dev.json" >> $GITHUB_OUTPUT
+          aws ecs describe-task-definition --task-definition threedollar-community-api-prod --query taskDefinition > task-definition-community-prod.json
+          echo "task-definition=$GITHUB_WORKSPACE/task-definition-community-prod.json" >> $GITHUB_OUTPUT
 
       - name: Update Amazon ECS task definition
         id: render-api-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{  steps.download-task-definition.outputs.task-definition  }}
-          container-name: threedollar-community-api-dev
+          container-name: threedollar-community-api-prod
           image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
@@ -90,6 +90,6 @@ jobs:
         with:
           task-definition: ${{  steps.render-api-container.outputs.task-definition  }}
           cluster: three-dollar-community-ecs
-          service: threedollar-community-api-dev
+          service: community-api-rpd
           wait-for-service-stability: true
 
