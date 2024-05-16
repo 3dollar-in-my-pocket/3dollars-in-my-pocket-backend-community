@@ -21,4 +21,8 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}")
 
     implementation("com.google.code.findbugs:jsr305:${findBugsJsr305Version}")
+
+    // Sentry
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.9.0'
+    implementation("io.sentry:sentry-logback:7.9.0")
 }
