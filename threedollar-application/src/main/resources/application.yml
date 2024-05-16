@@ -10,6 +10,25 @@ server:
     encoding:
       charset: UTF-8
       force: true
+  shutdown: graceful
+  tomcat:
+    threads:
+      max: 300
+      min-spare: 300
+    connection-timeout: 5s
+
+spring:
+  main:
+    web-application-type: servlet
+  mvc:
+    format:
+      date: iso
+      date-time: iso
+      time: iso
+    servlet:
+      load-on-startup: 1
+  messages:
+    encoding: UTF-8
 
 ---
 spring:
