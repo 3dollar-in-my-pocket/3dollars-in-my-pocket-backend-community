@@ -40,3 +40,20 @@ spring:
 logging:
   level:
     org.springframework.cache: TRACE
+
+sentry:
+  enabled: false
+  logging:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+        - prod
+
+sentry:
+  dsn: ${secret.sentry.dsn}
+  traces-sample-rate: 1.0
