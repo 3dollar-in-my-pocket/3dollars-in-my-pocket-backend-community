@@ -16,21 +16,9 @@ dependencies {
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-test")
-
-    // H2
-    runtimeOnly 'com.h2database:h2'
-
-    // Session
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     // Swagger
-    api("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}")
 
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
-    tasks.named('test') {
-        useJUnitPlatform()
-    }
-
+    implementation("com.google.code.findbugs:jsr305:${findBugsJsr305Version}")
 }
