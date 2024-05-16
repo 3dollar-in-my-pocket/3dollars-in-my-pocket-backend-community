@@ -22,10 +22,24 @@
 - [AppStore](https://apps.apple.com/kr/app/%EA%B0%80%EC%8A%B4%EC%86%8D-3%EC%B2%9C%EC%9B%90-%EC%82%AC%EC%9E%A5%EB%8B%98/id1639708958)
 - [PlayStore](https://play.google.com/store/apps/details?id=app.threedollars.manager)
 
+
+## 아키텍처
+![img.png](docs/community.png)
+
+
 ## 구성도
 
 ![img.png](docs/service-diagram.png)
 
 ## 기술 스택
 
-- TBD
+- Java 17
+- Spring Framework (Spring Boot, Spring MVC)
+- MariaDB, Redis
+- ElastiCache
+- JPA/Hibernate, QueryDSL
+- Gradle
+- Junit5
+- AWS Cloud Service (EC2, ECS Fargate)
+- Docker
+- Github Actions
