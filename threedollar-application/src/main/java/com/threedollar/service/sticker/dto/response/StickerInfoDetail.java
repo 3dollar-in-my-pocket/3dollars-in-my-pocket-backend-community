@@ -20,7 +20,7 @@ public class StickerInfoDetail {
     @Builder
     public StickerInfoDetail(String stickerName, Long stickerCount, String imageUrl, boolean selectedByMe) {
         this.stickerName = stickerName;
-        this.stickerCount = stickerCount;
+        this.stickerCount = Math.min(stickerCount, 0);
         this.imageUrl = imageUrl;
         this.selectedByMe = selectedByMe;
     }

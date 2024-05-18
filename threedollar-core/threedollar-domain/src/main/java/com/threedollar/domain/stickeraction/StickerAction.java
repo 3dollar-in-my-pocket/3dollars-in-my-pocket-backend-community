@@ -59,7 +59,11 @@ public class StickerAction extends BaseEntity {
         this.targetId = targetId;
     }
 
-    public static StickerAction newInstance(StickerGroup stickerGroup, String workspaceId, Set<Long> stickerIds, String accountId, String targetId) {
+    public static StickerAction newInstance(StickerGroup stickerGroup,
+                                            String workspaceId,
+                                            Set<Long> stickerIds,
+                                            String accountId,
+                                            String targetId) {
         return StickerAction.builder()
             .stickerGroup(stickerGroup)
             .workspaceId(workspaceId)

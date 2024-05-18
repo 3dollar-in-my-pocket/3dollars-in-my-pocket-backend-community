@@ -4,19 +4,15 @@ X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 {
-  "targetId": "5",
-  "accountId": "2",
-  "stickerNames": ["DISLIKE"]
+  "targetId": "1481",
+  "accountId": "USER_ACCOUNT:478",
+  "stickerNames": ["LIKE"]
 }
 
 ### 스티커를 제거합니다
-DELETE {{host_api}}/community/v1/sticker-group/REVIEW/stickers
+DELETE {{host_api}}/community/v1/sticker-group/REVIEW/stickers?targetId=1481&accountId=USER_ACCOUNT:478
 X-Community-Api-Key: {{api_key}}
 Content_Type: application/json
-
-{
-    "targetId": "5"
-}
 
 
 ### 타겟들에 대한 스티커를 조회합니다
