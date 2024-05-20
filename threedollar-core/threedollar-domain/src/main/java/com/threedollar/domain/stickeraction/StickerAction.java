@@ -3,6 +3,7 @@ package com.threedollar.domain.stickeraction;
 import com.threedollar.config.converter.SetLongArrayConverter;
 import com.threedollar.domain.BaseEntity;
 import com.threedollar.domain.sticker.StickerGroup;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -49,8 +50,8 @@ public class StickerAction extends BaseEntity {
     @Builder
     public StickerAction(@NotNull StickerGroup stickerGroup,
                          @NotBlank String workspaceId,
-                         @NotBlank Set<Long> stickerIds,
-                         @NotBlank String accountId,
+                         Set<Long> stickerIds,
+                         @Nullable String accountId,
                          @NotBlank String targetId) {
         this.stickerGroup = stickerGroup;
         this.workspaceId = workspaceId;
@@ -59,11 +60,11 @@ public class StickerAction extends BaseEntity {
         this.targetId = targetId;
     }
 
-    public static StickerAction newInstance(StickerGroup stickerGroup,
-                                            String workspaceId,
+    public static StickerAction newInstance(@NotNull StickerGroup stickerGroup,
+                                            @NotBlank String workspaceId,
                                             Set<Long> stickerIds,
-                                            String accountId,
-                                            String targetId) {
+                                            @Nullable String accountId,
+                                            @NotBlank String targetId) {
         return StickerAction.builder()
             .stickerGroup(stickerGroup)
             .workspaceId(workspaceId)
