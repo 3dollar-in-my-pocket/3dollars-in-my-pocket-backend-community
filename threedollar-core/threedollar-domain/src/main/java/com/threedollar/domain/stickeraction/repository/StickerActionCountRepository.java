@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -41,9 +40,6 @@ public class StickerActionCountRepository {
         stickerRedisRepository.decrBulk(stickerCountKeys);
     }
 
-    public Map<StickerActionCountKey, Long> getStickerCountMap(List<StickerActionCountKey> stickerCountKeys) {
-        return stickerRedisRepository.getBulk(stickerCountKeys);
-    }
 
     public Long getStickerCount(StickerActionCountKey stickerActionCountKey) {
         return stickerRedisRepository.get(stickerActionCountKey);

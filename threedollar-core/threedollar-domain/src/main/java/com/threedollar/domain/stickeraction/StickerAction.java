@@ -44,7 +44,7 @@ public class StickerAction extends BaseEntity {
     private String accountId;
 
     @Column(nullable = false)
-    private String targetId; // pollId, reviewId 등 ..
+    private String targetId;
 
 
     @Builder
