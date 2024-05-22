@@ -1,13 +1,10 @@
 package com.threedollar.domain.poll.repository;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.threedollar.domain.poll.Poll;
-import com.threedollar.domain.poll.PollCategory;
 import com.threedollar.domain.poll.PollStatus;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 
 import static com.threedollar.domain.poll.QPoll.poll;
 
@@ -15,16 +12,6 @@ import static com.threedollar.domain.poll.QPoll.poll;
 public class PollRepositoryCustomImpl implements PollRepositoryCustom{
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    @Override
-    public List<Poll> findAllPollList(Long cursor, int size, PollCategory pollCategory) {
-        return jpaQueryFactory.selectFrom(poll)
-                .where(existedCursor(cursor),
-                        poll.pollCategory.eq(pollCategory))
-                .orderBy(poll.id.desc())
-                .limit(size)
-                .fetch();
-    }
 
     @Override
     public Poll findByPollIdAndAccountIdAndTargetIdAndWorkspaceId(Long pollId, String accountId, String targetId, String workspaceId) {
@@ -37,11 +24,5 @@ public class PollRepositoryCustomImpl implements PollRepositoryCustom{
                 .fetchOne();
     }
 
-    private BooleanExpression existedCursor(Long cursor) {
-        if (cursor == null) {
-            return null;
-        }
-        return poll.id.lt(cursor);
-    }
 
 }
