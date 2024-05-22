@@ -17,9 +17,5 @@ public enum PollCategory {
 
     private final String content;
 
-    public static List<PollCategory> pollTypeList() {
-        return List.of(PollCategory.values());
-    }
-
 
 }
