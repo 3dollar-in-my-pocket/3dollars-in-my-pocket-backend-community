@@ -29,14 +29,17 @@ public class PostSection extends BaseEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(length = 200)
-    private Long parentId;
-
     @Column(nullable = false)
     private int priority;
 
-    @Column(length = 4000)
-    private String content;
+    @Column(nullable = false, length = 500)
+    private String url;
+
+    @Column(length = 100)
+    private int width;
+
+    @Column(length = 100)
+    private int height;
 
 
 }
