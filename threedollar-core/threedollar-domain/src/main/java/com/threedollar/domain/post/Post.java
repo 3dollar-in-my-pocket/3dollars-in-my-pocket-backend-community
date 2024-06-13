@@ -1,6 +1,8 @@
 package com.threedollar.domain.post;
 
 import com.threedollar.domain.BaseEntity;
+import com.threedollar.domain.post.postcategory.PostCategory;
+import com.threedollar.domain.post.postsection.PostSection;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,10 +41,10 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PostStatus status;
 
-    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<PostCategory> postCategory = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<PostSection> postSection = new ArrayList<>();
 
 
