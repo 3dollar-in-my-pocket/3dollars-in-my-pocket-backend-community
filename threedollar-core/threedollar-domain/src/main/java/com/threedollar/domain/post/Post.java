@@ -33,6 +33,9 @@ public class Post extends BaseEntity {
     @Column(nullable = false, length = 200)
     private String title;
 
+    @Column(length = 4000)
+    private String content;
+
     @Column(nullable = false, length = 200)
     private String accountId;
 
