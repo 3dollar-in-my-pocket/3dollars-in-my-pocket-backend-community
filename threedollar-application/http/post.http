@@ -1,0 +1,20 @@
+### Post
+POST {{host_api}}/community/v1/post
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+{
+      "postGroup": "BOSS_NEWS",
+      "title": "오늘은 휴일입니다",
+      "content": "정기적인 휴일입니다.",
+      "accountId": "USER222",
+      "postSectionRequests": [
+       {
+          "postType": "IMAGE",
+          "priority": "2",
+          "url": "image.jpg",
+          "width": "300",
+          "height": "400"
+       }
+      ]
+}

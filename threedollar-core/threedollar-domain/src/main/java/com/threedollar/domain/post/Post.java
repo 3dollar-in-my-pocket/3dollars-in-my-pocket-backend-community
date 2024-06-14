@@ -9,6 +9,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,6 +46,34 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<PostSection> postSection = new ArrayList<>();
+
+    @Builder
+    public Post(PostGroup postGroup, Long parentId, String workspaceId, String title, String content, String accountId, PostStatus status) {
+        this.postGroup = postGroup;
+        this.parentId = parentId;
+        this.workspaceId = workspaceId;
+        this.title = title;
+        this.content = content;
+        this.accountId = accountId;
+        this.status = status;
+    }
+
+    public void add(PostSection postSection) {
+        this.postSection.add(postSection);
+    }
+
+    public static Post of(PostGroup postGroup, Long parentId, String workspaceId,
+                          String title, String content, String accountId) {
+        return Post.builder()
+            .postGroup(postGroup)
+            .parentId(parentId)
+            .workspaceId(workspaceId)
+            .title(title)
+            .content(content)
+            .accountId(accountId)
+            .status(PostStatus.ACTIVE)
+            .build();
+    }
 
 
 }
