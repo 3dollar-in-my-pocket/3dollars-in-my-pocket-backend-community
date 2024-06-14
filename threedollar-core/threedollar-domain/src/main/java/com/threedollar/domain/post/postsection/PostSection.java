@@ -11,13 +11,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 public class PostSection extends BaseEntity {
 
@@ -41,5 +40,25 @@ public class PostSection extends BaseEntity {
     @Column(length = 100)
     private int height;
 
+    @Builder
+    public PostSection(PostType postType, Post post, int priority, String url, int width, int height) {
+        this.postType = postType;
+        this.post = post;
+        this.priority = priority;
+        this.url = url;
+        this.width = width;
+        this.height = height;
+    }
+
+    public static PostSection of(PostType postType, Post post, int priority, String url, int width, int height) {
+        return PostSection.builder()
+            .post(post)
+            .postType(postType)
+            .priority(priority)
+            .url(url)
+            .width(width)
+            .height(height)
+            .build();
+    }
 
 }
