@@ -62,6 +62,10 @@ public class Post extends BaseEntity {
         this.postSection.add(postSection);
     }
 
+    public void delete() {
+        this.status = PostStatus.DELETED;
+    }
+
     public static Post of(PostGroup postGroup, Long parentId, String workspaceId,
                           String title, String content, String accountId) {
         return Post.builder()
