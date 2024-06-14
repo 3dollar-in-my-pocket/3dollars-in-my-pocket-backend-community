@@ -3,6 +3,7 @@ package com.threedollar.service.post;
 import com.threedollar.IntegrationTest;
 import com.threedollar.domain.post.Post;
 import com.threedollar.domain.post.PostGroup;
+import com.threedollar.domain.post.PostStatus;
 import com.threedollar.domain.post.PostType;
 import com.threedollar.domain.post.repository.PostRepository;
 import com.threedollar.service.post.request.PostAddRequest;
@@ -29,16 +30,33 @@ public class PostServiceTest extends IntegrationTest {
 
         // given
         PostAddRequest request = newRequest();
-        String workspaceId = "user111";
+        String workspaceId = "three-user";
+        String accountId = "user22";
 
         // when
-        postService.addPost(request, workspaceId);
+        postService.addPost(request, workspaceId, accountId);
 
         // then
         Post post = postRepository.findAll().get(0);
         assertThat(postRepository.findAll()).hasSize(1);
         assertThat(workspaceId).isEqualTo(post.getWorkspaceId());
-        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), request.getAccountId());
+        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId);
+    }
+
+    @Test
+    void 사장님이_소식을_지운다() {
+        // given
+        String workspaceId = "three-dollar-dev";
+        String accountId = "user222";
+        Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
+
+        // when
+        postService.deletePost(workspaceId, accountId, post.getId());
+
+        // then
+        List<Post> posts = postRepository.findAll();
+        assertThat(posts.get(0).getStatus()).isEqualTo(PostStatus.DELETED);
+
     }
 
     private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId) {
@@ -50,13 +68,11 @@ public class PostServiceTest extends IntegrationTest {
 
     }
 
-
     private PostAddRequest newRequest() {
 
         PostGroup postGroup = PostGroup.BOSS_NEWS;
         String title = "은평구 핫도그 아저씨";
         String content = "콘텐트";
-        String accountId = "user222";
         PostType postType = PostType.IMAGE;
         int height = 400;
         int width = 200;
@@ -73,8 +89,8 @@ public class PostServiceTest extends IntegrationTest {
             .postGroup(postGroup)
             .title(title)
             .content(content)
-            .accountId(accountId)
             .postSectionRequests(List.of(postSectionRequest))
             .build();
     }
+
 }

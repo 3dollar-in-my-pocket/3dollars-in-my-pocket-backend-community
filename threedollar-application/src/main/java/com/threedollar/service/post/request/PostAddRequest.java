@@ -25,9 +25,6 @@ public class PostAddRequest {
     @NotBlank
     private String content;
 
-    @NotBlank
-    private String accountId;
-
     @NotNull
     private List<PostSectionRequest> postSectionRequests;
 
@@ -37,11 +34,10 @@ public class PostAddRequest {
         this.parentId = parentId;
         this.title = title;
         this.content = content;
-        this.accountId = accountId;
         this.postSectionRequests = postSectionRequests;
     }
 
-    public Post toEntity(String workspaceId) {
+    public Post toEntity(String workspaceId, String accountId) {
 
         Post post = Post.of(postGroup, parentId, workspaceId, title, content, accountId);
 
