@@ -8,6 +8,7 @@ import com.threedollar.domain.post.PostType;
 import com.threedollar.domain.post.repository.PostRepository;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostSectionRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,11 @@ public class PostServiceTest extends IntegrationTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @AfterEach
+    void clean_up() {
+        postRepository.deleteAll();
+    }
 
     @Test
     void 사장님이_소식을_작성한다() {

@@ -14,7 +14,7 @@ public class PostFacadeService {
 
     public void addPost(PostAddRequest request,
                         @NotBlank String workspaceId,
-                        String accountId) {
+                        @NotBlank String accountId) {
         postService.addPost(request, workspaceId, accountId);
     }
 
