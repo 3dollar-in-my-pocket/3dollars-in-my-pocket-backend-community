@@ -4,7 +4,7 @@ import com.threedollar.IntegrationTest;
 import com.threedollar.domain.post.Post;
 import com.threedollar.domain.post.PostGroup;
 import com.threedollar.domain.post.PostStatus;
-import com.threedollar.domain.post.PostType;
+import com.threedollar.domain.post.SectionType;
 import com.threedollar.domain.post.repository.PostRepository;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostSectionRequest;
@@ -46,7 +46,7 @@ public class PostServiceTest extends IntegrationTest {
         Post post = postRepository.findAll().get(0);
         assertThat(postRepository.findAll()).hasSize(1);
         assertThat(workspaceId).isEqualTo(post.getWorkspaceId());
-        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId);
+        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId, request.getTargetId());
     }
 
     @Test
@@ -65,12 +65,13 @@ public class PostServiceTest extends IntegrationTest {
 
     }
 
-    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId) {
+    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId, String targetId) {
 
         assertThat(post.getPostGroup()).isEqualTo(postGroup);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
         assertThat(post.getAccountId()).isEqualTo(accountId);
+        assertThat(post.getTargetId()).isEqualTo(targetId);
 
     }
 
@@ -79,13 +80,14 @@ public class PostServiceTest extends IntegrationTest {
         PostGroup postGroup = PostGroup.BOSS_NEWS;
         String title = "은평구 핫도그 아저씨";
         String content = "콘텐트";
-        PostType postType = PostType.IMAGE;
+        SectionType sectionType = SectionType.IMAGE;
         int height = 400;
         int width = 200;
         String url = "image.jpg";
+        String targetId = "111";
 
         PostSectionRequest postSectionRequest = PostSectionRequest.builder()
-            .postType(postType)
+            .sectionType(sectionType)
             .height(height)
             .width(width)
             .url(url)
@@ -94,8 +96,9 @@ public class PostServiceTest extends IntegrationTest {
         return PostAddRequest.builder()
             .postGroup(postGroup)
             .title(title)
+            .targetId(targetId)
             .content(content)
-            .postSectionRequests(List.of(postSectionRequest))
+            .sections(List.of(postSectionRequest))
             .build();
     }
 

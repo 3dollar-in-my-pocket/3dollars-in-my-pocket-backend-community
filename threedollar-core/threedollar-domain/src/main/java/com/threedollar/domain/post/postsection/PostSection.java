@@ -2,7 +2,7 @@ package com.threedollar.domain.post.postsection;
 
 import com.threedollar.domain.BaseEntity;
 import com.threedollar.domain.post.Post;
-import com.threedollar.domain.post.PostType;
+import com.threedollar.domain.post.SectionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +22,7 @@ public class PostSection extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 200)
-    private PostType postType;
+    private SectionType sectionType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
@@ -41,8 +41,8 @@ public class PostSection extends BaseEntity {
     private int height;
 
     @Builder
-    public PostSection(PostType postType, Post post, int priority, String url, int width, int height) {
-        this.postType = postType;
+    public PostSection(SectionType sectionType, Post post, int priority, String url, int width, int height) {
+        this.sectionType = sectionType;
         this.post = post;
         this.priority = priority;
         this.url = url;
@@ -50,10 +50,10 @@ public class PostSection extends BaseEntity {
         this.height = height;
     }
 
-    public static PostSection of(PostType postType, Post post, int priority, String url, int width, int height) {
+    public static PostSection of(SectionType sectionType, Post post, int priority, String url, int width, int height) {
         return PostSection.builder()
             .post(post)
-            .postType(postType)
+            .sectionType(sectionType)
             .priority(priority)
             .url(url)
             .width(width)

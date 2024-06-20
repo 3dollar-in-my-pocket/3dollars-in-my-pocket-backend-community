@@ -37,6 +37,8 @@ public class Post extends BaseEntity {
     @Column(length = 4000)
     private String content;
 
+    private String targetId;
+
     @Column(nullable = false, length = 200)
     private String accountId;
 
@@ -48,12 +50,13 @@ public class Post extends BaseEntity {
     private final List<PostSection> postSection = new ArrayList<>();
 
     @Builder
-    public Post(PostGroup postGroup, Long parentId, String workspaceId, String title, String content, String accountId, PostStatus status) {
+    public Post(PostGroup postGroup, Long parentId, String workspaceId, String title, String content, String targetId, String accountId, PostStatus status) {
         this.postGroup = postGroup;
         this.parentId = parentId;
         this.workspaceId = workspaceId;
         this.title = title;
         this.content = content;
+        this.targetId = targetId;
         this.accountId = accountId;
         this.status = status;
     }
@@ -67,13 +70,14 @@ public class Post extends BaseEntity {
     }
 
     public static Post of(PostGroup postGroup, Long parentId, String workspaceId,
-                          String title, String content, String accountId) {
+                          String title, String content, String targetId, String accountId) {
         return Post.builder()
             .postGroup(postGroup)
             .parentId(parentId)
             .workspaceId(workspaceId)
             .title(title)
             .content(content)
+            .targetId(targetId)
             .accountId(accountId)
             .status(PostStatus.ACTIVE)
             .build();
