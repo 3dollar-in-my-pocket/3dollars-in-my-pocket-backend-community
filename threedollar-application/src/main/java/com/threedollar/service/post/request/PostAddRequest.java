@@ -22,27 +22,30 @@ public class PostAddRequest {
 
     private String title;
 
+    private String targetId;
+
     @NotBlank
     private String content;
 
     @NotNull
-    private List<PostSectionRequest> postSectionRequests;
+    private List<PostSectionRequest> sections;
 
     @Builder
-    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String accountId, List<PostSectionRequest> postSectionRequests) {
+    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String targetId, List<PostSectionRequest> sections) {
         this.postGroup = postGroup;
         this.parentId = parentId;
         this.title = title;
+        this.targetId =
         this.content = content;
-        this.postSectionRequests = postSectionRequests;
+        this.sections = sections;
     }
 
     public Post toEntity(String workspaceId, String accountId) {
 
-        Post post = Post.of(postGroup, parentId, workspaceId, title, content, accountId);
+        Post post = Post.of(postGroup, parentId, workspaceId, title, content, targetId, accountId);
 
-        for (PostSectionRequest postSectionRequest : postSectionRequests) {
-            post.add(postSectionRequest.toEntity(post));
+        for (PostSectionRequest section : sections) {
+            post.add(section.toEntity(post));
         }
         return post;
 

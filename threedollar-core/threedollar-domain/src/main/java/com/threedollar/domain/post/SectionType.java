@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum PostType {
+public enum SectionType {
 
     IMAGE("사진"),
     TEXT("글"),
