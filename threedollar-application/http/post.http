@@ -1,5 +1,5 @@
-### Post
-POST {{host_api}}/community/v1/post
+### Post 추가
+POST {{host_api}}/community/v1/post?accountId=USER222
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
@@ -7,10 +7,10 @@ Content-Type: application/json
       "postGroup": "BOSS_NEWS",
       "title": "오늘은 휴일입니다",
       "content": "정기적인 휴일입니다.",
-      "accountId": "USER222",
-      "postSectionRequests": [
+      "workspaceId": "1",
+      "sections": [
        {
-          "postType": "IMAGE",
+          "sectionType": "IMAGE",
           "priority": "2",
           "url": "image.jpg",
           "width": "300",
@@ -18,3 +18,12 @@ Content-Type: application/json
        }
       ]
 }
+
+
+
+### Post 조회
+GET {{host_api}}/community/v1/posts?size=3&workspaceId=1&accountId=USER222
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+

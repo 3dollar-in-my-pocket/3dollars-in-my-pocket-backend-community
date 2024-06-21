@@ -57,7 +57,7 @@ public class PostServiceTest extends IntegrationTest {
         Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
 
         // when
-        postService.deletePost(workspaceId, accountId, post.getId());
+        postService.deletePost(workspaceId, accountId, post.getId(), post.getTargetId());
 
         // then
         List<Post> posts = postRepository.findAll();

@@ -24,6 +24,8 @@ public class PostAddRequest {
 
     private String targetId;
 
+    private String workspaceId;
+
     @NotBlank
     private String content;
 
@@ -31,11 +33,12 @@ public class PostAddRequest {
     private List<PostSectionRequest> sections;
 
     @Builder
-    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String targetId, List<PostSectionRequest> sections) {
+    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String targetId, String workspaceId, List<PostSectionRequest> sections) {
         this.postGroup = postGroup;
         this.parentId = parentId;
         this.title = title;
-        this.targetId =
+        this.targetId = targetId;
+        this.workspaceId = workspaceId;
         this.content = content;
         this.sections = sections;
     }
