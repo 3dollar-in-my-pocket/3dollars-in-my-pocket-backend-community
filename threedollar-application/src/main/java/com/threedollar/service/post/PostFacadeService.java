@@ -1,6 +1,6 @@
 package com.threedollar.service.post;
 
-import com.threedollar.domain.post.Post;
+import com.threedollar.domain.post.PostGroup;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostAndCursorRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
@@ -26,14 +26,14 @@ public class PostFacadeService {
     public void deletePost(@NotBlank String workspaceId,
                            @NotBlank String accountId,
                            @NotNull Long postId,
-                           @NotBlank String targetId) {
+                           @NotNull PostGroup postGroup) {
 
-        postService.deletePost(workspaceId, accountId, postId, targetId);
+        postService.deletePost(workspaceId, accountId, postId, postGroup);
 
     }
 
     public PostAndCursorResponse getPostAndCursor(@Valid PostAndCursorRequest request) {
-        return postService.getPostsAndCursor(request.getWorkspaceId(), request.getAccountId(), request.getCursor(), request.getSize());
+        return postService.getPostsAndCursor(request.getPostGroup(), request.getWorkspaceId(), request.getAccountId(), request.getCursor(), request.getSize());
     }
 
 

@@ -46,7 +46,7 @@ public class PostServiceTest extends IntegrationTest {
         Post post = postRepository.findAll().get(0);
         assertThat(postRepository.findAll()).hasSize(1);
         assertThat(workspaceId).isEqualTo(post.getWorkspaceId());
-        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId, request.getTargetId());
+        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId);
     }
 
     @Test
@@ -55,9 +55,10 @@ public class PostServiceTest extends IntegrationTest {
         String workspaceId = "three-dollar-dev";
         String accountId = "user222";
         Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
+        PostGroup postGroup = PostGroup.BOSS_NEWS;
 
         // when
-        postService.deletePost(workspaceId, accountId, post.getId(), post.getTargetId());
+        postService.deletePost(workspaceId, accountId, post.getId(), postGroup);
 
         // then
         List<Post> posts = postRepository.findAll();
@@ -65,13 +66,12 @@ public class PostServiceTest extends IntegrationTest {
 
     }
 
-    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId, String targetId) {
+    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId) {
 
         assertThat(post.getPostGroup()).isEqualTo(postGroup);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
         assertThat(post.getAccountId()).isEqualTo(accountId);
-        assertThat(post.getTargetId()).isEqualTo(targetId);
 
     }
 
@@ -84,7 +84,6 @@ public class PostServiceTest extends IntegrationTest {
         int height = 400;
         int width = 200;
         String url = "image.jpg";
-        String targetId = "111";
 
         PostSectionRequest postSectionRequest = PostSectionRequest.builder()
             .sectionType(sectionType)
@@ -96,7 +95,6 @@ public class PostServiceTest extends IntegrationTest {
         return PostAddRequest.builder()
             .postGroup(postGroup)
             .title(title)
-            .targetId(targetId)
             .content(content)
             .sections(List.of(postSectionRequest))
             .build();

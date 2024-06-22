@@ -3,6 +3,7 @@ package com.threedollar.controller.post;
 import com.threedollar.common.dto.response.ApiResponse;
 import com.threedollar.config.interceptor.ApiKeyContext;
 import com.threedollar.config.resolver.RequestApiKey;
+import com.threedollar.domain.post.PostGroup;
 import com.threedollar.service.post.PostFacadeService;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostAndCursorRequest;
@@ -24,8 +25,8 @@ public class PostController {
 
     @PostMapping("/v1/post")
     public ApiResponse<Long> addPost(@RequestApiKey ApiKeyContext workspaceId,
-                                       @RequestParam String accountId,
-                                       @Valid @RequestBody PostAddRequest request) {
+                                     @RequestParam String accountId,
+                                     @Valid @RequestBody PostAddRequest request) {
 
         return ApiResponse.success(postFacadeService.addPost(request, workspaceId.getWorkspaceId(), accountId));
 
@@ -35,11 +36,9 @@ public class PostController {
     public ApiResponse<String> deletePost(Long postId,
                                           String accountId,
                                           String workspaceId,
-                                          String targetId) {
-
-        postFacadeService.deletePost(workspaceId, accountId, postId, targetId);
+                                          PostGroup postGroup) {
+        postFacadeService.deletePost(workspaceId, accountId, postId, postGroup);
         return ApiResponse.OK;
-
     }
 
     @GetMapping("/v1/posts")

@@ -22,8 +22,6 @@ public class PostAddRequest {
 
     private String title;
 
-    private String targetId;
-
     private String workspaceId;
 
     @NotBlank
@@ -33,11 +31,10 @@ public class PostAddRequest {
     private List<PostSectionRequest> sections;
 
     @Builder
-    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String targetId, String workspaceId, List<PostSectionRequest> sections) {
+    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String content, String workspaceId, List<PostSectionRequest> sections) {
         this.postGroup = postGroup;
         this.parentId = parentId;
         this.title = title;
-        this.targetId = targetId;
         this.workspaceId = workspaceId;
         this.content = content;
         this.sections = sections;
@@ -45,7 +42,7 @@ public class PostAddRequest {
 
     public Post toEntity(String workspaceId, String accountId) {
 
-        Post post = Post.of(postGroup, parentId, workspaceId, title, content, targetId, accountId);
+        Post post = Post.of(postGroup, parentId, workspaceId, title, content, accountId);
 
         for (PostSectionRequest section : sections) {
             post.add(section.toEntity(post));

@@ -2,8 +2,8 @@ package com.threedollar.service.post;
 
 import com.threedollar.common.exception.NotFoundException;
 import com.threedollar.domain.post.Post;
+import com.threedollar.domain.post.PostGroup;
 import com.threedollar.domain.post.repository.PostRepository;
-import com.threedollar.service.post.request.CursorRequest;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
 import jakarta.validation.constraints.NotBlank;
@@ -34,9 +34,9 @@ public class PostService {
     public void deletePost(String workspaceId,
                            String accountId,
                            Long postId,
-                           String targetId) {
+                           PostGroup postGroup) {
 
-        Post post = postRepository.findByIdAndWorkspaceIdAndAccountIdAndTargetId(postId, accountId, workspaceId, targetId);
+        Post post = postRepository.findByIdAndWorkspaceIdAndAccountIdAndGroup(postId, accountId, workspaceId, postGroup);
         if (post == null) {
             throw new NotFoundException(String.format("(%s)에 해당하는 postId 는 존재하지 않거나 잘못된 접근입니다", postId));
         }
@@ -46,17 +46,17 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostAndCursorResponse getPostsAndCursor(String workspaceId,
-                                               String accountId,
-                                               Long cursor,
-                                               int size) {
-        List<Post> posts = postRepository.findByAccountIdAndWorkspaceIdAndCursorAndSize(workspaceId, accountId, cursor, size + 1);
+    public PostAndCursorResponse getPostsAndCursor(PostGroup postGroup,
+                                                   String workspaceId,
+                                                   String accountId,
+                                                   Long cursor,
+                                                   int size) {
+        List<Post> posts = postRepository.findByPostGroupAndAccountIdAndWorkspaceIdAndCursorAndSize(postGroup, workspaceId, accountId, cursor, size + 1);
 
         if (posts.isEmpty() || posts.size() <= size) {
             return PostAndCursorResponse.noMore(posts);
         }
         return PostAndCursorResponse.hasNext(posts);
-
 
     }
 
