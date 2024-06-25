@@ -27,7 +27,7 @@ public class PostAndCursorResponse {
         return PostAndCursorResponse.builder()
             .cursor(CursorResponse.builder()
                 .hasNext(true)
-                .cursor(posts.get(posts.size() - 2).getId())
+                .nextCursor(posts.get(posts.size() - 2).getId())
                 .build())
             .posts(getPostResponse(posts.subList(0, posts.size() - 1)))
             .build();
@@ -37,7 +37,7 @@ public class PostAndCursorResponse {
         return PostAndCursorResponse.builder()
             .cursor(CursorResponse.builder()
                 .hasNext(false)
-                .cursor(null)
+                .nextCursor(null)
                 .build())
             .posts(getPostResponse(posts))
             .build();
