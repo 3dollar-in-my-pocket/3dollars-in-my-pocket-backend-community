@@ -10,12 +10,12 @@ public class CursorResponse {
 
     private boolean hasNext;
 
-    private Long next;
+    private Long nextCursor;
 
     @Builder
-    public CursorResponse(boolean hasNext, Long next) {
+    public CursorResponse(boolean hasNext, Long nextCursor) {
         this.hasNext = hasNext;
-        this.next = next;
+        this.nextCursor = nextCursor;
     }
 
 }

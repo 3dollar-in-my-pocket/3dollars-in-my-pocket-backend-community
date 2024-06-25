@@ -37,6 +37,7 @@ public class Post extends BaseEntity {
     @Column(length = 4000)
     private String content;
 
+    @Column(nullable = false, length = 200)
     private String targetId;
 
     @Column(nullable = false, length = 200)

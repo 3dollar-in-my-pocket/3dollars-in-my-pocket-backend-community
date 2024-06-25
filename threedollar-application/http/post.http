@@ -1,20 +1,29 @@
-### Post
-POST {{host_api}}/community/v1/post
+### Post 추가
+POST {{host_api}}/community/v1/post?accountId=USER222
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 {
-      "postGroup": "BOSS_NEWS",
+      "postGroup": "NEWS_POST",
       "title": "오늘은 휴일입니다",
       "content": "정기적인 휴일입니다.",
-      "accountId": "USER222",
-      "postSectionRequests": [
+      "targetId": "3",
+      "workspaceId": "threedollar-dev",
+      "sections": [
        {
-          "postType": "IMAGE",
+          "sectionType": "IMAGE",
           "priority": "2",
-          "url": "image.jpg",
-          "width": "300",
-          "height": "400"
+          "ratio": 23.333,
+          "url": "www.naver.com"
        }
       ]
 }
+
+
+
+### Post 조회
+GET {{host_api}}/community/v1/posts?cursor=8&size=3&workspaceId=threedollar-dev&targetId=3&postGroup=NEWS_POST
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json
+
+
