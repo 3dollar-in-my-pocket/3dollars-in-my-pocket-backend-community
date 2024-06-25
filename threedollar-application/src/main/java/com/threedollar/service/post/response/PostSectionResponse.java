@@ -16,17 +16,14 @@ public class PostSectionResponse {
 
     private String url;
 
-    private int width;
-
-    private int height;
+    private double ratio;
 
     @Builder
-    public PostSectionResponse(SectionType sectionType, int priority, String url, int width, int height) {
+    public PostSectionResponse(SectionType sectionType, int priority, String url, double ratio) {
         this.sectionType = sectionType;
         this.priority = priority;
         this.url = url;
-        this.width = width;
-        this.height = height;
+        this.ratio = ratio;
     }
 
     public static PostSectionResponse of(PostSection section) {
@@ -35,8 +32,7 @@ public class PostSectionResponse {
             .sectionType(section.getSectionType())
             .priority(section.getPriority())
             .url(section.getUrl())
-            .width(section.getWidth())
-            .height(section.getHeight())
+            .ratio(section.getRatio())
             .build();
 
     }

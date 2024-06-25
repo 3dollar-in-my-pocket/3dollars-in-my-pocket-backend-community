@@ -1,4 +1,4 @@
-package com.threedollar.controller;
+package com.threedollar.config.advice;
 
 import com.threedollar.common.dto.response.ApiResponse;
 import com.threedollar.common.exception.NotFoundException;
@@ -18,5 +18,7 @@ public class ExceptionControllerAdvice {
         log.error(e.getErrorCode().getMessage(), e);
         return ApiResponse.error(e.getErrorCode(), e.getMessage());
     }
+
+
 
 }

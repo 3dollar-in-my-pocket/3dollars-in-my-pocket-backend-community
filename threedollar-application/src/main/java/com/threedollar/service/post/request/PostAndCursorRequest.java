@@ -1,9 +1,9 @@
 package com.threedollar.service.post.request;
 
-import com.threedollar.domain.post.PostGroup;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,17 +18,16 @@ public class PostAndCursorRequest {
     @Max(30)
     private int size;
 
+    @NotBlank
     private String workspaceId;
 
-    private String accountId;
+    @NotBlank
+    private String targetId;
 
-    private PostGroup postGroup;
-
-    public PostAndCursorRequest(Long cursor, int size, String workspaceId, String accountId, PostGroup postGroup) {
+    public PostAndCursorRequest(Long cursor, int size, String workspaceId, String targetId) {
         this.cursor = cursor;
         this.size = size;
         this.workspaceId = workspaceId;
-        this.accountId = accountId;
-        this.postGroup = postGroup;
+        this.targetId = targetId;
     }
 }

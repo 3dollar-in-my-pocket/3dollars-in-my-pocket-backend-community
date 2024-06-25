@@ -26,14 +26,21 @@ public class PostFacadeService {
     public void deletePost(@NotBlank String workspaceId,
                            @NotBlank String accountId,
                            @NotNull Long postId,
-                           @NotNull PostGroup postGroup) {
+                           @NotNull PostGroup postGroup,
+                           @NotBlank String targetId) {
 
-        postService.deletePost(workspaceId, accountId, postId, postGroup);
+        postService.deletePost(workspaceId, accountId, postId, postGroup, targetId);
 
     }
 
-    public PostAndCursorResponse getPostAndCursor(@Valid PostAndCursorRequest request) {
-        return postService.getPostsAndCursor(request.getPostGroup(), request.getWorkspaceId(), request.getAccountId(), request.getCursor(), request.getSize());
+    public PostAndCursorResponse getPostAndCursor(@Valid PostAndCursorRequest request,
+                                                  PostGroup postGroup) {
+        return postService.getPostsAndCursor(
+            postGroup,
+            request.getWorkspaceId(),
+            request.getTargetId(),
+            request.getCursor(),
+            request.getSize());
     }
 
 

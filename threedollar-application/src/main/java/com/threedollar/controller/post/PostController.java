@@ -5,6 +5,7 @@ import com.threedollar.config.interceptor.ApiKeyContext;
 import com.threedollar.config.resolver.RequestApiKey;
 import com.threedollar.domain.post.PostGroup;
 import com.threedollar.service.post.PostFacadeService;
+import com.threedollar.service.post.request.GetPostRequest;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostAndCursorRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,18 +34,17 @@ public class PostController {
 
     }
 
-    @DeleteMapping("/v1/post")
-    public ApiResponse<String> deletePost(Long postId,
-                                          String accountId,
-                                          String workspaceId,
-                                          PostGroup postGroup) {
-        postFacadeService.deletePost(workspaceId, accountId, postId, postGroup);
+    @DeleteMapping("/v1/post/{postId}")
+    public ApiResponse<String> deletePost(@PathVariable Long postId,
+                                          GetPostRequest request) {
+        postFacadeService.deletePost(request.getWorkspaceId(), request.getAccountId(), postId, request.getPostGroup(), request.getTargetId());
         return ApiResponse.OK;
     }
 
-    @GetMapping("/v1/posts")
-    public ApiResponse<PostAndCursorResponse> getPosts(@Valid PostAndCursorRequest request) {
-        return ApiResponse.success(postFacadeService.getPostAndCursor(request));
+    @GetMapping("/v1/post-group/{postGroup}")
+    public ApiResponse<PostAndCursorResponse> getPosts(@Valid PostAndCursorRequest request,
+                                                       @PathVariable PostGroup postGroup) {
+        return ApiResponse.success(postFacadeService.getPostAndCursor(request, postGroup));
     }
 
 }

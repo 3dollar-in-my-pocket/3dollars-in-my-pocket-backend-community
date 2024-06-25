@@ -33,7 +33,6 @@ public class PostServiceTest extends IntegrationTest {
 
     @Test
     void 사장님이_소식을_작성한다() {
-
         // given
         PostAddRequest request = newRequest();
         String workspaceId = "three-user";
@@ -45,8 +44,7 @@ public class PostServiceTest extends IntegrationTest {
         // then
         Post post = postRepository.findAll().get(0);
         assertThat(postRepository.findAll()).hasSize(1);
-        assertThat(workspaceId).isEqualTo(post.getWorkspaceId());
-        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId);
+        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId, workspaceId, request.getTargetId());
     }
 
     @Test
@@ -55,10 +53,11 @@ public class PostServiceTest extends IntegrationTest {
         String workspaceId = "three-dollar-dev";
         String accountId = "user222";
         Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
-        PostGroup postGroup = PostGroup.BOSS_NEWS;
+        PostGroup postGroup = PostGroup.NEWS_POST;
+        String targetId = "333";
 
         // when
-        postService.deletePost(workspaceId, accountId, post.getId(), postGroup);
+        postService.deletePost(workspaceId, accountId, post.getId(), postGroup, targetId);
 
         // then
         List<Post> posts = postRepository.findAll();
@@ -66,29 +65,31 @@ public class PostServiceTest extends IntegrationTest {
 
     }
 
-    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId) {
+    private void assertPost(Post post, PostGroup postGroup, String title, String content, String accountId, String workspaceId, String targetId) {
 
         assertThat(post.getPostGroup()).isEqualTo(postGroup);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
         assertThat(post.getAccountId()).isEqualTo(accountId);
+        assertThat(post.getWorkspaceId()).isEqualTo(workspaceId);
+        assertThat(post.getTargetId()).isEqualTo(targetId);
 
     }
 
     private PostAddRequest newRequest() {
 
-        PostGroup postGroup = PostGroup.BOSS_NEWS;
+        PostGroup postGroup = PostGroup.NEWS_POST;
+        String targetId = "33";
+        String workspaceId = "threedollar-dev";
         String title = "은평구 핫도그 아저씨";
         String content = "콘텐트";
         SectionType sectionType = SectionType.IMAGE;
-        int height = 400;
-        int width = 200;
+        double ratio = 23.333;
         String url = "image.jpg";
 
         PostSectionRequest postSectionRequest = PostSectionRequest.builder()
             .sectionType(sectionType)
-            .height(height)
-            .width(width)
+            .ratio(ratio)
             .url(url)
             .build();
 
@@ -96,6 +97,8 @@ public class PostServiceTest extends IntegrationTest {
             .postGroup(postGroup)
             .title(title)
             .content(content)
+            .targetId(targetId)
+            .workspaceId(workspaceId)
             .sections(List.of(postSectionRequest))
             .build();
     }

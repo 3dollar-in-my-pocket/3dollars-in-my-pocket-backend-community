@@ -18,26 +18,27 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Post findByIdAndWorkspaceIdAndAccountIdAndGroup(Long postId, String accountId, String workspaceId, PostGroup postGroup) {
+    public Post findByIdAndWorkspaceIdAndAccountIdAndGroupAndTargetId(Long postId, String accountId, String workspaceId, PostGroup postGroup, String targetId) {
         return jpaQueryFactory.selectFrom(post)
             .where(
                 post.workspaceId.eq(workspaceId),
                 post.accountId.eq(accountId),
                 post.id.eq(postId),
                 post.postGroup.eq(postGroup),
+                post.targetId.eq(targetId),
                 post.status.eq(PostStatus.ACTIVE)
             )
             .fetchOne();
     }
 
     @Override
-    public List<Post> findByPostGroupAndAccountIdAndWorkspaceIdAndCursorAndSize(PostGroup postGroup, String workspaceId, String accountId, Long cursor, int size) {
+    public List<Post> findByPostGroupAndWorkspaceIdAndTargetIdAndCursorAndSize(PostGroup postGroup, String workspaceId, String targetId, Long cursor, int size) {
         List<Long> postIds = jpaQueryFactory.select(post.id)
             .from(post)
             .where(existsCursor(cursor),
                 post.workspaceId.eq(workspaceId),
-                post.accountId.eq(accountId),
                 post.postGroup.eq(postGroup),
+                post.targetId.eq(targetId),
                 post.status.eq(PostStatus.ACTIVE))
             .orderBy(post.id.desc())
             .limit(size)

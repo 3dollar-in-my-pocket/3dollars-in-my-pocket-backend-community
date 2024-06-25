@@ -19,22 +19,20 @@ public class PostSectionRequest {
 
     private String url;
 
-    private int width;
-
-    private int height;
+    private double ratio;
 
     @Builder
-    public PostSectionRequest(SectionType sectionType, int priority, String url, int width, int height) {
+    public PostSectionRequest(SectionType sectionType, int priority, String url, double ratio) {
         this.sectionType = sectionType;
         this.priority = priority;
         this.url = url;
-        this.width = width;
-        this.height = height;
+        this.ratio = ratio;
+
     }
 
     public PostSection toEntity(Post post) {
 
-        return PostSection.of(sectionType, post, priority, url, width, height);
+        return PostSection.of(sectionType, post, priority, url, ratio);
 
     }
 

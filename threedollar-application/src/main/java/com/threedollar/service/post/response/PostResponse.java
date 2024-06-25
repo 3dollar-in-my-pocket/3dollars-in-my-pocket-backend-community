@@ -19,25 +19,25 @@ public class PostResponse {
 
     private Long parentId;
 
-    private String workspaceId;
-
     private String title;
 
     private String content;
 
     private String accountId;
 
+    private String targetId;
+
     private List<PostSectionResponse> postSections;
 
     @Builder
-    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String workspaceId, String title, String content, String accountId, List<PostSectionResponse> postSections) {
+    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String accountId, String targetId, List<PostSectionResponse> postSections) {
         this.postId = postId;
         this.postGroup = postGroup;
         this.parentId = parentId;
-        this.workspaceId = workspaceId;
         this.title = title;
         this.content = content;
         this.accountId = accountId;
+        this.targetId = targetId;
         this.postSections = postSections;
     }
 
@@ -46,10 +46,10 @@ public class PostResponse {
             .postId(post.getId())
             .postGroup(post.getPostGroup())
             .parentId(post.getParentId())
-            .workspaceId(post.getWorkspaceId())
             .title(post.getTitle())
             .content(post.getContent())
             .accountId(post.getAccountId())
+            .targetId(post.getTargetId())
             .postSections(getPostSectionResponses(post))
             .build();
 

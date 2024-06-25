@@ -8,14 +8,15 @@ import java.util.List;
 
 public interface PostRepositoryCustom {
 
-    Post findByIdAndWorkspaceIdAndAccountIdAndGroup(Long postId,
+    Post findByIdAndWorkspaceIdAndAccountIdAndGroupAndTargetId(Long postId,
                                             String accountId,
                                             String workspaceId,
-                                            PostGroup group);
+                                            PostGroup group,
+                                                    String targetId);
 
-    List<Post> findByPostGroupAndAccountIdAndWorkspaceIdAndCursorAndSize(PostGroup postGroup,
+    List<Post> findByPostGroupAndWorkspaceIdAndTargetIdAndCursorAndSize(PostGroup postGroup,
                                                                          String workspaceId,
-                                                                         String accountId,
+                                                                         String targetId,
                                                                          @Nullable Long cursor,
                                                                          int size);
 }

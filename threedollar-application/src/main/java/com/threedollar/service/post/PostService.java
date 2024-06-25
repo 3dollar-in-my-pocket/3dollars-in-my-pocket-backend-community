@@ -34,9 +34,10 @@ public class PostService {
     public void deletePost(String workspaceId,
                            String accountId,
                            Long postId,
-                           PostGroup postGroup) {
+                           PostGroup postGroup,
+                           String targetId) {
 
-        Post post = postRepository.findByIdAndWorkspaceIdAndAccountIdAndGroup(postId, accountId, workspaceId, postGroup);
+        Post post = postRepository.findByIdAndWorkspaceIdAndAccountIdAndGroupAndTargetId(postId, accountId, workspaceId, postGroup, targetId);
         if (post == null) {
             throw new NotFoundException(String.format("(%s)에 해당하는 postId 는 존재하지 않거나 잘못된 접근입니다", postId));
         }
@@ -48,10 +49,10 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostAndCursorResponse getPostsAndCursor(PostGroup postGroup,
                                                    String workspaceId,
-                                                   String accountId,
+                                                   String targetId,
                                                    Long cursor,
                                                    int size) {
-        List<Post> posts = postRepository.findByPostGroupAndAccountIdAndWorkspaceIdAndCursorAndSize(postGroup, workspaceId, accountId, cursor, size + 1);
+        List<Post> posts = postRepository.findByPostGroupAndWorkspaceIdAndTargetIdAndCursorAndSize(postGroup, workspaceId, targetId, cursor, size + 1);
 
         if (posts.isEmpty() || posts.size() <= size) {
             return PostAndCursorResponse.noMore(posts);

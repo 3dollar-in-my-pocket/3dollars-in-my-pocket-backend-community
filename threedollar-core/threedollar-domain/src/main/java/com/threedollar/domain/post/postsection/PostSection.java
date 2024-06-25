@@ -35,29 +35,24 @@ public class PostSection extends BaseEntity {
     private String url;
 
     @Column(length = 100)
-    private int width;
-
-    @Column(length = 100)
-    private int height;
+    private double ratio;
 
     @Builder
-    public PostSection(SectionType sectionType, Post post, int priority, String url, int width, int height) {
+    public PostSection(SectionType sectionType, Post post, double ratio, String url, int priority) {
         this.sectionType = sectionType;
         this.post = post;
         this.priority = priority;
         this.url = url;
-        this.width = width;
-        this.height = height;
+        this.ratio = ratio;
     }
 
-    public static PostSection of(SectionType sectionType, Post post, int priority, String url, int width, int height) {
+    public static PostSection of(SectionType sectionType, Post post, int priority, String url, double ratio) {
         return PostSection.builder()
             .post(post)
             .sectionType(sectionType)
             .priority(priority)
             .url(url)
-            .width(width)
-            .height(height)
+            .ratio(ratio)
             .build();
     }
 

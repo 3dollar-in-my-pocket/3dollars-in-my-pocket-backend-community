@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum PostGroup {
 
-    BOSS_NEWS("사장님 소식")
+    NEWS_POST("소식")
     ;
 
     private final String description;
