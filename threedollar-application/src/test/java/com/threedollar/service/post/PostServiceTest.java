@@ -51,7 +51,7 @@ public class PostServiceTest extends IntegrationTest {
     void 사장님이_소식을_지운다() {
         // given
         String workspaceId = "three-dollar-dev";
-        String accountId = "user222";
+        String accountId = "user";
         Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
         PostGroup postGroup = PostGroup.NEWS_POST;
         String targetId = "333";
