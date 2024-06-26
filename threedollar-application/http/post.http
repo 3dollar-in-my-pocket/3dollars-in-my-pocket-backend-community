@@ -21,9 +21,14 @@ Content-Type: application/json
 
 
 
-### Post 조회
+### Post 조회 (다건 조회)
 GET {{host_api}}/community/v1/posts?cursor=8&size=3&workspaceId=threedollar-dev&targetId=3&postGroup=NEWS_POST
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 
+
+### Post 단건 조회
+GET {{host_api}}/community/v1/post-group/NEWS_POST/post/2?accountId=USER222&workspaceId=threedollar-dev&targetId=3
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json

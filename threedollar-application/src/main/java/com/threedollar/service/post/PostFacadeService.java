@@ -4,6 +4,7 @@ import com.threedollar.domain.post.PostGroup;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostAndCursorRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
+import com.threedollar.service.post.response.PostResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +42,14 @@ public class PostFacadeService {
             request.getTargetId(),
             request.getCursor(),
             request.getSize());
+    }
+
+    public PostResponse getPostById(String workspaceId,
+                                    String accountId,
+                                    Long postId,
+                                    PostGroup postGroup,
+                                    String targetId) {
+        return postService.getPostById(workspaceId, accountId, postId, postGroup, targetId);
     }
 
 

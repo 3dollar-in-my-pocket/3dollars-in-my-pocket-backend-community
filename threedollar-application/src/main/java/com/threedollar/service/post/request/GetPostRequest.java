@@ -1,6 +1,5 @@
 package com.threedollar.service.post.request;
 
-import com.threedollar.domain.post.PostGroup;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +14,12 @@ public class GetPostRequest {
     @NotBlank
     private String workspaceId;
 
-    private PostGroup postGroup;
-
+    @NotBlank
     private String targetId;
 
-    public GetPostRequest(String accountId, String workspaceId, PostGroup postGroup, String targetId) {
+    public GetPostRequest(String accountId, String workspaceId, String targetId) {
         this.accountId = accountId;
         this.workspaceId = workspaceId;
-        this.postGroup = postGroup;
         this.targetId = targetId;
     }
 }

@@ -9,6 +9,7 @@ import com.threedollar.service.post.request.GetPostRequest;
 import com.threedollar.service.post.request.PostAddRequest;
 import com.threedollar.service.post.request.PostAndCursorRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
+import com.threedollar.service.post.response.PostResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,10 +35,11 @@ public class PostController {
 
     }
 
-    @DeleteMapping("/v1/post/{postId}")
+    @DeleteMapping("/v1/post-group/{postGroup}/post/{postId}")
     public ApiResponse<String> deletePost(@PathVariable Long postId,
-                                          GetPostRequest request) {
-        postFacadeService.deletePost(request.getWorkspaceId(), request.getAccountId(), postId, request.getPostGroup(), request.getTargetId());
+                                          @PathVariable PostGroup postGroup,
+                                          @Valid GetPostRequest request) {
+        postFacadeService.deletePost(request.getWorkspaceId(), request.getAccountId(), postId, postGroup, request.getTargetId());
         return ApiResponse.OK;
     }
 
@@ -46,5 +48,15 @@ public class PostController {
                                                        @PathVariable PostGroup postGroup) {
         return ApiResponse.success(postFacadeService.getPostAndCursor(request, postGroup));
     }
+
+    @GetMapping("/v1/post-group/{postGroup}/post/{postId}")
+    public ApiResponse<PostResponse> getPost(@Valid GetPostRequest postRequest,
+                                             @PathVariable PostGroup postGroup,
+                                             @PathVariable Long postId) {
+        return ApiResponse.success(postFacadeService.getPostById(postRequest.getWorkspaceId(),
+            postRequest.getAccountId(), postId, postGroup, postRequest.getTargetId()));
+
+    }
+
 
 }
