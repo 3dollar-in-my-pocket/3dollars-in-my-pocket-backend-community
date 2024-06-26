@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +28,14 @@ public class PostResponse {
 
     private String targetId;
 
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
+
     private List<PostSectionResponse> postSections;
 
     @Builder
-    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String accountId, String targetId, List<PostSectionResponse> postSections) {
+    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String accountId, String targetId, LocalDateTime createTime, LocalDateTime updateTime, List<PostSectionResponse> postSections) {
         this.postId = postId;
         this.postGroup = postGroup;
         this.parentId = parentId;
@@ -38,6 +43,8 @@ public class PostResponse {
         this.content = content;
         this.accountId = accountId;
         this.targetId = targetId;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
         this.postSections = postSections;
     }
 
@@ -50,6 +57,8 @@ public class PostResponse {
             .content(post.getContent())
             .accountId(post.getAccountId())
             .targetId(post.getTargetId())
+            .createTime(post.getCreatedAt())
+            .updateTime(post.getUpdatedAt())
             .postSections(getPostSectionResponses(post))
             .build();
 
