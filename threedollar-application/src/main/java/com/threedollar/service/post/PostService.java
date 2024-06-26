@@ -71,11 +71,10 @@ public class PostService {
         return PostResponse.of(post, isOwner(post, accountId));
     }
 
-    public int getPostCountByTargetId(String workspaceId,
-                                       PostGroup postGroup,
-                                       String targetId) {
-        List<Post> postCount = postRepository.postCountByWorkspaceIdAndPostGroupAndTargetId(workspaceId, postGroup, targetId);
-        return postCount.size();
+    public Long getPostCountByTargetId(String workspaceId,
+                                      PostGroup postGroup,
+                                      String targetId) {
+        return postRepository.postCountByWorkspaceIdAndPostGroupAndTargetId(workspaceId, postGroup, targetId);
     }
 
     private Post validatePost(String workspaceId,
