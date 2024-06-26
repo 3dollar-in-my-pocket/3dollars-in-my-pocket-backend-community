@@ -47,9 +47,21 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
             .fetch();
 
         return jpaQueryFactory.selectFrom(post)
-            .leftJoin(post.postSection, postSection).fetchJoin()
             .where(post.id.in(postIds))
+            .leftJoin(post.postSection, postSection).fetchJoin()
             .orderBy(post.id.desc())
+            .fetch();
+    }
+
+    @Override
+    public List<Post> postCountByWorkspaceIdAndPostGroupAndTargetId(String workspaceId, PostGroup postGroup, String targetId) {
+        return jpaQueryFactory.selectFrom(post)
+            .where(
+                post.workspaceId.eq(workspaceId),
+                post.postGroup.eq(postGroup),
+                post.targetId.eq(targetId),
+                post.status.eq(PostStatus.ACTIVE)
+            )
             .fetch();
     }
 

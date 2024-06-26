@@ -32,3 +32,10 @@ Content-Type: application/json
 GET {{host_api}}/community/v1/post-group/NEWS_POST/post/2?accountId=USER222&workspaceId=threedollar-dev&targetId=3
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
+
+
+
+### Post targetId 에 해당하는 post 개수 조회
+GET {{host_api}}/community/v1/post-group/NEWS_POST/count?workspaceId=threedollar-dev&targetId=3
+X-Community-Api-Key: {{api_key}}
+Content-Type: application/json

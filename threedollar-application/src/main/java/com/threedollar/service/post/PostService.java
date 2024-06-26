@@ -71,6 +71,13 @@ public class PostService {
         return PostResponse.of(post, isOwner(post, accountId));
     }
 
+    public int getPostCountByTargetId(String workspaceId,
+                                       PostGroup postGroup,
+                                       String targetId) {
+        List<Post> postCount = postRepository.postCountByWorkspaceIdAndPostGroupAndTargetId(workspaceId, postGroup, targetId);
+        return postCount.size();
+    }
+
     private Post validatePost(String workspaceId,
                               String accountId,
                               Long postId,
@@ -83,6 +90,7 @@ public class PostService {
         return post;
 
     }
+
     private static boolean isOwner(Post post, String accountId) {
         return Objects.equals(post.getAccountId(), accountId);
     }

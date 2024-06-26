@@ -19,4 +19,8 @@ public interface PostRepositoryCustom {
                                                                         String targetId,
                                                                         @Nullable Long cursor,
                                                                         int size);
+
+    List<Post> postCountByWorkspaceIdAndPostGroupAndTargetId(String workspaceId,
+                                                             PostGroup postGroup,
+                                                             String targetId);
 }

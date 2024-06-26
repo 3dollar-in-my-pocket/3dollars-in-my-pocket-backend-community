@@ -53,5 +53,11 @@ public class PostFacadeService {
         return postService.getPostById(workspaceId, accountId, postId, postGroup, targetId);
     }
 
+    public int getPostCountByTargetId(String workspaceId,
+                                       PostGroup postGroup,
+                                       String targetId) {
+        return postService.getPostCountByTargetId(workspaceId, postGroup, targetId);
+    }
+
 
 }

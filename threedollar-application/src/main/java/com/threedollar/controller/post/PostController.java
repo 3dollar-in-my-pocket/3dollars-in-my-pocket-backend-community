@@ -58,5 +58,13 @@ public class PostController {
 
     }
 
+    @GetMapping("/v1/post-group/{postGroup}/count")
+    public ApiResponse<Integer> getPostCount(@PathVariable PostGroup postGroup,
+                                             @RequestParam String workspaceId,
+                                             @RequestParam String targetId) {
+        return ApiResponse.success(postFacadeService.getPostCountByTargetId(workspaceId, postGroup, targetId));
+
+    }
+
 
 }
