@@ -24,10 +24,14 @@ public class PostAndCursorRequest {
     @NotBlank
     private String targetId;
 
-    public PostAndCursorRequest(Long cursor, int size, String workspaceId, String targetId) {
+    @Nullable
+    private String accountId;
+
+    public PostAndCursorRequest(Long cursor, int size, String workspaceId, String targetId, String accountId) {
         this.cursor = cursor;
         this.size = size;
         this.workspaceId = workspaceId;
         this.targetId = targetId;
+        this.accountId = accountId;
     }
 }

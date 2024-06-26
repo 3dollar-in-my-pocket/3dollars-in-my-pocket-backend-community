@@ -1,5 +1,6 @@
 package com.threedollar.service.post.request;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class GetPostRequest {
 
-    @NotBlank
+    @Nullable
     private String accountId;
 
     @NotBlank

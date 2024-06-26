@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -47,14 +48,15 @@ public class PostService {
     public PostAndCursorResponse getPostsAndCursor(PostGroup postGroup,
                                                    String workspaceId,
                                                    String targetId,
+                                                   String accountId,
                                                    Long cursor,
                                                    int size) {
         List<Post> posts = postRepository.findByPostGroupAndWorkspaceIdAndTargetIdAndCursorAndSize(postGroup, workspaceId, targetId, cursor, size + 1);
 
         if (posts.isEmpty() || posts.size() <= size) {
-            return PostAndCursorResponse.noMore(posts);
+            return PostAndCursorResponse.noMore(posts, accountId);
         }
-        return PostAndCursorResponse.hasNext(posts);
+        return PostAndCursorResponse.hasNext(posts, accountId);
 
     }
 
@@ -66,7 +68,7 @@ public class PostService {
                                     PostGroup postGroup,
                                     String targetId) {
         Post post = validatePost(workspaceId, accountId, postId, postGroup, targetId);
-        return PostResponse.of(post);
+        return PostResponse.of(post, isOwner(post, accountId));
     }
 
     private Post validatePost(String workspaceId,
@@ -80,6 +82,9 @@ public class PostService {
         }
         return post;
 
+    }
+    private static boolean isOwner(Post post, String accountId) {
+        return Objects.equals(post.getAccountId(), accountId);
     }
 
 }

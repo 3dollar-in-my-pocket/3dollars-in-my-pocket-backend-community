@@ -22,7 +22,7 @@ Content-Type: application/json
 
 
 ### Post 조회 (다건 조회)
-GET {{host_api}}/community/v1/posts?cursor=8&size=3&workspaceId=threedollar-dev&targetId=3&postGroup=NEWS_POST
+GET {{host_api}}/community/v1/post-group/NEWS_POST?cursor=8&size=3&workspaceId=threedollar-dev&targetId=3&postGroup=NEWS_POST&accountId=USER222
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 

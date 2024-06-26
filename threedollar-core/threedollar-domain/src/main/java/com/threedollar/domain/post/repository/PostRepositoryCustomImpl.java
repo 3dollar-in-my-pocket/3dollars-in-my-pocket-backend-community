@@ -35,11 +35,13 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     public List<Post> findByPostGroupAndWorkspaceIdAndTargetIdAndCursorAndSize(PostGroup postGroup, String workspaceId, String targetId, Long cursor, int size) {
         List<Long> postIds = jpaQueryFactory.select(post.id)
             .from(post)
-            .where(existsCursor(cursor),
+            .where(
+                existsCursor(cursor),
                 post.workspaceId.eq(workspaceId),
                 post.postGroup.eq(postGroup),
                 post.targetId.eq(targetId),
-                post.status.eq(PostStatus.ACTIVE))
+                post.status.eq(PostStatus.ACTIVE)
+            )
             .orderBy(post.id.desc())
             .limit(size)
             .fetch();
@@ -57,5 +59,6 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
         }
         return post.id.lt(cursor);
     }
+
 
 }

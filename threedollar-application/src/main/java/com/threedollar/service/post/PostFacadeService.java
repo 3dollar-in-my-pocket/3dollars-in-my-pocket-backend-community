@@ -40,6 +40,7 @@ public class PostFacadeService {
             postGroup,
             request.getWorkspaceId(),
             request.getTargetId(),
+            request.getAccountId(),
             request.getCursor(),
             request.getSize());
     }

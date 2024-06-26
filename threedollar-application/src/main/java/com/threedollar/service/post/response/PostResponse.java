@@ -24,9 +24,9 @@ public class PostResponse {
 
     private String content;
 
-    private String accountId;
-
     private String targetId;
+
+    private boolean isOwner;
 
     private LocalDateTime createTime;
 
@@ -35,28 +35,28 @@ public class PostResponse {
     private List<PostSectionResponse> postSections;
 
     @Builder
-    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String accountId, String targetId, LocalDateTime createTime, LocalDateTime updateTime, List<PostSectionResponse> postSections) {
+    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String targetId, boolean isOwner, LocalDateTime createTime, LocalDateTime updateTime, List<PostSectionResponse> postSections) {
         this.postId = postId;
         this.postGroup = postGroup;
         this.parentId = parentId;
         this.title = title;
         this.content = content;
-        this.accountId = accountId;
         this.targetId = targetId;
+        this.isOwner = isOwner;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.postSections = postSections;
     }
 
-    public static PostResponse of(Post post) {
+    public static PostResponse of(Post post, boolean isOwner) {
         return PostResponse.builder()
             .postId(post.getId())
             .postGroup(post.getPostGroup())
             .parentId(post.getParentId())
             .title(post.getTitle())
             .content(post.getContent())
-            .accountId(post.getAccountId())
             .targetId(post.getTargetId())
+            .isOwner(isOwner)
             .createTime(post.getCreatedAt())
             .updateTime(post.getUpdatedAt())
             .postSections(getPostSectionResponses(post))
@@ -64,7 +64,7 @@ public class PostResponse {
 
     }
 
-    public static List<PostSectionResponse> getPostSectionResponses(Post post) {
+    private static List<PostSectionResponse> getPostSectionResponses(Post post) {
         return post.getPostSection().stream()
             .map(PostSectionResponse::of)
             .collect(Collectors.toList());
