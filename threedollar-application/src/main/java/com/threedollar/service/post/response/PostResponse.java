@@ -26,7 +26,7 @@ public class PostResponse {
 
     private String targetId;
 
-    private boolean isOwner;
+    private Boolean isOwner;
 
     private LocalDateTime createTime;
 
@@ -48,7 +48,7 @@ public class PostResponse {
         this.postSections = postSections;
     }
 
-    public static PostResponse of(Post post, boolean isOwner) {
+    public static PostResponse of(Post post, Boolean isOwner) {
         return PostResponse.builder()
             .postId(post.getId())
             .postGroup(post.getPostGroup())

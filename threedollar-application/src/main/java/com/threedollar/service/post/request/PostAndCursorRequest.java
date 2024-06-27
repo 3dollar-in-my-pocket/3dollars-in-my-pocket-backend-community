@@ -19,18 +19,14 @@ public class PostAndCursorRequest {
     private int size;
 
     @NotBlank
-    private String workspaceId;
-
-    @NotBlank
     private String targetId;
 
     @Nullable
     private String accountId;
 
-    public PostAndCursorRequest(Long cursor, int size, String workspaceId, String targetId, String accountId) {
+    public PostAndCursorRequest(Long cursor, int size, String targetId, String accountId) {
         this.cursor = cursor;
         this.size = size;
-        this.workspaceId = workspaceId;
         this.targetId = targetId;
         this.accountId = accountId;
     }

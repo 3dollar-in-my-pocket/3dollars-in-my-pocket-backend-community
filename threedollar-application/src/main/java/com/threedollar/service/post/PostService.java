@@ -5,6 +5,7 @@ import com.threedollar.domain.post.Post;
 import com.threedollar.domain.post.PostGroup;
 import com.threedollar.domain.post.repository.PostRepository;
 import com.threedollar.service.post.request.PostAddRequest;
+import com.threedollar.service.post.request.PostUpdateRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
 import com.threedollar.service.post.response.PostResponse;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,10 +74,25 @@ public class PostService {
     }
 
     public Long getPostCountByTargetId(String workspaceId,
-                                      PostGroup postGroup,
-                                      String targetId) {
+                                       PostGroup postGroup,
+                                       String targetId) {
         return postRepository.postCountByWorkspaceIdAndPostGroupAndTargetId(workspaceId, postGroup, targetId);
     }
+
+
+    public void update(String workspaceId,
+                       String accountId,
+                       Long postId,
+                       PostGroup postGroup,
+                       String targetId,
+                       PostUpdateRequest request) {
+
+        Post post = validatePost(workspaceId, accountId, postId, postGroup, targetId);
+        post.update(request.getTitle(), request.getContent(), request.getPostSections().stream()
+            .map(r -> r.toEntity(post))
+            .collect(Collectors.toList()));
+    }
+
 
     private Post validatePost(String workspaceId,
                               String accountId,
@@ -90,7 +107,10 @@ public class PostService {
 
     }
 
-    private static boolean isOwner(Post post, String accountId) {
+    private static Boolean isOwner(Post post, String accountId) {
+        if (accountId == null) {
+            return null;
+        }
         return Objects.equals(post.getAccountId(), accountId);
     }
 

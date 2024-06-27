@@ -21,8 +21,8 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     public Post findByIdAndWorkspaceIdAndAccountIdAndGroupAndTargetId(Long postId, String accountId, String workspaceId, PostGroup postGroup, String targetId) {
         return jpaQueryFactory.selectFrom(post)
             .where(
+                existsAccountId(accountId),
                 post.workspaceId.eq(workspaceId),
-                post.accountId.eq(accountId),
                 post.id.eq(postId),
                 post.postGroup.eq(postGroup),
                 post.targetId.eq(targetId),
@@ -70,6 +70,13 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
             return null;
         }
         return post.id.lt(cursor);
+    }
+
+    private BooleanExpression existsAccountId(String accountId) {
+        if (accountId == null) {
+            return null;
+        }
+        return post.accountId.eq(accountId);
     }
 
 

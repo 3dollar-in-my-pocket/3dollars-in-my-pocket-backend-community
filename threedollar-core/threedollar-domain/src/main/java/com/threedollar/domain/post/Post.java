@@ -66,6 +66,13 @@ public class Post extends BaseEntity {
         this.postSection.add(postSection);
     }
 
+    public void update(String title, String content, List<PostSection> sections) {
+        this.postSection.clear();
+        this.postSection.addAll(sections);
+        this.title = title;
+        this.content = content;
+    }
+
     public void delete() {
         this.status = PostStatus.DELETED;
     }

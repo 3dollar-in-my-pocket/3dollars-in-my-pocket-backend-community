@@ -36,15 +36,17 @@ public class PostFacadeService {
     }
 
     public PostAndCursorResponse getPostAndCursor(@Valid PostAndCursorRequest request,
+                                                  String workspaceId,
                                                   PostGroup postGroup) {
         return postService.getPostsAndCursor(
             postGroup,
-            request.getWorkspaceId(),
+            workspaceId,
             request.getTargetId(),
             request.getAccountId(),
             request.getCursor(),
             request.getSize());
     }
+
 
     public PostResponse getPostById(String workspaceId,
                                     String accountId,
@@ -60,6 +62,13 @@ public class PostFacadeService {
         return postService.getPostCountByTargetId(workspaceId, postGroup, targetId);
     }
 
-
+    public void updatePost(String workspaceId,
+                           String accountId,
+                           PostGroup postGroup,
+                           Long postId,
+                           String targetId,
+                           PostUpdateRequest request) {
+        postService.update(workspaceId, accountId, postId, postGroup, targetId, request);
+    }
 
 }

@@ -34,8 +34,8 @@ public class PostServiceTest extends IntegrationTest {
     @Test
     void 사장님이_소식을_작성한다() {
         // given
-        PostAddRequest request = newRequest();
         String workspaceId = "three-user";
+        PostAddRequest request = newRequest();
         String accountId = "user22";
 
         // when
@@ -79,7 +79,6 @@ public class PostServiceTest extends IntegrationTest {
 
         PostGroup postGroup = PostGroup.NEWS_POST;
         String targetId = "33";
-        String workspaceId = "threedollar-dev";
         String title = "은평구 핫도그 아저씨";
         String content = "콘텐트";
         SectionType sectionType = SectionType.IMAGE;
@@ -97,7 +96,6 @@ public class PostServiceTest extends IntegrationTest {
             .title(title)
             .content(content)
             .targetId(targetId)
-            .workspaceId(workspaceId)
             .sections(List.of(postSectionRequest))
             .build();
     }

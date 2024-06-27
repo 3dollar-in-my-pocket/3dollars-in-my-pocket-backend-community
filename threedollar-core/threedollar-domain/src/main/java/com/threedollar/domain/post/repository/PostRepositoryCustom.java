@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostRepositoryCustom {
 
     Post findByIdAndWorkspaceIdAndAccountIdAndGroupAndTargetId(Long postId,
-                                                               String accountId,
+                                                               @Nullable String accountId,
                                                                String workspaceId,
                                                                PostGroup group,
                                                                String targetId);
