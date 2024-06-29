@@ -35,7 +35,7 @@ public class PostResponse {
     private List<PostSectionResponse> postSections;
 
     @Builder
-    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String targetId, boolean isOwner, LocalDateTime createTime, LocalDateTime updateTime, List<PostSectionResponse> postSections) {
+    public PostResponse(Long postId, PostGroup postGroup, Long parentId, String title, String content, String targetId, Boolean isOwner, LocalDateTime createTime, LocalDateTime updateTime, List<PostSectionResponse> postSections) {
         this.postId = postId;
         this.postGroup = postGroup;
         this.parentId = parentId;
