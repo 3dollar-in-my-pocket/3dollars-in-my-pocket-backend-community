@@ -11,6 +11,7 @@ import com.threedollar.service.post.request.PostAndCursorRequest;
 import com.threedollar.service.post.request.PostUpdateRequest;
 import com.threedollar.service.post.response.PostAndCursorResponse;
 import com.threedollar.service.post.response.PostResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,7 @@ public class PostController {
 
     private final PostFacadeService postFacadeService;
 
+    @Operation(summary = "[소식] 소식을 작성합니다.", description = "유저 혹은 사장님이 소식을 작성합니다.")
     @PostMapping("/v1/post")
     public ApiResponse<Long> addPost(@RequestApiKey ApiKeyContext workspaceId,
                                      @RequestParam String accountId,
@@ -37,6 +39,7 @@ public class PostController {
 
     }
 
+    @Operation(summary = "[소식] 소식을 제거합니다.", description = "유저 혹은 사장님이 소식을 제거합니다.")
     @DeleteMapping("/v1/post-group/{postGroup}/post/{postId}")
     public ApiResponse<String> deletePost(@PathVariable Long postId,
                                           @RequestApiKey ApiKeyContext workspaceId,
@@ -46,6 +49,7 @@ public class PostController {
         return ApiResponse.OK;
     }
 
+    @Operation(summary = "[소식] 소식들을 조회합니다.", description = "다건의 소식들을 조회합니다.")
     @GetMapping("/v1/post-group/{postGroup}")
     public ApiResponse<PostAndCursorResponse> getPosts(@Valid PostAndCursorRequest request,
                                                        @RequestApiKey ApiKeyContext workspaceId,
@@ -53,6 +57,7 @@ public class PostController {
         return ApiResponse.success(postFacadeService.getPostAndCursor(request, workspaceId.getWorkspaceId(), postGroup));
     }
 
+    @Operation(summary = "[소식] 소식을 조회합니다", description = "단건의 소식을 조회합니다.")
     @GetMapping("/v1/post-group/{postGroup}/post/{postId}")
     public ApiResponse<PostResponse> getPost(@RequestParam(required = false) String accountId,
                                              @RequestParam String targetId,
@@ -64,6 +69,7 @@ public class PostController {
 
     }
 
+    @Operation(summary = "[소식] target 에 해당하는 소식의 수를 조회합니다.", description = "store 등에 해당하는 소식 수를 조회합니다.")
     @GetMapping("/v1/post-group/{postGroup}/count")
     public ApiResponse<Long> getPostCount(@PathVariable PostGroup postGroup,
                                           @RequestApiKey ApiKeyContext workspaceId,
@@ -72,13 +78,14 @@ public class PostController {
 
     }
 
+    @Operation(summary = "[소식] 소식을 수정합니다.", description = "postId에 해당하는 소식을 수정합니다.")
     @PatchMapping("/v1/post-group/{postGroup}/post/{postId}")
     public ApiResponse<Long> updatePost(@Valid PostUpdateRequest request,
-                                          @RequestApiKey ApiKeyContext workspaceId,
-                                          @PathVariable PostGroup postGroup,
-                                          @PathVariable Long postId,
-                                          @RequestParam(required = false) String accountId,
-                                          @RequestParam String targetId) {
+                                        @RequestApiKey ApiKeyContext workspaceId,
+                                        @PathVariable PostGroup postGroup,
+                                        @PathVariable Long postId,
+                                        @RequestParam(required = false) String accountId,
+                                        @RequestParam String targetId) {
         return ApiResponse.success(postFacadeService.updatePost(workspaceId.getWorkspaceId(), accountId, postGroup, postId, targetId, request));
 
     }
