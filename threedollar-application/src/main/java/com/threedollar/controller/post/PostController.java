@@ -73,14 +73,13 @@ public class PostController {
     }
 
     @PatchMapping("/v1/post-group/{postGroup}/post/{postId}")
-    public ApiResponse<String> updatePost(@Valid PostUpdateRequest request,
+    public ApiResponse<Long> updatePost(@Valid PostUpdateRequest request,
                                           @RequestApiKey ApiKeyContext workspaceId,
                                           @PathVariable PostGroup postGroup,
                                           @PathVariable Long postId,
                                           @RequestParam(required = false) String accountId,
                                           @RequestParam String targetId) {
-        postFacadeService.updatePost(workspaceId.getWorkspaceId(), accountId, postGroup, postId, targetId, request);
-        return ApiResponse.OK;
+        return ApiResponse.success(postFacadeService.updatePost(workspaceId.getWorkspaceId(), accountId, postGroup, postId, targetId, request));
 
     }
 

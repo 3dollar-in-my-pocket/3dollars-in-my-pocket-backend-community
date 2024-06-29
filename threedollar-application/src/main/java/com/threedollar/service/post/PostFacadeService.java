@@ -62,13 +62,14 @@ public class PostFacadeService {
         return postService.getPostCountByTargetId(workspaceId, postGroup, targetId);
     }
 
-    public void updatePost(String workspaceId,
+    public Long updatePost(String workspaceId,
                            String accountId,
                            PostGroup postGroup,
                            Long postId,
                            String targetId,
                            PostUpdateRequest request) {
-        postService.update(workspaceId, accountId, postId, postGroup, targetId, request);
+        return postService.update(workspaceId, accountId, postId, postGroup, targetId, request);
+
     }
 
 }
