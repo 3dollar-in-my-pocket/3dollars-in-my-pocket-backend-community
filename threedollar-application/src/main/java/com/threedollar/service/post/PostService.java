@@ -80,7 +80,7 @@ public class PostService {
     }
 
 
-    public Long update(String workspaceId,
+    public PostResponse update(String workspaceId,
                        String accountId,
                        Long postId,
                        PostGroup postGroup,
@@ -91,7 +91,7 @@ public class PostService {
         post.update(request.getTitle(), request.getContent(), request.getPostSections().stream()
             .map(r -> r.toEntity(post))
             .collect(Collectors.toList()));
-        return post.getId();
+        return PostResponse.of(post, isOwner(post, accountId));
     }
 
 

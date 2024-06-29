@@ -80,7 +80,7 @@ public class PostController {
 
     @Operation(summary = "[소식] 소식을 수정합니다.", description = "postId에 해당하는 소식을 수정합니다.")
     @PatchMapping("/v1/post-group/{postGroup}/post/{postId}")
-    public ApiResponse<Long> updatePost(@Valid PostUpdateRequest request,
+    public ApiResponse<PostResponse> updatePost(@Valid PostUpdateRequest request,
                                         @RequestApiKey ApiKeyContext workspaceId,
                                         @PathVariable PostGroup postGroup,
                                         @PathVariable Long postId,
