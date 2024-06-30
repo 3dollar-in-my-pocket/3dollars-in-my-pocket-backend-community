@@ -86,6 +86,7 @@ public class PostController {
                                         @PathVariable Long postId,
                                         @RequestParam(required = false) String accountId,
                                         @RequestParam String targetId) {
+
         return ApiResponse.success(postFacadeService.updatePost(workspaceId.getWorkspaceId(), accountId, postGroup, postId, targetId, request));
 
     }
