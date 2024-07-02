@@ -15,14 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PostAddRequest {
 
-    @NotNull
-    private PostGroup postGroup;
-
     private Long parentId;
 
     private String title;
-
-    private String targetId;
 
     @NotBlank
     private String content;
@@ -31,16 +26,14 @@ public class PostAddRequest {
     private List<PostSectionRequest> sections;
 
     @Builder
-    public PostAddRequest(PostGroup postGroup, Long parentId, String title, String targetId, String content, List<PostSectionRequest> sections) {
-        this.postGroup = postGroup;
+    public PostAddRequest(Long parentId, String title, String content, List<PostSectionRequest> sections) {
         this.parentId = parentId;
         this.title = title;
         this.content = content;
-        this.targetId = targetId;
         this.sections = sections;
     }
 
-    public Post toEntity(String workspaceId, String accountId) {
+    public Post toEntity(PostGroup postGroup, String workspaceId, String accountId, String targetId) {
 
         Post post = Post.of(postGroup, parentId, workspaceId, title, content, targetId, accountId);
 

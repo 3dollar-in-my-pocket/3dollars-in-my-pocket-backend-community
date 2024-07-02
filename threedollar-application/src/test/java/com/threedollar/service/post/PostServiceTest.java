@@ -37,14 +37,16 @@ public class PostServiceTest extends IntegrationTest {
         String workspaceId = "three-user";
         PostAddRequest request = newRequest();
         String accountId = "user22";
+        PostGroup postGroup = PostGroup.NEWS_POST;
+        String targetId = "store:33";
 
         // when
-        postService.addPost(request, workspaceId, accountId);
+        postService.addPost(postGroup, targetId, request, workspaceId, accountId);
 
         // then
         Post post = postRepository.findAll().get(0);
         assertThat(postRepository.findAll()).hasSize(1);
-        assertPost(post, request.getPostGroup(), request.getTitle(), request.getContent(), accountId, workspaceId, request.getTargetId());
+        assertPost(post, postGroup, request.getTitle(), request.getContent(), accountId, workspaceId, targetId);
     }
 
     @Test
@@ -52,7 +54,9 @@ public class PostServiceTest extends IntegrationTest {
         // given
         String workspaceId = "three-dollar-dev";
         String accountId = "user";
-        Post post = postRepository.save(newRequest().toEntity(workspaceId, accountId));
+        PostGroup postGroup = PostGroup.NEWS_POST;
+        String targetId = "user222";
+        Post post = postRepository.save(newRequest().toEntity(postGroup, workspaceId, accountId, targetId));
 
         // when
         postService.deletePost(workspaceId, accountId, post.getId(), post.getPostGroup(), post.getTargetId());
@@ -77,8 +81,6 @@ public class PostServiceTest extends IntegrationTest {
 
     private PostAddRequest newRequest() {
 
-        PostGroup postGroup = PostGroup.NEWS_POST;
-        String targetId = "33";
         String title = "은평구 핫도그 아저씨";
         String content = "콘텐트";
         SectionType sectionType = SectionType.IMAGE;
@@ -92,10 +94,8 @@ public class PostServiceTest extends IntegrationTest {
             .build();
 
         return PostAddRequest.builder()
-            .postGroup(postGroup)
             .title(title)
             .content(content)
-            .targetId(targetId)
             .sections(List.of(postSectionRequest))
             .build();
     }

@@ -18,10 +18,13 @@ public class PostFacadeService {
 
     private final PostService postService;
 
-    public Long addPost(PostAddRequest request,
+    public Long addPost(
+                        PostGroup postGroup,
+                        PostAddRequest request,
                         @NotBlank String workspaceId,
-                        @NotBlank String accountId) {
-        return postService.addPost(request, workspaceId, accountId);
+                        @NotBlank String accountId,
+                        @NotBlank String targetId) {
+        return postService.addPost(postGroup, targetId, request, workspaceId, accountId);
     }
 
 
@@ -37,11 +40,12 @@ public class PostFacadeService {
 
     public PostAndCursorResponse getPostAndCursor(@Valid PostAndCursorRequest request,
                                                   String workspaceId,
-                                                  PostGroup postGroup) {
+                                                  PostGroup postGroup,
+                                                  String targetId) {
         return postService.getPostsAndCursor(
             postGroup,
             workspaceId,
-            request.getTargetId(),
+            targetId,
             request.getAccountId(),
             request.getCursor(),
             request.getSize());

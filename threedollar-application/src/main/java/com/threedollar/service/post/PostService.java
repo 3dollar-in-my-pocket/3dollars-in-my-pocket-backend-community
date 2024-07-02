@@ -25,11 +25,14 @@ public class PostService {
 
 
     @Transactional
-    public Long addPost(PostAddRequest request,
-                        @NotBlank String workspaceId,
-                        String accountId) {
+    public Long addPost(
+        PostGroup postGroup,
+        String targetId,
+        PostAddRequest request,
+        @NotBlank String workspaceId,
+        String accountId) {
 
-        Post post = postRepository.save(request.toEntity(workspaceId, accountId));
+        Post post = postRepository.save(request.toEntity(postGroup, workspaceId, accountId, targetId));
         return post.getId();
 
     }
@@ -81,11 +84,11 @@ public class PostService {
 
 
     public PostResponse update(String workspaceId,
-                       String accountId,
-                       Long postId,
-                       PostGroup postGroup,
-                       String targetId,
-                       PostUpdateRequest request) {
+                               String accountId,
+                               Long postId,
+                               PostGroup postGroup,
+                               String targetId,
+                               PostUpdateRequest request) {
 
         Post post = validatePost(workspaceId, accountId, postId, postGroup, targetId);
         post.update(request.getTitle(), request.getContent(), request.getPostSections().stream()
