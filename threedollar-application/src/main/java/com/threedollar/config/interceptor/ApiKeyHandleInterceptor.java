@@ -24,10 +24,13 @@ public class ApiKeyHandleInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String requestApiKey = request.getHeader(CommunityHttpHeaders.API_KEY.getHeaderName());
+        if (isSwaggerRequest(request)) {
+            return true;
+        }
+
         if (StringUtils.isBlank(requestApiKey)) {
             throw new ApiKeyInvalidException("Api-Key 헤더가 비어있습니다.");
         }
-
         try {
             ApiKeyResponse apiKey = apiKeyQueryService.getApiKey(requestApiKey, ApiKeyStatus.ACTIVE);
             request.setAttribute(SESSION_KEY, ApiKeyContext.from(apiKey));
@@ -35,5 +38,10 @@ public class ApiKeyHandleInterceptor implements HandlerInterceptor {
         } catch (NotFoundException exception) {
             throw new ApiKeyInvalidException(String.format("등록되지 않은 Api-Key(%s)가 요청 되었습니다.", requestApiKey));
         }
+    }
+
+    private boolean isSwaggerRequest(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.contains("swagger") || uri.contains("api-docs");
     }
 }
