@@ -1,18 +1,14 @@
 ### Post 추가
-POST {{host_api}}/community/v1/post?accountId=USER222
+POST {{host_api}}/community/v1/post-group/STORE_NEWS/target/3/post?accountId=USER222
 X-Community-Api-Key: {{api_key}}
 Content-Type: application/json
 
 {
-      "postGroup": "NEWS_POST",
       "title": "오늘은 휴일입니다",
       "content": "정기적인 휴일입니다.",
-      "targetId": "3",
-      "workspaceId": "threedollar-dev",
       "sections": [
        {
           "sectionType": "IMAGE",
-          "priority": "2",
           "ratio": 23.333,
           "url": "www.naver.com"
        }

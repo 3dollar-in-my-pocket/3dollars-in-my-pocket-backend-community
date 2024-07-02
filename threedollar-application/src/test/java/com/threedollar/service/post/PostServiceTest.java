@@ -37,7 +37,7 @@ public class PostServiceTest extends IntegrationTest {
         String workspaceId = "three-user";
         PostAddRequest request = newRequest();
         String accountId = "user22";
-        PostGroup postGroup = PostGroup.NEWS_POST;
+        PostGroup postGroup = PostGroup.STORE_NEWS;
         String targetId = "store:33";
 
         // when
@@ -54,7 +54,7 @@ public class PostServiceTest extends IntegrationTest {
         // given
         String workspaceId = "three-dollar-dev";
         String accountId = "user";
-        PostGroup postGroup = PostGroup.NEWS_POST;
+        PostGroup postGroup = PostGroup.STORE_NEWS;
         String targetId = "user222";
         Post post = postRepository.save(newRequest().toEntity(postGroup, workspaceId, accountId, targetId));
 
